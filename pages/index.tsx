@@ -102,7 +102,7 @@ export default function Home({ data }: {data:About}) {
            style={tourImageStyle}/>
            <div className="tourContent">
              <h2 className="drop-shadow-md">{homeTour.title}</h2>
-             <Button className="tour-button">Discover {homeTour.title}</Button>
+             <a href="/tours"><Button className="tour-button">Discover {homeTour.title}</Button></a>
            </div>
 
       </div>
