@@ -79,7 +79,7 @@ export default function Tours({ data }: {data:Activity}) {
     //   window.removeEventListener('scroll', handleScroll);
     // };
   },[])
-
+//<li>Choose Tour</li>
   return (
       <div id="tours">
 
@@ -91,8 +91,8 @@ export default function Tours({ data }: {data:Activity}) {
 
           </div>
           <div className="tabs">
-            <ul className="drop-shadow-sm">
-            <li>Choose Tour</li>
+            <ul className="ul-tabs">
+
             {item.activityItemHeading.map((activityItemHeading,index) => (
                 <li key={activityItemHeading.id}
                 className={(tab == activityItemHeading.id? 'selected': '')}

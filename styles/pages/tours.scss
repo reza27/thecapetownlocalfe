@@ -23,41 +23,45 @@
 
 .tabs {
   position: relative;
-  height: 110px;
+  height: 100px;
   margin: auto;
   display: flex;
-  top: -100px;
+  top: -82px;
   padding-right: 70px;
   justify-content: right;
 
   @media only screen and (max-width: 768px) {
       padding: 10px 0;
       justify-content: left;
+      height: 60px;
 
   }
 
 
-  ul {
+  .ul-tabs {
     position: absolute;
 
     // right: 0;
     // margin: auto;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     background: white;
-    padding: 12px;
+    width: calc(50% - 70px);
+    border-bottom: 1px solid #ccc;
+
 
     @media only screen and (max-width: 768px) {
-      flex-direction: column;
-      width: 100%;
-      padding: 10px;
+      //flex-direction: column;
+      width: calc(100% - 30px);
+      margin: 10px $mobi-gutter-padding;
     }
 
     li {
 
       @media only screen and (max-width: 768px) {
         width: 100%;
+        flex:auto;
       }
 
       display: flex;
@@ -67,20 +71,21 @@
       font-weight: 500;
       font-size: 12px;
       background: white;
-      border: 1px solid $zinc100;
+      border-bottom: 5px solid transparent;
       width:120px;
       height:40px;
+      flex:1;
       text-align: center;
       color: #333333;
       //background: $zinc100;
       position: relative;
       transition: background 0.3s;
-      margin: 0 5px;
+
       //border-bottom: 5px solid $zinc100;
       //border-radius: 20px;
-      &:first-child {
-        border:none;
-      }
+      // &:first-child {
+      //   border:none;
+      // }
 
       &:not(:first-child) {
         cursor: pointer;
@@ -95,13 +100,18 @@
         display: flex;
         span {
          font-family: Roboto;
-         text-transform: capitalize;
+         text-transform: uppercase;
          font-size: 12px;
        }
       }
 
       &.selected {
-         background: #fcb82e;
+         //background: #fcb82e;
+         border-bottom: 5px solid #fcb82e;
+
+           // @media only screen and (max-width: 768px) {
+           //   background: #fcb82e;
+           // }
          //scolor: white;
          //border-radius: 30px;
         //border-bottom: 5px solid #1c1917;
