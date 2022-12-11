@@ -72,7 +72,7 @@ export default function Home({ data }: {data:About}) {
       <div className="left">
         <h1 className="home-title">Join us for <br/>a trip you&apos;ll <br/>never forget.</h1>
         <p>Here at the capetownlocal we always strive for perfection. Our experience is guaranteed to make the best memories.</p>
-        <Button className="header-button" onClick={window.location.href = '/tours'}>View Tours</Button>
+        <a href="/tours"><Button className="header-button">View Tours</Button></a>
       </div>
     <div className="right">
     <Image
@@ -102,7 +102,7 @@ export default function Home({ data }: {data:About}) {
            style={tourImageStyle}/>
            <div className="tourContent">
              <h2 className="drop-shadow-md">{homeTour.title}</h2>
-             <Button className="tour-button" onClick={window.location.href = '/tours'}>Discover {homeTour.title}</Button>
+             <Button className="tour-button">Discover {homeTour.title}</Button>
            </div>
 
       </div>
