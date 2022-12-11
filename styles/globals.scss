@@ -1,0 +1,119 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+$zinc600: #52525b;
+$zinc200: #e5e5e5;
+$zinc100: #f4f4f5;
+$slate600: #475569;
+$gray800: #1f2937;
+$stone600: #57534e;
+$stone800: #292524;
+$stone900: #1c1917;
+$yellow: #fef08a;
+$rose700: #be123c;
+$red600: #dc2626;
+
+$cptlocalred: #da1820;
+$cptlocalgreen: #4baf43;
+$cptlocalyellow: #fbb32b;
+$cptlocalyellowlight: #f8cf81;
+$cptlocalblue: #135db6;
+$yellowTheme: #fcb82e;
+$blueButtonTheme: #257de6;
+
+$mobi-gutter-padding: 15px;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto, system-ui, sans-serif;
+  font-weight: 300;
+  background: white;
+}
+
+main {
+  background: white;
+}
+
+h1,h2,h3 {
+  font-weight: 700;
+  font-family: Alexandria;
+  color:#333;
+}
+
+h2 {
+  font-size: 34px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 80px;
+  color: white;
+  text-transform: capitalize;
+    font-family: Caveat;
+}
+
+// .header {
+//   position: relative;
+//   align-items: center;
+//   display: flex;
+//   justify-content: center;
+//
+//   h1 {
+//     position: absolute;
+//   }
+// }
+
+strong {
+  font-weight: bold;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 400;
+}
+p {
+  color:#333333;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.price {
+  font-weight: 700;
+  font-family: Roboto;
+  font-size: 14px;
+  color: $red600;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    color: white;
+    background: black;
+  }
+}
+
+
+
+
+@import "components/nav";
+@import "components/footer";
+@import "components/contact-form";
+@import "components/image-slider";
+@import "pages/tours";
+@import "pages/contact";
+@import "pages/about";
+@import "pages/home";
