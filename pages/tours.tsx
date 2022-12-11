@@ -91,7 +91,7 @@ export default function Tours({ data }: {data:Activity}) {
 
           </div>
           <div className="tabs">
-            <ul className="drop-shadow-lg">
+            <ul className="drop-shadow-sm">
             <li>Choose Tour</li>
             {item.activityItemHeading.map((activityItemHeading,index) => (
                 <li key={activityItemHeading.id}
