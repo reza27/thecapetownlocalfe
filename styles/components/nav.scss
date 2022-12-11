@@ -7,7 +7,7 @@
   width: 100%;
   z-index: 101;
   color: white;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid #e9e9ed;
   transition: all 0.3s;
   top: 0;
   padding-right: 70px;
@@ -23,7 +23,8 @@
   &.scrolled {
     background: white;
     color: black;
-    border-bottom: 1px solid $zinc100;
+    border-bottom: 1px solid #e9e9ed;
+
 
   }
 
