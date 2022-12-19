@@ -223,18 +223,18 @@ export default function ContactForm() {
               <p>Preferred date:</p>
               <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="input-field" />
             </div>
-            <div className="input-field-container">
-              <label className="label-check" onChange={(e) => {
-                 e.stopPropagation();setTransportNeeded(!transportNeeded)}}>Do you need transport?
-                 <Radio id="transportYes" name="transport" label="Yes" />
-                 <Radio id="trasnportNo" name="transport" label="No" defaultChecked/>
-              </label>
-            </div>
             <div className="input-field-container"onChange={(e) => {
                e.stopPropagation();setFlexibleDate(!flexibleDate)}}>
                  <label className="label-check" >Is your date flexible?
                 <Radio id="flexibleYes" name="flexible" label="Yes" defaultChecked/>
                 <Radio id="flexibleNo" name="flexible" label="No" />
+              </label>
+            </div>
+            <div className="input-field-container">
+              <label className="label-check" onChange={(e) => {
+                 e.stopPropagation();setTransportNeeded(!transportNeeded)}}>Do you need transport?
+                 <Radio id="transportYes" name="transport" label="Yes" />
+                 <Radio id="trasnportNo" name="transport" label="No" defaultChecked/>
               </label>
             </div>
             <div className="input-field-container address">
