@@ -13,7 +13,8 @@ import ImageLoader from '../components/image-loader';
 import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTag, faClock, faStar } from '@fortawesome/free-solid-svg-icons'
+import { faTag, faClock, faStar } from '@fortawesome/free-solid-svg-icons';
+
 
 type About = {
   id: String,
@@ -24,8 +25,9 @@ type About = {
   guidesCount: Int
 };
 
-export default function Home({ data }: {data:About}) {
+export default function Home({ data }: {data}) {
 
+  const [isMobi, setIsMobi] = useState(false);
   const reviews = [{
     name:'Lorry Luscri',
     stars: 5,
@@ -87,6 +89,10 @@ export default function Home({ data }: {data:About}) {
     // return () => {
     //   window.removeEventListener('scroll', handleScroll);
     // };
+
+    if (window.innerWidth <= 768 ) {
+      setIsMobi(true);
+    }
   },[])
   return (
     <div id="home">
@@ -135,7 +141,9 @@ export default function Home({ data }: {data:About}) {
         <h2>Reviews</h2>
         <h3>Average rating <span><FontAwesomeIcon icon={faStar} /> </span> 5.0</h3>
         <p>At The Cape Town Local we strive to make your tour as memorable and comfortable as possible. See what others are saying about us.</p>
-        <a target="blank" href="https://www.google.com/search?q=The%20Cape%20Town%20Local&stick=H4sIAAAAAAAAAONgU1I1qDBMSU42MU4ySE5KSklOsTS3MqgwTbNMMjCxTEw0MjFMNDZJW8QqHJKRquCcWJCqEJJfnqfgk5-cmAMAKAYJzj8AAAA&mat=CU21M6PrLZga&ved=2ahUKEwi8k4yj6YX8AhU6QUEAHcZYAc4QrMcEegQIVRAG#lrd=0x1dcc43b0cbbdcd97:0x5f9b049aa241a34f,1,,,">
+        <a target="blank"
+        href={isMobi? "https://www.google.com/search?q=the+cape+town+local&oq=the+cape+tow&aqs=chrome.0.69i59j0i512j69i57j0i512j46i175i199i512l2j0i512l2j46i175i199i512l2.2663j1j9&client=ms-android-samsung-ss&sourceid=chrome-mobile&ie=UTF8#lkt=LocalPoiReviews&lpg=cid:CgIgAQ%3D%3D&trex=m_t:lcl_akp,rc_f:rln,rc_ludocids:6889105117186990927,ru_gwp:0%252C7,ru_lqi:ChN0aGUgY2FwZSB0b3duIGxvY2FsSICZ_qDIsoCACFolEAAQARACEAMYABgBGAIYAyITdGhlIGNhcGUgdG93biBsb2NhbHoJQ2FwZSBUb3dukgENdG91cl9vcGVyYXRvcpoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VSSGFXSnFTa05SRUFFqgEbEAEqFyITdGhlIGNhcGUgdG93biBsb2NhbCgA,ru_phdesc:miSBjOtOkDM,trex_id:BGUPIc":
+        "https://www.google.com/search?q=The%20Cape%20Town%20Local&stick=H4sIAAAAAAAAAONgU1I1qDBMSU42MU4ySE5KSklOsTS3MqgwTbNMMjCxTEw0MjFMNDZJW8QqHJKRquCcWJCqEJJfnqfgk5-cmAMAKAYJzj8AAAA&mat=CU21M6PrLZga&ved=2ahUKEwi8k4yj6YX8AhU6QUEAHcZYAc4QrMcEegQIVRAG#lrd=0x1dcc43b0cbbdcd97:0x5f9b049aa241a34f,1,,,"}>
           <Button className="reviews-button">See All reviews on Google</Button>
         </a>
       </div>
