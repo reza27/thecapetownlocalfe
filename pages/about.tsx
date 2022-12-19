@@ -104,7 +104,7 @@ export default function About({ data }: {data}) {
       </div>
 
       <div className="affiliations-container">
-      <h2 className="section-heading">Partners</h2>
+      <h2 className="section-heading">Affiliations</h2>
       <div className="affiliations">
 
       {data.about.affiliations.map((affiliate) => (

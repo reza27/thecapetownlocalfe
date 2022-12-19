@@ -1,6 +1,7 @@
 
 .contact-form {
   display: flex;
+  flex-direction: column;
   padding-top: 20px;
   padding-bottom: 40px;
   background: white;
@@ -11,6 +12,41 @@
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
+  }
+
+  .heading {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 50px 0;
+
+    @media only screen and (max-width: 768px) {
+      flex-direction: column;
+      padding: 30px 30px 0;
+    }
+
+    h2 {
+      color: white;
+      font-size: 65px;
+      line-height: 1.2;
+
+      @media only screen and (max-width: 768px) {
+        font-size: 42px;
+      }
+    }
+    .form-description {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 10px;
+      opacity: 0.7;
+    }
+  }
+
+  .contact-form-inner {
+    display: flex;
+
+    @media only screen and (max-width: 768px) {
+      flex-direction: column;
+    }
   }
 
 
@@ -25,17 +61,6 @@
         padding: 0 30px;
     }
 
-    h2 {
-      color: white;
-      font-size: 55px;
-      line-height: 1.2;
-    }
-    .form-description {
-      color: white;
-      font-size: 14px;
-      margin-bottom: 10px;
-      opacity: 0.7;
-    }
   }
 
   .right-block {
@@ -57,6 +82,7 @@
 
   .input-field-container.date, .input-field-container.message {
     flex-direction: row;
+    padding-top: 15px;
   }
 
   .input-field-container.address {
@@ -77,6 +103,10 @@
     font-family: Roboto;
     font-weight: 400;
     font-size: 14px;
+
+    label {
+      color: #607d8b;
+    }
 
     p {
       font-family: Roboto;

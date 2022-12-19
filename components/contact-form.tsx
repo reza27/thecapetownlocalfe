@@ -1,12 +1,36 @@
-import { Input } from "@material-tailwind/react";
+import { Input, Radio } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
 import { Button, Checkbox, Select, Option } from "@material-tailwind/react";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
 import DatePicker from 'react-datepicker';
 
+// if (typeof window !== "undefined") {
+//   window.initPlaces = function() {
+//     const center = { lat: 50.064192, lng: -130.605469 };
+//       // Create a bounding box with sides ~10km away from the center point
+//     const defaultBounds = {
+//       north: center.lat + 0.1,
+//       south: center.lat - 0.1,
+//       east: center.lng + 0.1,
+//       west: center.lng - 0.1,
+//     };
+//     const input = document.getElementById("address");
+//     const options = {
+//       bounds: defaultBounds,
+//       componentRestrictions: { country: "us" },
+//       fields: ["address_components", "geometry", "icon", "name"],
+//       strictBounds: false,
+//       types: ["establishment"],
+//     };
+//     const autocomplete = new google.maps.places.Autocomplete(input, options);
+//   };
+//
+// }
+
 export default function ContactForm() {
   const [transportNeeded, setTransportNeeded] = useState(false);
+  const [flexibleDate, setFlexibleDate] = useState(true);
   const [isDateFlexible, setIsDateFlexible] = useState(false);
   const [canSubmit, setCanSubmit] = useState(false);
   const [messageSubmitted, setMessageSubmitted] = useState(false);
@@ -15,6 +39,13 @@ export default function ContactForm() {
   const [nameError, setNameError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const inputRef = useRef();
+  const autoCompleteRef = useRef();
+
+  const options = {
+   componentRestrictions: { country: "za" },
+   fields: ["address_components", "geometry", "icon", "name"],
+  };
 
   const onSubmit = async (e) => {
     //e.preventDefault();
@@ -34,12 +65,14 @@ export default function ContactForm() {
         email: $('#email')[0].value,
         subject: $('#subject')[0].innerText,
         date: formattedDate,
-        transportNeeded: $('#transport-needed').val() === 'on' ? 'yes': 'no',
+        transportNeeded: transportNeeded ? "yes" : "no",
+        isDateFlexible: flexibleDate ? "yes" : "no",
         address: $('#address')[0].value,
         phone: $('#phone').val(),
         message: $('#message').val(),
 
       }
+       console.log('data',data)
       let isValid = true;
       if( /(.+)@(.+){2,}\.(.+){2,}/.test(data.email) ){
         // valid email
@@ -135,6 +168,17 @@ export default function ContactForm() {
   }
 
   useEffect(() => {
+    const input = document.getElementById("address");
+    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+     input,
+     options
+    );
+
+    //$('.address input').prop('autoComplete', 'address')
+
+   }, []);
+
+  useEffect(() => {
     if (transportNeeded) {
       $('.contact-form .address').addClass('show');
     }
@@ -145,55 +189,68 @@ export default function ContactForm() {
 
   return (
     <div className="contact-form">
-      <div className="left-block">
+      <div className="heading">
         <h2>Get in touch.</h2>
         <p className="form-description">Submit to enquire about a tour, transport or anything you&apos;d like to know. Looking forward to be your guide.</p>
+      </div>
+      <div className="contact-form-inner">
+        <div className="left-block">
+          <div className="input-field-container">
+            <Select error={subjectError} variant="standard" label="Select Tour" id="subject" onChange={validateInputFields}>
+              <Option>Lion&apos;s head - sunrise</Option>
+              <Option>Lion&apos;s head - sunset</Option>
+              <Option>Table mountain - India venster</Option>
+              <Option>General request</Option>
+            </Select>
+            <p className="required-field">*Required field</p>
+          </div>
+            <div className="input-field-container">
+              <Input autoComplete="off" error={nameError} id="name" required variant="standard" color="light-blue" label="Name" className="input-field" onChange={validateInputFields}/>
+              <p className="required-field">*Required field</p>
+            </div>
+            <div className="input-field-container">
+              <Input autoComplete="off" error={phoneError} type="tel" pattern="^[0-9-+\s()]*$" minLength="7" maxLength="15" required id="phone" variant="standard" color="light-blue" label="Phone (include country code)" className="input-field" onChange={validateInputFields}/>
+              <p className="required-field">*Required field</p>
+            </div>
+            <div className="input-field-container email">
+              <Input autoComplete="off" error={emailError} required type="email" id="email" variant="standard" color="light-blue" label="Email" className="input-field" onChange={validateInputFields}/>
+              <p className="required-field">*Required field</p>
+            </div>
+          </div>
+          <div className="right-block">
 
-        <div className="input-field-container">
-          <Select error={subjectError} variant="standard" label="Select Tour" id="subject" onChange={validateInputFields}>
-            <Option>Lion&apos;s head - sunrise</Option>
-            <Option>Lion&apos;s head - sunset</Option>
-            <Option>Table mountain - India venster</Option>
-            <Option>Custom request</Option>
-          </Select>
-          <p className="required-field">*Required field</p>
+            <div className="input-field-container date">
+              <p>Preferred date:</p>
+              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="input-field" />
+            </div>
+            <div className="input-field-container">
+              <label className="label-check" onChange={(e) => {
+                 e.stopPropagation();setTransportNeeded(!transportNeeded)}}>Do you need transport?
+                 <Radio id="transportYes" name="transport" label="Yes" />
+                 <Radio id="trasnportNo" name="transport" label="No" defaultChecked/>
+              </label>
+            </div>
+            <div className="input-field-container"onChange={(e) => {
+               e.stopPropagation();setFlexibleDate(!flexibleDate)}}>
+                 <label className="label-check" >Is your date flexible?
+                <Radio id="flexibleYes" name="flexible" label="Yes" defaultChecked/>
+                <Radio id="flexibleNo" name="flexible" label="No" />
+              </label>
+            </div>
+            <div className="input-field-container address">
+              <Input autoCapitalize="off" autoComplete="off" autoCorrect="off" name="address" id="address" variant="standard" color="light-blue" label="Address/Hotel" className="input-field"/>
+            </div>
+            <div className="input-field-container message">
+              <Textarea autoComplete="off" id="message" variant="standard" color="light-blue" label="Message" className="input-field"/>
+            </div>
+            <div className="input-field-container">
+              <Button type="submit" className={canSubmit ? "form-button": "form-button disabled"} onClick={onSubmit}>Submit</Button>
+              <p className={messageSubmitted ? "feedback-field": "feedback-field hide"}>Enquiry sent.</p>
+            </div>
         </div>
-        <div className="input-field-container">
-          <Input autocomplete="off" error={nameError} id="name" required variant="standard" color="light-blue" label="Name" className="input-field" onChange={validateInputFields}/>
-          <p className="required-field">*Required field</p>
-        </div>
-        <div className="input-field-container">
-          <Input autocomplete="off" error={phoneError} type="tel" pattern="^[0-9-+\s()]*$" minlength="7" maxlength="15" required id="phone" variant="standard" color="light-blue" label="Phone (include country code)" className="input-field" onChange={validateInputFields}/>
-          <p className="required-field">*Required field</p>
-        </div>
-      </div>
-      <div className="right-block">
-      <div className="input-field-container">
-        <Input autocomplete="off" error={emailError} required type="email" id="email" variant="standard" color="light-blue" label="Email" className="input-field" onChange={validateInputFields}/>
-        <p className="required-field">*Required field</p>
-      </div>
-      <div className="input-field-container date">
-        <p>Choose date:</p>
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="input-field" />
       </div>
 
-      <div className="input-field-container">
-        <label className="label-check">Transport needed?
-            <input id="transport-needed" type="checkbox" checked={transportNeeded} onChange={(e) => {
-               e.stopPropagation();setTransportNeeded(!transportNeeded)}} />
-        </label>
-      </div>
-      <div className="input-field-container address">
-        <Input autocomplete="off" id="address" variant="standard" color="light-blue" label="Address" className="input-field"/>
-      </div>
-      <div className="input-field-container message">
-        <Textarea autocomplete="off" id="message" variant="standard" color="light-blue" label="Message" className="input-field"/>
-      </div>
-      <div className="input-field-container">
-        <Button type="submit" className={canSubmit ? "form-button": "form-button disabled"} onClick={onSubmit}>Submit</Button>
-        <p className={messageSubmitted ? "feedback-field": "feedback-field hide"}>Enquiry sent.</p>
-      </div>
-      </div>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAitjjkU75KclxN66oxm8q2_oMMPY4fA0E&libraries=places"></script>
     </div>
   )
 }
