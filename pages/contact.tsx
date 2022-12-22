@@ -1,8 +1,21 @@
 import ContactForm from '../components/contact-form';
 import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
+import { gql } from "@apollo/client";
+import client from "../helpers/apollo-client";
 
-export default function Contact() {
+export default function Contact({ data }: {data}) {
+
+  const getFormOptions =  (activity) => {
+    let ItemsArr = [];
+    let activityItemHeadings = activity.activityItemHeading;
+    for (var i = 0; i < activityItemHeadings.length; i++) {
+      for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
+        ItemsArr.push(activityItemHeadings[i].activityItems[j])
+      }
+    }
+    return ItemsArr;
+  };
 
   useEffect(() => {
     // const handleScroll = event => {
@@ -24,6 +37,51 @@ export default function Contact() {
 
   return (
     <div id="contact">
-      <ContactForm/>
+      <ContactForm selectOptions={getFormOptions(data.activities[0])}/>
     </div>)
+}
+
+export async function getServerSideProps() {
+  const { data } = await client.query({
+    query: gql`
+    query GetActivities {
+        activities (where: {tag:{name:{equals:"Tours"}}}) {
+          id
+          title
+          faq {
+            question
+            answer
+          }
+          activityItemHeading  {
+            id
+            title
+            activityItemsCount
+            activityItems {
+              id
+              title
+              content {
+                document
+              }
+              price
+              duration
+              images {
+                altText
+                id
+                name
+                image {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+  });
+  console.log('data>>>', data)
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
