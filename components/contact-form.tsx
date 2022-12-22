@@ -168,6 +168,15 @@ export default function ContactForm(props) {
     }
   }
 
+  const displayOptions = (selectOptions) => {
+    let options = [];
+    selectOptions.map((item) =>{
+      options.push(<Option>{item.title}</Option>)
+    })
+    options.push(<Option>General request</Option>)
+    return options;
+  }
+
   useEffect(() => {
     const input = document.getElementById("address");
     autoCompleteRef.current = new window.google.maps.places.Autocomplete(
@@ -198,9 +207,7 @@ export default function ContactForm(props) {
         <div className="left-block">
           <div className="input-field-container">
             <Select error={subjectError} variant="standard" label="Select Tour" id="subject" onChange={validateInputFields}>
-              {selectOptions.map((item) =>(
-              <Option>{item.title}</Option>))}
-              <Option>General request</Option>
+            {displayOptions(selectOptions)}
             </Select>
             <p className="required-field">*Required field</p>
           </div>
