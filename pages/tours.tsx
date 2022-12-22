@@ -61,8 +61,20 @@ export default function Tours({ data }: {data:Activity}) {
     setFormOpen(formOpen === value ? 0 : value);
   };
 
+  const getFormOptions =  (activity) => {
+    let ItemsArr = [];
+    let activityItemHeadings = activity.activityItemHeading;
+    for (var i = 0; i < activityItemHeadings.length; i++) {
+      for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
+        ItemsArr.push(activityItemHeadings[i].activityItems[j])
+      }
+    }
+    return ItemsArr;
+  };
+
 
   useEffect(() => {
+    //getFormOptions(data.activities[0].activityItemHeading)
     // const handleScroll = event => {
     //   //console.log('window.scrollY', window.scrollY);
     //   if (window.scrollY > 0) {
@@ -139,7 +151,7 @@ export default function Tours({ data }: {data:Activity}) {
                 ))}
 
                 <div id="tour-contact-form" class="tour-contact-form">
-                  <ContactForm />
+                  <ContactForm selectOptions={getFormOptions(item)}/>
                 </div>
                 <div className="faqs">
                   <h2>FAQs</h2>
@@ -167,15 +179,12 @@ export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
     query GetActivities {
-        activities (where: {tag:{name:{equals:"Hiking"}}}) {
+        activities (where: {tag:{name:{equals:"Tours"}}}) {
           id
           title
           faq {
             question
             answer
-          }
-          featureImage {
-            url
           }
           activityItemHeading  {
             id

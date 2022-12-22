@@ -84,6 +84,13 @@
       margin: 25px;
     }
 
+    .review-link {
+      font-size: 12px;
+      margin-top: 15px;
+      display: block;
+      color: $blueButtonTheme;
+    }
+
     h3 {
       margin-bottom: 15px;
       //color: white;
@@ -98,7 +105,7 @@
 
     p {
       font-size: 12px;
-      max-height: 150px;
+      max-height: 110px;
       overflow: scroll;
       //color: white;
       opacity: 0.8;

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowLeft, faArrowRight, faStar} from '@fortawesome/free-solid-svg-icons'
 import $ from 'jquery';
 import React, { useState, useEffect, Fragment } from 'react';
+import Link from "next/link";
 
 export default function ReviewSlider(props) {
   const { reviews, id } = props;
@@ -76,6 +77,7 @@ export default function ReviewSlider(props) {
         <h3>{review.name}</h3>
         <div className="stars">{getStars(review.stars)}</div>
         <p>{review.review}</p>
+        <Link className="review-link" href={review.url} target="blank">See full Google review  <FontAwesomeIcon icon={faArrowRight} /></Link>
         </div>
       </div>
     ))}

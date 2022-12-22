@@ -28,7 +28,7 @@ export default function Navbar() {
   return (
     <div id="navbar" className="bg-white dark:bg-black">
       <div id="navbar-inner">
-        <img className="logo" src="/thecptlocal3.png" />
+        <Link className="logo-link" href="/"><img className="logo" src="/thecptlocal3.png" /></Link>
         <div className="links">
           <ul>
             <li><Link href="/" onClick={linkSelected}>Home</Link></li>

@@ -28,7 +28,8 @@ import DatePicker from 'react-datepicker';
 //
 // }
 
-export default function ContactForm() {
+export default function ContactForm(props) {
+  const { selectOptions } = props;
   const [transportNeeded, setTransportNeeded] = useState(false);
   const [flexibleDate, setFlexibleDate] = useState(true);
   const [isDateFlexible, setIsDateFlexible] = useState(false);
@@ -197,9 +198,8 @@ export default function ContactForm() {
         <div className="left-block">
           <div className="input-field-container">
             <Select error={subjectError} variant="standard" label="Select Tour" id="subject" onChange={validateInputFields}>
-              <Option>Lion&apos;s head - sunrise</Option>
-              <Option>Lion&apos;s head - sunset</Option>
-              <Option>Table mountain - India venster</Option>
+              {selectOptions.map((item) =>(
+              <Option>{item.title}</Option>))}
               <Option>General request</Option>
             </Select>
             <p className="required-field">*Required field</p>
@@ -250,7 +250,6 @@ export default function ContactForm() {
         </div>
       </div>
 
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAitjjkU75KclxN66oxm8q2_oMMPY4fA0E&libraries=places"></script>
     </div>
   )
 }
