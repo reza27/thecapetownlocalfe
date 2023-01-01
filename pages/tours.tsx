@@ -47,7 +47,7 @@ export default function Tours({ data }: {data:Activity}) {
   //  overflow: 'hidden'
   };
 
-  let firstTab = data.activities[0].activityItemHeading[0].id;
+  let firstTab = data.activities[0].activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
   const [formOpen, setFormOpen] = useState(false);
@@ -90,6 +90,48 @@ export default function Tours({ data }: {data:Activity}) {
     // return () => {
     //   window.removeEventListener('scroll', handleScroll);
     // };
+    // $(document.body).animate({
+    //   'scrollTop':   $('#anchorName2').offset().top
+    // }, 2000);
+
+    function selectTab () {
+
+    var url = new URL(window.location.href);
+    var tab1 = url.searchParams.get("tab")?.toLowerCase();
+    var anchor = url.searchParams.get("anchor")?.toLowerCase();
+
+    if (tab1) {
+             console.log('tab', tab)
+
+      setTab(tab1);
+      setTimeout(() => {
+        $('html').animate({
+         scrollTop: $('#'+anchor).offset().top-100
+       }, 1000);
+     }, 300);
+
+
+      //var listItems =   $('.ul-tabs li');
+
+      // listItems.each(function(idx, li) {
+      //     var $tab = $(li);
+      //
+      //     //$tab.removeClass('selected')
+      //     if ($tab.attr('id') === tab)
+      //     {
+      //       $tab.addClass('selected');
+      //       console.log('tab',$tab.attr('id'), tab)
+      //
+      //     }
+      //
+      //     // and the rest of your code
+      // });
+    }
+
+  }
+  setTimeout(selectTab, 300);
+
+
   },[])
 //<li>Choose Tour</li>
   return (
@@ -107,8 +149,8 @@ export default function Tours({ data }: {data:Activity}) {
 
             {item.activityItemHeading.map((activityItemHeading,index) => (
                 <li key={activityItemHeading.id}
-                className={(tab == activityItemHeading.id? 'selected': '')}
-                onClick={() => setTab(activityItemHeading.id)} >
+                className={(tab == activityItemHeading.title.toLowerCase()? 'selected': '')}
+                onClick={() => setTab(activityItemHeading.title.toLowerCase())} >
                       <h2><span>{activityItemHeading.title}</span></h2>
                 </li>
               ))}
@@ -117,12 +159,12 @@ export default function Tours({ data }: {data:Activity}) {
           <div className="tab-panels">
 
               {item.activityItemHeading.map((activityItemHeading) => (
-                  <div key={activityItemHeading.id} className={(tab == activityItemHeading.id? 'selected': '')+ ' panel w-full'} data-index={activityItemHeading.id}>
+                  <div key={activityItemHeading.id} className={(tab == activityItemHeading.title.toLowerCase()? 'selected': '')+ ' panel w-full'} data-index={activityItemHeading.id}>
 
                       {activityItemHeading.activityItems.map((activityItem, index) => (
                         <div className="panel-outer" key={activityItem.id}>
                             <div key={activityItem.id} className="panel-inner">
-                              <div className="tab-panel">
+                              <div className="tab-panel" id={activityItem.anchor.toLowerCase()}>
                                 <h2>{activityItem.title}</h2>
                                 <div className="doc">
                                   <DocumentRenderer document={activityItem.content.document} />
@@ -134,7 +176,10 @@ export default function Tours({ data }: {data:Activity}) {
                                   <span><FontAwesomeIcon icon={faClock} /></span>{activityItem.duration}
                                 </div>
                                 <Button className="enquire-button" onClick={() => {
-                                  document.getElementById('tour-contact-form').scrollIntoView();
+                                //  document.getElementById('tour-contact-form').scrollIntoView();
+                                  $('html').animate({
+                                   scrollTop: $('#tour-contact-form').offset().top-100
+                               }, 1000);
                                   //var top = document.getElementById('tour-contact-form').offsetTop + $('#tour-contact-form').height() - 150; //Getting Y of target element
                                   //window.scrollTo(0, top);
                                 }}>Enquire now</Button>
@@ -150,7 +195,7 @@ export default function Tours({ data }: {data:Activity}) {
                   </div>
                 ))}
 
-                <div id="tour-contact-form" class="tour-contact-form">
+                <div id="tour-contact-form" className="tour-contact-form">
                   <ContactForm selectOptions={getFormOptions(item)}/>
                 </div>
                 <div className="faqs">
@@ -176,10 +221,11 @@ export default function Tours({ data }: {data:Activity}) {
 }
 
 export async function getServerSideProps() {
+  //(where: {tag:{name:{equals:"Tours"}}})
   const { data } = await client.query({
     query: gql`
     query GetActivities {
-        activities (where: {tag:{name:{equals:"Tours"}}}) {
+        activities  {
           id
           title
           faq {
@@ -193,6 +239,8 @@ export async function getServerSideProps() {
             activityItems {
               id
               title
+              anchor
+              tab
               content {
                 document
               }

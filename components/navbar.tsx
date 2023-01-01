@@ -22,7 +22,7 @@ export default function Navbar() {
       $('.mobi-links').css('top','80px');
     }
     else {
-      $('.mobi-links').css('top','-150px');
+      $('.mobi-links').css('top','-100vh');
     }
   }
   return (

@@ -14,6 +14,8 @@ import { DocumentRenderer } from '@keystone-6/document-renderer';
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag, faClock, faStar } from '@fortawesome/free-solid-svg-icons';
+import Link from "next/link";
+
 
 
 type About = {
@@ -28,6 +30,7 @@ type About = {
 export default function Home({ data }: {data}) {
 
   const [isMobi, setIsMobi] = useState(false);
+
   const reviews = [{
     name:'Lorry Luscri',
     stars: 5,
@@ -81,7 +84,10 @@ export default function Home({ data }: {data}) {
     overflow: 'auto'
   }
 
-
+  const getImageUrl = (images) => {
+    console.log('images',images)
+    return images[0].image.url;
+  }
 
   useEffect(() => {
   //  const handleScroll = event => {
@@ -130,17 +136,17 @@ export default function Home({ data }: {data}) {
     </div>
     <h2 className="toursHeading">Most popular tours</h2>
     <div className="tours">
-    {data.home.homeTours.map((homeTour) =>(
+    {data.home.homeTours.map((homeTour, index) =>(
       <div className="tour" key={homeTour.id}>
         <Image
           loader={ImageLoader}
-            src={homeTour.image.url}
+            src={getImageUrl(homeTour.homeTour.images)}
            width={100}
            height={100}
            style={tourImageStyle}/>
            <div className="tourContent">
-             <h2 className="drop-shadow-md">{homeTour.title}</h2>
-             <a href="/tours"><Button className="tour-button">Discover {homeTour.title}</Button></a>
+             <h2 className="drop-shadow-md">{homeTour.homeTour.title}</h2>
+             <Link href={'/tours?anchor='+homeTour.homeTour.anchor+'&tab='+homeTour.homeTour.tab}><Button className="tour-button">Discover {homeTour.homeTour.title}</Button></Link>
            </div>
 
       </div>
@@ -171,23 +177,24 @@ export async function getServerSideProps() {
     query: gql`
     query GetHome {
        home {
-        title
         homeTours {
-          title
-          price
-          duration
-          image {
-            url
+          homeTour {
+            title
+            anchor
+            tab
+            images (take:1) {
+            	altText
+
+              image {
+                id
+                url
+
+              }
+            }
           }
-          content {
-            document
           }
         }
-        featureImage {
-            url
-          }
       }
-    }
     `,
   });
   console.log('data about>>>', data)
