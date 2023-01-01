@@ -19,7 +19,7 @@ export default function Navbar() {
     setOpenMenu(!openMenu)
     console.log('openMenu', openMenu)
     if (!openMenu) {
-      $('.mobi-links').css('top','80px');
+      $('.mobi-links').css('top','0');
     }
     else {
       $('.mobi-links').css('top','-100vh');

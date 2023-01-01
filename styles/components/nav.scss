@@ -131,13 +131,13 @@
   .mobi-links {
     display: flex;
     top: -100vh;
-    background: white;
+    background: #f1f1f1;
     position: absolute;
     width: 100%;
-    border: 1px solid #e3e3e3;
     transition: all 0.3s;
     z-index: 100;
     height: 100vh;
+    align-items: center;
 
     @media only screen and (min-width: 769px) {
       display: none;
@@ -147,14 +147,22 @@
       display: flex;
       flex-direction: column;
       width: 100%;
-      padding-top: 30px;
+      margin: 0;
+      padding: 0;
 
       li {
-        padding: 8px;
+        padding: 2px;
         display: flex;
         justify-content: center;
         text-transform: uppercase;
-        font-size: 50px;
+        font-size: 55px;
+        font-family: Bebas Neue;
+
+        // &:not(:last-child) {
+        //   border-bottom: 1px solid #e3e3e3;
+        //
+        // }
+
 
         a {
           color: #333;
