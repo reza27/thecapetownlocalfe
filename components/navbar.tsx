@@ -33,6 +33,7 @@ export default function Navbar() {
           <ul>
             <li><Link href="/" onClick={linkSelected}>Home</Link></li>
             <li><Link href="/tours" onClick={linkSelected}>Tours</Link></li>
+            <li><Link href="/services" onClick={linkSelected}>Services</Link></li>
             <li><Link href="/about" onClick={linkSelected}>About</Link></li>
             <li><Link href="/contact" onClick={linkSelected}>Contact</Link></li>
           </ul>
@@ -50,6 +51,7 @@ export default function Navbar() {
         <ul>
           <li><Link href="/" onClick={linkSelected}>Home</Link></li>
           <li><Link href="/tours" onClick={linkSelected}>Tours</Link></li>
+          <li><Link href="/services" onClick={linkSelected}>Services</Link></li>
           <li><Link href="/about" onClick={linkSelected}>About</Link></li>
           <li><Link href="/contact" onClick={linkSelected}>Contact</Link></li>
         </ul>
