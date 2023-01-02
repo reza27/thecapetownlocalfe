@@ -18,13 +18,18 @@ export default function Footer() {
         <ul>
 
           <li>
-            <Link href="/">
+            <Link target="blank" href="https://www.instagram.com/thecapetownlocal/?hl=en">
               <FontAwesomeIcon icon={faInstagram} />
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link target="blank" href="https://www.facebook.com/thecapetownlocal">
               <FontAwesomeIcon icon={faFacebook} />
+            </Link>
+          </li>
+          <li>
+            <Link target="blank" href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.html">
+              <img src="/tripadvisor-logo.png"/>
             </Link>
           </li>
         </ul>
@@ -35,6 +40,7 @@ export default function Footer() {
         <ul>
           <Link href="/">Home</Link>
           <Link href="/tours">Tours</Link>
+          <Link href="/services">Services</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
         </ul>

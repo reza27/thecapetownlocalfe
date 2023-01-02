@@ -45,13 +45,9 @@ export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
     query GetActivities {
-        activities (where: {tag:{name:{equals:"Tours"}}}) {
+        activities {
           id
           title
-          faq {
-            question
-            answer
-          }
           activityItemHeading  {
             id
             title
@@ -59,19 +55,6 @@ export async function getServerSideProps() {
             activityItems {
               id
               title
-              content {
-                document
-              }
-              price
-              duration
-              images {
-                altText
-                id
-                name
-                image {
-                  url
-                }
-              }
             }
           }
         }
