@@ -47,7 +47,7 @@ export default function Tours({ data }: {data:Activity}) {
   //  overflow: 'hidden'
   };
 
-  let firstTab = data.activities[0].activityItemHeading[0].title.toLowerCase();
+  let firstTab = data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
   const [formOpen, setFormOpen] = useState(false);

@@ -8,10 +8,10 @@ export default function Contact({ data }: {data}) {
 
   const getFormOptions =  (activity) => {
     let ItemsArr = [];
-    let activityItemHeadings = activity.activityItemHeading;
-    for (var i = 0; i < activityItemHeadings.length; i++) {
-      for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
-        ItemsArr.push(activityItemHeadings[i].activityItems[j])
+    let activityItemHeadings = activity?.activityItemHeading;
+    for (var i = 0; i < activityItemHeadings?.length; i++) {
+      for (var j = 0; j < activityItemHeadings[i]?.activityItems.length; j++) {
+        ItemsArr.push(activityItemHeadings[i]?.activityItems[j])
       }
     }
     return ItemsArr;

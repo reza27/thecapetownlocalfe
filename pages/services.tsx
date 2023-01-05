@@ -64,8 +64,8 @@ const services = data.services[0]
 
   const getFormOptions =  (activity) => {
     let ItemsArr = [];
-    let activityItemHeadings = activity.activityItemHeading;
-    for (var i = 0; i < activityItemHeadings.length; i++) {
+    let activityItemHeadings = activity?.activityItemHeading;
+    for (var i = 0; i < activityItemHeadings?.length; i++) {
       for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
         ItemsArr.push(activityItemHeadings[i].activityItems[j])
       }
@@ -107,7 +107,7 @@ const services = data.services[0]
       <h2 className="main-heading">Services</h2>
       <div className="tab-panels">
 
-          {services.serviceItems.map((serviceItem) => (
+          {services?.serviceItems.map((serviceItem) => (
 
                     <div className="panel-outer" key={serviceItem.id}>
                         <div key={serviceItem.id} className="panel-inner">

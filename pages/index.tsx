@@ -136,7 +136,7 @@ export default function Home({ data }: {data}) {
     </div>
     <h2 className="toursHeading">Most popular tours</h2>
     <div className="tours">
-    {data.home.homeTours.map((homeTour, index) =>(
+    {data.home?.homeTours.map((homeTour, index) =>(
       <div className="tour" key={homeTour.id}>
         <Image
           loader={ImageLoader}
