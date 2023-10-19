@@ -107,21 +107,21 @@ export default function About({ data }: {data}) {
       <h2 className="section-heading">Affiliations</h2>
       <div className="affiliations">
 
-      {data.about?.affiliations.map((affiliate) => (
-        <div className="affiliate" key={affiliate.id}>
-            <Image
-              loader={ImageLoader}
-              alt={affiliate.image?.altText}
-              src={affiliate.image?.url}
-              sizes="(max-width: 300px) 100vw,
-               (max-width: 200px) 50vw,
-               auto"
-               width={100}
-               height={100}
-               style={affiliateImageStyle}
-            />
-          </div>
-        ))};
+      // {data.about?.affiliations.map((affiliate) => (
+      //   <div className="affiliate" key={affiliate.id}>
+      //       <Image
+      //         loader={ImageLoader}
+      //         alt={affiliate.image?.altText}
+      //         src={affiliate.image?.url}
+      //         sizes="(max-width: 300px) 100vw,
+      //          (max-width: 200px) 50vw,
+      //          auto"
+      //          width={100}
+      //          height={100}
+      //          style={affiliateImageStyle}
+      //       />
+      //     </div>
+      //   ))};
         </div>
       </div>
     </div>)
