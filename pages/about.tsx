@@ -80,7 +80,7 @@ export default function About({ data }: {data}) {
       <div className="guides-container">
         <h2>Meet the team</h2>
         <div className="guides">
-        {data.about?.guides.map((guide) => (
+        {data.about?.guides?.map((guide) => (
           <div className="guide" key={guide.id}>
               <Image
                 loader={ImageLoader}
