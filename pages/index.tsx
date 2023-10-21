@@ -174,7 +174,6 @@ export default function Home({ data }: {data}) {
 
 export async function getServerSideProps() {
   const { data } = await client.query({
-    fetchPolicy​: ​'no-cache'​,
     query: gql`
     query GetHome {
        home {
@@ -197,6 +196,7 @@ export async function getServerSideProps() {
         }
       }
     `,
+    fetchPolicy:'no-cache'
   });
   console.log('data about>>>', data)
   return {

@@ -140,7 +140,8 @@ export async function getServerSideProps() {
         }
       }
     }
-    `
+    `,
+    fetchPolicy:'no-cache'
   });
   console.log('data about>>>', data)
   return {

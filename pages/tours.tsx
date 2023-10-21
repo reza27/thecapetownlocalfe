@@ -223,7 +223,6 @@ export default function Tours({ data }: {data:Activity}) {
 export async function getServerSideProps() {
   //(where: {tag:{name:{equals:"Tours"}}})
   const { data } = await client.query({
-    fetchPolicy​: ​'no-cache',
     query: gql`
     query GetActivities {
         activities  {
@@ -260,6 +259,7 @@ export async function getServerSideProps() {
         }
       }
     `,
+    fetchPolicy:'no-cache'
   });
   console.log('data>>>', data)
   return {
