@@ -50,7 +50,7 @@ export default function Footer() {
         <p className="footer-heading">Legal</p>
         <ul>
           <Link href="/">Privacy Policy</Link>
-          <Link href="/tours">Terms and conditions</Link>
+          <Link href="/">Terms and conditions</Link>
         </ul>
 
       </div>

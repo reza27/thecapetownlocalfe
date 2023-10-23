@@ -76,11 +76,11 @@ export default function About({ data }: {data}) {
   return (
     <div id="about">
       <h2 className="main-heading">About us</h2>
-      <div className="about-description"><DocumentRenderer document={data.about?.content.document}/></div>
+      <div className="about-description">{data.about?<DocumentRenderer document={data.about?.content?.document}/>:''}</div>
       <div className="guides-container">
         <h2>Meet the team</h2>
         <div className="guides">
-        {data.about?.guides?.map((guide) => (
+        {data.about ? data.about?.guides?.map((guide) => (
           <div className="guide" key={guide.id}>
               <Image
                 loader={ImageLoader}
@@ -99,7 +99,7 @@ export default function About({ data }: {data}) {
                 <div className="guide-description">{guide.description}</div>
               </div>
             </div>
-          ))}
+          )):''}
         </div>
       </div>
 
@@ -107,7 +107,21 @@ export default function About({ data }: {data}) {
       <h2 className="section-heading">Affiliations</h2>
       <div className="affiliations">
 
-
+      {data.about?.affiliations.map((affiliate) => (
+        <div className="affiliate" key={affiliate.id}>
+            <Image
+              loader={ImageLoader}
+              alt={affiliate.image?.altText}
+              src={affiliate.image?.url}
+              sizes="(max-width: 300px) 100vw,
+               (max-width: 200px) 50vw,
+               auto"
+               width={100}
+               height={100}
+               style={affiliateImageStyle}
+            />
+          </div>
+        ))}
         </div>
       </div>
     </div>)
@@ -150,19 +164,3 @@ export async function getServerSideProps() {
     },
   };
 }
-
-// {data.about?.affiliations.map((affiliate) => (
-//   <div className="affiliate" key={affiliate.id}>
-//       <Image
-//         loader={ImageLoader}
-//         alt={affiliate.image?.altText}
-//         src={affiliate.image?.url}
-//         sizes="(max-width: 300px) 100vw,
-//          (max-width: 200px) 50vw,
-//          auto"
-//          width={100}
-//          height={100}
-//          style={affiliateImageStyle}
-//       />
-//     </div>
-//   ))};

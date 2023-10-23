@@ -170,10 +170,10 @@ export default function ContactForm(props) {
 
   const displayOptions = (selectOptions) => {
     let options = [];
-    selectOptions.map((item) =>{
-      options.push(<Option>{item.title}</Option>)
+    selectOptions.map((item,i) =>{
+      options.push(<Option key={item.title}>{item.title}</Option>)
     })
-    options.push(<Option>General request</Option>)
+    options.push(<Option  key="General request">General request</Option>)
     return options;
   }
 

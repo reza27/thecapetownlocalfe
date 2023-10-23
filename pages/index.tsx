@@ -86,7 +86,7 @@ export default function Home({ data }: {data}) {
 
   const getImageUrl = (images) => {
     console.log('images',images)
-    return images[0].image.url;
+    return images[0]?.image.url?images[0].image.url:"";
   }
 
   useEffect(() => {

@@ -203,10 +203,10 @@ export default function Tours({ data }: {data:Activity}) {
                   <div className="faqs-accordion">
                   {item.faq.map((faq, i) => (
                     <Accordion  open={open === i+1} key={faq.id}>
-                        <AccordionHeader onClick={() => handleOpen(i+1)}>
+                        <AccordionHeader key={faq.question} onClick={() => handleOpen(i+1)}>
                           {faq.question}
                         </AccordionHeader>
-                        <AccordionBody>
+                        <AccordionBody key={faq.answer}>
                           {faq.answer}
                         </AccordionBody>
                       </Accordion>
