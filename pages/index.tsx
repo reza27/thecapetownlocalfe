@@ -131,7 +131,7 @@ export default function Home({ data }: {data}) {
     <div class="info">
       <p>20 <span>years<br/>experience</span></p><span className="separator"></span>
       <p>1000+ <span>trips</span></p><span className="separator"></span>
-      <p>10 <span>tour<br/>experiences</span></p><span className="separator"></span>
+      <p>3 <span>tour<br/>experiences</span></p><span className="separator"></span>
       <p>5.0<span>overall <br/>rating</span></p>
     </div>
     <h2 className="toursHeading">Most popular tours</h2>
