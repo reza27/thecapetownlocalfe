@@ -196,7 +196,7 @@ export async function getServerSideProps() {
         }
       }
     `,
-    fetchPolicy:'no-cache'
+    fetchPolicy:'no-cache' 
   });
   console.log('data about>>>', data)
   return {
