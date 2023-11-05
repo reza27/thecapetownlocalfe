@@ -187,7 +187,7 @@ export async function getServerSideProps() {
 
               image {
                 id
-                url
+                publicUrl
 
               }
             }

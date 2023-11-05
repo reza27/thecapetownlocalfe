@@ -133,9 +133,6 @@ export async function getServerSideProps() {
     query GetAbout {
        about {
         title
-        featureImage {
-            url
-          }
         content {
           document
         }
@@ -143,13 +140,13 @@ export async function getServerSideProps() {
           name
           title
           image {
-            url
+            publicUrl
           }
           description
         }
         affiliations {
           image {
-            url
+            publicUrl
           }
         }
       }
