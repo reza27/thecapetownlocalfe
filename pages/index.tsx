@@ -184,11 +184,9 @@ export async function getServerSideProps() {
             tab
             images (take:1) {
             	altText
-
               image {
                 id
                 publicUrl
-
               }
             }
           }
@@ -196,7 +194,7 @@ export async function getServerSideProps() {
         }
       }
     `,
-    fetchPolicy:'no-cache' 
+    fetchPolicy:'no-cache'
   });
   console.log('data about>>>', data)
   return {
