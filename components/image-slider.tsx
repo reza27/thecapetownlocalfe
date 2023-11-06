@@ -61,7 +61,7 @@ export default function ImageSlider(props) {
     <div className="panel-images-slider" style={sliderStyle}>
 
     {images.map((image) =>(
-      <div key={image.id} className="panel-image" style={{backgroundImage:'url(' + image.image.url+')', backgroundPosition:'center'}}></div>
+      <div key={image.id} className="panel-image" style={{backgroundImage:'url(' + image.image.publicUrl+')', backgroundPosition:'center'}}></div>
     ))}
     </div>
   </div>
