@@ -7,7 +7,7 @@ const client = new ApolloClient({
   onError: ({ networkError, graphQLErrors }) => {
     console.log('graphQLErrors', graphQLErrors)
     console.log('networkError', networkError)
-  }
+  },
   //uri: `LOCAL_URL${process.env.PROD_URL}/api/graphql`,
   //uri: 'http://localhost:3000/api/graphql',
   //uri: 'https://thecapetownlocal.herokuapp.com/api/graphql',
