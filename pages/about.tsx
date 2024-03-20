@@ -85,7 +85,7 @@ export default function About({ data }: {data}) {
               <Image
                 loader={ImageLoader}
                 alt={guide.image?.altText}
-                src={guide.image?.url}
+                src={guide.image?.publicUrl}
                 sizes="(max-width: 300px) 100vw,
                  (max-width: 200px) 50vw,
                  auto"
@@ -112,7 +112,7 @@ export default function About({ data }: {data}) {
             <Image
               loader={ImageLoader}
               alt={affiliate.image?.altText}
-              src={affiliate.image?.url}
+              src={affiliate.image?.publicUrl}
               sizes="(max-width: 300px) 100vw,
                (max-width: 200px) 50vw,
                auto"
@@ -133,9 +133,6 @@ export async function getServerSideProps() {
     query GetAbout {
        about {
         title
-        featureImage {
-            url
-          }
         content {
           document
         }
@@ -143,13 +140,13 @@ export async function getServerSideProps() {
           name
           title
           image {
-            url
+            publicUrl
           }
           description
         }
         affiliations {
           image {
-            url
+            publicUrl
           }
         }
       }

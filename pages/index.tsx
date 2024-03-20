@@ -86,7 +86,7 @@ export default function Home({ data }: {data}) {
 
   const getImageUrl = (images) => {
     console.log('images',images)
-    return images[0]?.image.url?images[0].image.url:"";
+    return images[0]?.image?.publicUrl?images[0].image?.publicUrl:"";
   }
 
   useEffect(() => {
@@ -184,11 +184,9 @@ export async function getServerSideProps() {
             tab
             images (take:1) {
             	altText
-
               image {
                 id
-                url
-
+                publicUrl
               }
             }
           }

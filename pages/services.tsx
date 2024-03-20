@@ -178,7 +178,7 @@ export async function getServerSideProps() {
           price
           images {
             image {
-              url
+              publicUrl
               id
             }
             altText
