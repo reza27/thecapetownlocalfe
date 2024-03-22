@@ -1,4 +1,5 @@
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Html, Head, Main, NextScript } from 'next/document';
+import Script from 'next/script'
 
 export default function Document() {
   return (
@@ -11,13 +12,13 @@ export default function Document() {
       <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Alexandria&family=Roboto:wght@300;500;700;800&display=swap" rel="stylesheet"/>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAitjjkU75KclxN66oxm8q2_oMMPY4fA0E&libraries=places"></script>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NC9WGWVD6X"></script>
-      <script>
+      <Script>
         {`window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments)}
         gtag('js', new Date());
 
         gtag('config', 'G-NC9WGWVD6X');`}
-      </script>
+      </Script>
     </Head>
     <body className="dark:bg-gray-800">
         <Main />
