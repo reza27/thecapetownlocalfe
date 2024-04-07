@@ -5,6 +5,7 @@ import { gql } from "@apollo/client";
 import client from "../helpers/apollo-client";
 import Image from 'next/image';
 import ImageLoader from '../components/image-loader';
+import { sendGTMEvent } from '@next/third-parties/google'
 
 import { Metadata } from 'next'
 
@@ -57,7 +58,8 @@ export default function Contact({ data }: {data}) {
       <div>
         <ContactForm selectOptions={getFormOptions(data.activities[0])}/>
       </div>
-      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank">
+      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{      sendGTMEvent({ event: 'buttonClicked', value: 'WhatsApp opened' })
+}}>
       <Image
         loader={ImageLoader}
         src="/WhatsApp.svg"
