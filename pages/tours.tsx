@@ -31,6 +31,13 @@ type Activity = {
   activityItemHeading: ActivityItemHeading
 };
 
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Tours'
+}
+
+
 export default function Tours({ data }: {data:Activity}) {
 
   const featureImageStyle = {

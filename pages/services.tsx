@@ -25,6 +25,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMountainSun, faMountainCity, faClock, faTag, faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
+
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Services'
+}
+
 // type About = {
 //   id: String,
 //   title: String,

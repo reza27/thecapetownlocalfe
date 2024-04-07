@@ -19,6 +19,13 @@ import { faMountain} from '@fortawesome/free-solid-svg-icons'
 //   guidesCount: Int
 // };
 
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About'
+}
+
+
 const guideImageStyle = {
   objectFit: 'cover',
   height: '400px',
