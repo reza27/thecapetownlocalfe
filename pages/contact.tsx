@@ -3,23 +3,12 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { gql } from "@apollo/client";
 import client from "../helpers/apollo-client";
-import Image from 'next/image';
-import ImageLoader from '../components/image-loader';
-import { sendGTMEvent } from '@next/third-parties/google'
 
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Contact'
 }
-
-const waImageStyle = {
-  objectFit: 'contain',
-  objectPosition: 'center bottom',
-  height: '60px',
-  width: '60px',
-  overflow: 'hidden'
-};
 
 
 export default function Contact({ data }: {data}) {
@@ -58,16 +47,7 @@ export default function Contact({ data }: {data}) {
       <div>
         <ContactForm selectOptions={getFormOptions(data.activities[0])}/>
       </div>
-      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{      sendGTMEvent({ event: 'buttonClicked', value: 'WhatsApp opened' })
-}}>
-      <Image
-        loader={ImageLoader}
-        src="/WhatsApp.svg"
-         width={60}
-         height={60}
-         style={waImageStyle}/>
-         <p>Reach out via WhatsApp</p>
-      </a>
+
     </div>)
 }
 
