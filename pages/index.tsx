@@ -16,7 +16,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag, faClock, faStar } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Home'
+}
 
 type About = {
   id: String,

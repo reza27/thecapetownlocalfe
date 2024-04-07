@@ -4,6 +4,8 @@ import { Button, Checkbox, Select, Option } from "@material-tailwind/react";
 import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
 import DatePicker from 'react-datepicker';
+import { sendGTMEvent } from '@next/third-parties/google'
+
 
 // if (typeof window !== "undefined") {
 //   window.initPlaces = function() {
@@ -51,6 +53,7 @@ export default function ContactForm(props) {
   const onSubmit = async (e) => {
     //e.preventDefault();
     //if (canSubmit) {
+      sendGTMEvent({ event: 'buttonClicked', value: 'Form submitted' })
       let selectedDate = new Date(startDate);
       let month = selectedDate.getUTCMonth() + 1; //months from 1-12
       let day = selectedDate.getUTCDate();
