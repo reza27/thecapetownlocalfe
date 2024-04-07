@@ -4,6 +4,8 @@ import { Button, Checkbox, Select, Option } from "@material-tailwind/react";
 import React, { useState, useEffect, useRef } from 'react';
 import $ from 'jquery';
 import DatePicker from 'react-datepicker';
+import Image from 'next/image';
+import ImageLoader from '../components/image-loader';
 import { sendGTMEvent } from '@next/third-parties/google'
 
 
@@ -29,6 +31,14 @@ import { sendGTMEvent } from '@next/third-parties/google'
 //   };
 //
 // }
+
+const waImageStyle = {
+  objectFit: 'contain',
+  objectPosition: 'center bottom',
+  height: '60px',
+  width: '60px',
+  overflow: 'hidden'
+};
 
 export default function ContactForm(props) {
   const { selectOptions } = props;
@@ -259,9 +269,18 @@ export default function ContactForm(props) {
             </div>
         </div>
       </div>
-
+      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{      sendGTMEvent({ event: 'buttonClicked', value: 'WhatsApp opened' })
+    }}>
+      <Image
+        loader={ImageLoader}
+        src="/WhatsApp.svg"
+         width={60}
+         height={60}
+         style={waImageStyle}/>
+         <p>Reach out via WhatsApp</p>
+      </a>
     </div>
-  )
+        )
 }
 
 // <Checkbox checked={transportNeeded} label="Transport needed" onClick={(e) => {
