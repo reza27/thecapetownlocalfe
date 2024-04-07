@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import { gql } from "@apollo/client";
 import client from "../helpers/apollo-client";
+import Head from 'next/head'
+
 
 import { Metadata } from 'next'
 
@@ -43,12 +45,18 @@ export default function Contact({ data }: {data}) {
   },[])
 
   return (
+    <>
+      <Head>
+          <title>Contact</title>
+      </Head>
     <div id="contact">
       <div>
         <ContactForm selectOptions={getFormOptions(data.activities[0])}/>
       </div>
 
-    </div>)
+    </div>
+  </>)
+
 }
 
 export async function getServerSideProps() {

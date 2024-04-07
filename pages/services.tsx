@@ -25,7 +25,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMountainSun, faMountainCity, faClock, faTag, faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 
-
+import Head from 'next/head'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -110,6 +110,10 @@ const services = data.services[0]
   // </div>
 
   return (
+    <>
+      <Head>
+          <title>Services</title>
+      </Head>
     <div id="services">
       <h2 className="main-heading">Services</h2>
       <div className="tab-panels">
@@ -151,7 +155,8 @@ const services = data.services[0]
       </div>
 
 
-    </div>)
+    </div>
+  </>)
 }
 
 export async function getServerSideProps() {

@@ -9,6 +9,8 @@ import Image from 'next/image';
 import ImageLoader from '../components/image-loader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMountain} from '@fortawesome/free-solid-svg-icons'
+import Head from 'next/head'
+
 
 // type About = {
 //   id: String,
@@ -81,6 +83,10 @@ export default function About({ data }: {data}) {
   // </div>
 
   return (
+    <>
+      <Head>
+          <title>About</title>
+      </Head>
     <div id="about">
       <h2 className="main-heading">About us</h2>
       <div className="about-description">{data.about?<DocumentRenderer document={data.about?.content?.document}/>:''}</div>
@@ -131,7 +137,8 @@ export default function About({ data }: {data}) {
         ))}
         </div>
       </div>
-    </div>)
+    </div>
+  </>)
 }
 
 export async function getServerSideProps() {

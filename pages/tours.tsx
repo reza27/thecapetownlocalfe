@@ -30,7 +30,7 @@ type Activity = {
   title: string;
   activityItemHeading: ActivityItemHeading
 };
-
+import Head from 'next/head'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -142,6 +142,10 @@ export default function Tours({ data }: {data:Activity}) {
   },[])
 //<li>Choose Tour</li>
   return (
+    <>
+      <Head>
+          <title>Tours</title>
+      </Head>
       <div id="tours">
 
         {data.activities.map((item) => (
@@ -224,6 +228,7 @@ export default function Tours({ data }: {data:Activity}) {
           </div>
         ))}
       </div>
+      </>
   );
 }
 
