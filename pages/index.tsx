@@ -15,6 +15,8 @@ import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTag, faClock, faStar } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
+import Head from 'next/head'
+
 
 import { Metadata } from 'next'
 
@@ -115,6 +117,10 @@ export default function Home({ data }: {data}) {
     }
   },[])
   return (
+    <>
+      <Head>
+          <title>Home</title>
+      </Head>
     <div id="home">
     <div className="header-home">
       <div className="left">
@@ -173,6 +179,7 @@ export default function Home({ data }: {data}) {
 
     </div>
     </div>
+    </>
   )
 }
 
