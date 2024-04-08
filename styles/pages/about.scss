@@ -89,25 +89,34 @@
   }
 
   .guides {
-    display: flex;
-    justify-content: left;
-    @media only screen and (max-width: 768px) {
-      flex-direction: column;
+
+     display: grid;
+     grid-template-columns: repeat(3, minmax(0, 1fr));
+     gap: 20px;
+
+     @media only screen and (max-width: 1400px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+     }
+    @media only screen and (max-width: 992px) {
+       grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 
     .guide {
       display: flex;
       justify-content: flex-end;
-      align-items: center;
+
       flex-direction: column;
       position: relative;
+      top: 0;
+
       flex:1;
+
       //max-width: 30%;
       //background: white;
-      &:not(:first-child) {
-        margin-left: 70px;
-        @media only screen and (max-width: 768px) {
-          margin-left: 0;
+      &:not(:nth-child(odd)) {
+        //padding-left: 70px;
+        @media only screen and (max-width: 992px) {
+          padding-left: 0;
           margin-top: 10px;
         }
       }
@@ -120,9 +129,11 @@
       .guide-content {
         //flex:1;
         position: absolute;
+
         left: 20px;
         right: 20px;
         bottom: 20px;
+
         //border-radius: 16px;
         //box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         backdrop-filter: blur(5px);
