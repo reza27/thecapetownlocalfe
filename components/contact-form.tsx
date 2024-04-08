@@ -6,7 +6,6 @@ import $ from 'jquery';
 import DatePicker from 'react-datepicker';
 import Image from 'next/image';
 import ImageLoader from '../components/image-loader';
-import { sendGAEvent } from '@next/third-parties/google'
 
 
 // if (typeof window !== "undefined") {
@@ -63,7 +62,7 @@ export default function ContactForm(props) {
   const onSubmit = async (e) => {
     //e.preventDefault();
     //if (canSubmit) {
-      sendGAEvent('event', 'buttonClicked', { value: 'Form Submitted' })
+
       let selectedDate = new Date(startDate);
       let month = selectedDate.getUTCMonth() + 1; //months from 1-12
       let day = selectedDate.getUTCDate();
@@ -148,6 +147,10 @@ export default function ContactForm(props) {
       // // If server returns the name submitted, that means the form works.
         const result = await response.json();
         console.log('data message', result);
+
+        gtag('event', 'click', {
+          'action': 'Form submit'
+        });
 
         setMessageSubmitted(true);
     //}
@@ -269,7 +272,10 @@ export default function ContactForm(props) {
             </div>
         </div>
       </div>
-      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{ sendGAEvent('event', 'buttonClicked', { value: 'WhatsApp opened' })
+      <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{
+        gtag('event', 'click', {
+          'action': 'WhatsApp opened'
+        });
     }}>
       <Image
         loader={ImageLoader}
