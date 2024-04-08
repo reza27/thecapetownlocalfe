@@ -30,6 +30,7 @@ export const metadata: Metadata = {
 
 const guideImageStyle = {
   objectFit: 'cover',
+  objectPosition:'center -100px',
   height: '400px',
   width: '100%',
   //padding:'15px',
