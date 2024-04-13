@@ -15,6 +15,10 @@
     }
   }
 
+  .guides-description {
+    padding: 10px 70px 10px 0;
+  }
+
   .about-description {
     padding: 10px 70px 10px;
 
@@ -79,7 +83,7 @@
 
     h2 {
       //color: white;
-      padding: 70px 0;
+      padding: 70px 0 30px;
       //text-align: center;
 
         @media only screen and (max-width: 768px) {

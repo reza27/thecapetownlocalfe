@@ -93,6 +93,7 @@ export default function About({ data }: {data}) {
       <div className="about-description">{data.about?<DocumentRenderer document={data.about?.content?.document}/>:''}</div>
       <div className="guides-container">
         <h2>Meet the team</h2>
+        <div className="guides-description">{data.about?<DocumentRenderer document={data.about?.guidesInfo?.document}/>:''}</div>
         <div className="guides">
         {data.about ? data.about?.guides?.map((guide) => (
           <div className="guide" key={guide.id}>
@@ -151,13 +152,17 @@ export async function getServerSideProps() {
         content {
           document
         }
-        guides {
+        guidesInfo {
+          document
+        }
+        guides (orderBy: {displayIndex:asc}) {
           name
           title
           image {
             publicUrl
           }
           description
+          displayIndex
         }
         affiliations {
           image {
