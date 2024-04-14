@@ -148,7 +148,7 @@ export default function ContactForm(props) {
         const result = await response.json();
         console.log('data message', result);
 
-        gtag('event', 'click', {
+        gtag('event', 'submit_form', {
           'action': 'Form submit'
         });
 
@@ -273,7 +273,7 @@ export default function ContactForm(props) {
         </div>
       </div>
       <a id="whatsapp" href="https://wa.me/27789803335" target="_blank" onClick={()=>{
-        gtag('event', 'click', {
+        gtag('event', 'whatsapp', {
           'action': 'WhatsApp opened'
         });
     }}>
