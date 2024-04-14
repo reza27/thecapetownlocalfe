@@ -119,7 +119,7 @@ export default function Home({ data }: {data}) {
   return (
     <>
       <Head>
-          <title>Home</title>
+          <title>Home - The Cape Town Local</title>
       </Head>
     <div id="home">
     <div className="header-home">

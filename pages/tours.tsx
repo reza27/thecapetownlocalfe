@@ -144,7 +144,7 @@ export default function Tours({ data }: {data:Activity}) {
   return (
     <>
       <Head>
-          <title>Tours</title>
+          <title>Tours - The Cape Town Local</title>
       </Head>
       <div id="tours">
 
