@@ -5,8 +5,8 @@ export default function Document() {
     <Html className="dark">
       <Head >
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <meta name="description" content="The Cape Town Local - We live your experience. Join us for guided hiking tours up Table Mountain and Lion's Head.">
-      <meta name="keywords" content="The Cape Town Local, Hiking, Tour Guides, Guided Tours">
+      <meta name="description" content="The Cape Town Local - We live your experience. Join us for guided hiking tours up Table Mountain and Lion's Head."/>
+      <meta name="keywords" content="The Cape Town Local, Hiking, Tour Guides, Guided Tours"/>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
       <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/2.14.1/react-datepicker.min.css" />
