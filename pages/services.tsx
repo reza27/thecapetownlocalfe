@@ -112,7 +112,7 @@ const services = data.services[0]
   return (
     <>
       <Head>
-          <title>Services</title>
+          <title>Services - The Cape Town Local</title>
       </Head>
     <div id="services">
       <h2 className="main-heading">Services</h2>

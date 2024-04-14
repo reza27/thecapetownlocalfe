@@ -86,7 +86,7 @@ export default function About({ data }: {data}) {
   return (
     <>
       <Head>
-          <title>About</title>
+          <title>About - The Cape Town Local</title>
       </Head>
     <div id="about">
       <h2 className="main-heading">About us</h2>

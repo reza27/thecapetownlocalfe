@@ -47,7 +47,7 @@ export default function Contact({ data }: {data}) {
   return (
     <>
       <Head>
-          <title>Contact</title>
+          <title>Contact - The Cape Town Local</title>
       </Head>
     <div id="contact">
       <div>
