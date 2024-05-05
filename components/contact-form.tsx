@@ -224,6 +224,9 @@ export default function ContactForm(props) {
       options
     );
 
+    setCountry(204);
+    console.log("country");
+
     //$('.address input').prop('autoComplete', 'address')
   }, []);
 
