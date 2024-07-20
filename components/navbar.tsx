@@ -1,4 +1,4 @@
-
+"use client"
 import Link from "next/link";
 import $ from 'jquery';
 import React, { useState} from 'react';

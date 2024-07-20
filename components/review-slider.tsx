@@ -4,11 +4,11 @@ import {faArrowLeft, faArrowRight, faStar} from '@fortawesome/free-solid-svg-ico
 import $ from 'jquery';
 import React, { useState, useEffect, Fragment } from 'react';
 import Link from "next/link";
+import {IReview} from "../types/IReview";
 
 export default function ReviewSlider(props) {
-  const { reviews, id } = props;
+  const { reviews, id }: {reviews:IReview[], id:string} = props;
   let currIndex = 0;
-  console.log('id>>>', id)
 
   const sliderStyle = {
 
@@ -57,10 +57,11 @@ export default function ReviewSlider(props) {
   };
   let getStars = (numStars) => {
     console.log('numStars',numStars)
+    console.log('reviews',reviews)
       let stars = [];
 
       for (let i = 0; i < numStars; i++) {
-        stars.push(<div className="star"><FontAwesomeIcon icon={faStar} /></div>)
+        stars.push(<div className="star" key={i}><FontAwesomeIcon icon={faStar} /></div>)
       }
       return stars;
   }
@@ -71,8 +72,8 @@ export default function ReviewSlider(props) {
     <div className="right-button slider-button" onClick={() => onRightClick()}><FontAwesomeIcon icon={faArrowRight} /></div>
     <div className="panel-review-slider" style={sliderStyle}>
 
-    {reviews.map((review) =>(
-      <div key={review.id} className="review">
+    {reviews.map((review, index) =>(
+      <div key={review.name} className="review">
         <div className="inner-review">
         <h3>{review.name}</h3>
         <div className="stars">{getStars(review.stars)}</div>
