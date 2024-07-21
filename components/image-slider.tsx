@@ -1,4 +1,4 @@
-
+"use-client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import $ from 'jquery';
@@ -7,8 +7,6 @@ import React, { useState, useEffect, Fragment } from 'react';
 export default function ImageSlider(props) {
   const { images, id } = props;
   let currIndex = 0;
-  console.log('id>>>', id)
-
   const sliderStyle = {
 
     width: images.length * 100 + '%'
@@ -60,8 +58,8 @@ export default function ImageSlider(props) {
     <div className="right-button slider-button" onClick={() => onRightClick()}><FontAwesomeIcon icon={faArrowRight} /></div>
     <div className="panel-images-slider" style={sliderStyle}>
 
-    {images.map((image) =>(
-      <div key={image.id} className="panel-image" style={{backgroundImage:'url(' + image?.image?.publicUrl+')', backgroundPosition:'center'}}></div>
+    {images.map((image, index) =>(
+      <div key={image.id + "-" + index} className="panel-image" style={{backgroundImage:'url(' + image?.image?.publicUrl+')', backgroundPosition:'center'}}></div>
     ))}
     </div>
   </div>

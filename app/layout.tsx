@@ -5,6 +5,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
+
 export default function RootLayout({
                                        // Layouts must accept a children prop.
                                        // This will be populated with nested layouts or pages
@@ -33,6 +34,7 @@ export default function RootLayout({
                 <Navbar/>
                 {children}
                 <Footer/>
+                <GoogleAnalytics gaId="G-NC9WGWVD6X" />
             </body>
         </html>
     )

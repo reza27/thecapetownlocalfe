@@ -1,3 +1,5 @@
+"use-client";
+
 import { useCountries } from "use-react-countries";
 import {
   Menu,
@@ -475,6 +477,7 @@ export default function ContactForm(props) {
           width={60}
           height={60}
           style={waImageStyle}
+          alt="whatsapp"
         />
         <p>Reach out via WhatsApp</p>
       </a>

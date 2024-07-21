@@ -85,7 +85,6 @@ export default function Home({ data }: {data}) {
     }
 
     const getImageUrl = (images) => {
-        console.log('images',images)
         return images[0]?.image?.publicUrl?images[0].image?.publicUrl:"";
     }
 

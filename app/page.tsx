@@ -1,5 +1,5 @@
 
-import HomePage from './home-page'
+import Home from './home-page'
 import { gql } from "@apollo/client";
 import client from "../helpers/apollo-client";
 
@@ -40,5 +40,5 @@ export default async function HomePageData() {
     // Fetch data directly in a Server Component
     const data = await getHomeData()
     // Forward fetched data to your Client Component
-    return <HomePage data={data} />
+    return <Home data={data} />
 }
