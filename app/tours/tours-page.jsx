@@ -223,24 +223,28 @@ export default function Tours(aData) {
               <div id="tour-contact-form" className="tour-contact-form">
                 <ContactForm selectOptions={getFormOptions(item)} />
               </div>
-              <div className="faqs">
-                <h2>FAQs</h2>
-                <div className="faqs-accordion">
-                  {item.faq.map((faq, i) => (
-                    <Accordion open={open === i + 1} key={faq.id}>
-                      <AccordionHeader
-                        key={faq.question}
-                        onClick={() => handleOpen(i + 1)}
-                      >
-                        {faq.question}
-                      </AccordionHeader>
-                      <AccordionBody key={faq.answer}>
-                        {faq.answer}
-                      </AccordionBody>
-                    </Accordion>
-                  ))}
+              {item.faq.length > 0 ? (
+                <div className="faqs">
+                  <h2>FAQs</h2>
+                  <div className="faqs-accordion">
+                    {item.faq.map((faq, i) => (
+                      <Accordion open={open === i + 1} key={faq.id}>
+                        <AccordionHeader
+                          key={faq.question}
+                          onClick={() => handleOpen(i + 1)}
+                        >
+                          {faq.question}
+                        </AccordionHeader>
+                        <AccordionBody key={faq.answer}>
+                          {faq.answer}
+                        </AccordionBody>
+                      </Accordion>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         ))}
