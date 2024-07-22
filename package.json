@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "CI=false next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "fast": "next dev --turbo"
@@ -22,7 +22,6 @@
     "@next/third-parties": "^14.1.4",
     "@reduxjs/toolkit": "^2.2.6",
     "@tailwindcss/typography": "^0.5.7",
-    "@types/react": "^18.3.3",
     "babel-plugin-macros": "^3.1.0",
     "graphql": "^16.6.0",
     "jquery": "^3.6.1",
@@ -37,6 +36,7 @@
   },
   "devDependencies": {
     "@types/node": "18.11.7",
+    "@types/react": "^18.3.3",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.2.5",
