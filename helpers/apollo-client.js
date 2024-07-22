@@ -6,7 +6,6 @@ const client = new ApolloClient({
     process.env.APP_ENV === "production"
       ? `${process.env.PROD_URL}/api/graphql`
       : `${process.env.LOCAL_URL}/api/graphql`,
-
   cache: new InMemoryCache(),
 });
 
