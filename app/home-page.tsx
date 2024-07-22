@@ -1,12 +1,8 @@
-// import Head from 'next/head'
-// import Image from 'next/image'
-// import styles from '../styles/Home.module.scss'
 "use client";
 import ContactForm from "../components/contact-form";
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
-import { gql } from "@apollo/client";
-import client from "../helpers/apollo-client";
+
 import Image from "next/image";
 import ReviewSlider from "../components/review-slider";
 import ImageLoader from "../components/image-loader";
