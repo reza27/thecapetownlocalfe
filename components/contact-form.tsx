@@ -1,4 +1,22 @@
-"use-client";
+"use client";
+
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import {
+  setTransportNeeded,
+  setFlexibleDate,
+  setEmailError,
+  setNameError,
+  setSubjectError,
+  setPhoneError,
+  setCanSubmit,
+  setStartDate,
+  setName,
+  setEmail,
+  setMobile,
+  setSubject,
+  setAddress,
+  setMessage,
+} from "../lib/features/contact/contactSlice";
 
 import { useCountries } from "use-react-countries";
 import {
@@ -17,29 +35,6 @@ import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
 
-// if (typeof window !== "undefined") {
-//   window.initPlaces = function() {
-//     const center = { lat: 50.064192, lng: -130.605469 };
-//       // Create a bounding box with sides ~10km away from the center point
-//     const defaultBounds = {
-//       north: center.lat + 0.1,
-//       south: center.lat - 0.1,
-//       east: center.lng + 0.1,
-//       west: center.lng - 0.1,
-//     };
-//     const input = document.getElementById("address");
-//     const options = {
-//       bounds: defaultBounds,
-//       componentRestrictions: { country: "us" },
-//       fields: ["address_components", "geometry", "icon", "name"],
-//       strictBounds: false,
-//       types: ["establishment"],
-//     };
-//     const autocomplete = new google.maps.places.Autocomplete(input, options);
-//   };
-//
-// }
-
 const waImageStyle = {
   objectFit: "contain",
   objectPosition: "center bottom",
@@ -49,17 +44,37 @@ const waImageStyle = {
 };
 
 export default function ContactForm(props) {
+  const isTransportNeeded = useAppSelector(
+    (state) => state.contact.isTransportNeeded
+  );
+  const isFlexibleDate = useAppSelector(
+    (state) => state.contact.isFlexibleDate
+  );
+  const emailError = useAppSelector((state) => state.contact.hasEmailError);
+  const nameError = useAppSelector((state) => state.contact.hasNameError);
+  const subjectError = useAppSelector((state) => state.contact.hasSubjectError);
+  const phoneError = useAppSelector((state) => state.contact.hasPhoneError);
+  const canSubmit = useAppSelector((state) => state.contact.canSubmit);
+  const startDate = useAppSelector((state) => state.contact.startDate);
+  const nameVal = useAppSelector((state) => state.contact.name);
+  const emailVal = useAppSelector((state) => state.contact.email);
+  const mobileVal = useAppSelector((state) => state.contact.mobile);
+  const messageVal = useAppSelector((state) => state.contact.message);
+  const addressVal = useAppSelector((state) => state.contact.address);
+  const subjectVal = useAppSelector((state) => state.contact.subject);
+  const dispatch = useAppDispatch();
+
   const { selectOptions } = props;
-  const [transportNeeded, setTransportNeeded] = useState(false);
-  const [flexibleDate, setFlexibleDate] = useState(true);
-  const [isDateFlexible, setIsDateFlexible] = useState(false);
-  const [canSubmit, setCanSubmit] = useState(false);
+  //const [transportNeeded, setTransportNeeded] = useState(false);
+  //const [flexibleDate, setFlexibleDate] = useState(true);
+  //const [isDateFlexible, setIsDateFlexible] = useState(false);
+  //const [canSubmit, setCanSubmit] = useState(false);
   const [messageSubmitted, setMessageSubmitted] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-  const [subjectError, setSubjectError] = useState(false);
-  const [nameError, setNameError] = useState(false);
-  const [phoneError, setPhoneError] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
+  //const [emailError, setEmailError] = useState(false);
+  //const [subjectError, setSubjectError] = useState(false);
+  //const [nameError, setNameError] = useState(false);
+  // const [phoneError, setPhoneError] = useState(false);
+  //const [startDate, setStartDate] = useState(new Date());
   const inputRef = useRef();
   const autoCompleteRef = useRef();
   const { countries } = useCountries();
@@ -96,75 +111,88 @@ export default function ContactForm(props) {
 
     let formattedDate = day + " " + monthNames[month - 1] + " " + year;
 
+    // let data = {
+    //   name: $("#name")[0].value,
+    //   email: $("#email")[0].value,
+    //   subject: $("#subject")[0].innerText,
+    //   date: formattedDate,
+    //   transportNeeded: isTransportNeeded ? "yes" : "no",
+    //   isDateFlexible: isFlexibleDate ? "yes" : "no",
+    //   //address: $("#address")[0].value,
+    //   phone: countryCallingCode + $("#phone").val(),
+    //   message: $("#message").val(),
+    // };
     let data = {
-      name: $("#name")[0].value,
-      email: $("#email")[0].value,
-      subject: $("#subject")[0].innerText,
+      name: nameVal,
+      email: emailVal,
+      subject: subjectVal,
       date: formattedDate,
-      transportNeeded: transportNeeded ? "yes" : "no",
-      isDateFlexible: flexibleDate ? "yes" : "no",
-      address: $("#address")[0].value,
-      phone: countryCallingCode + $("#phone").val(),
-      message: $("#message").val(),
+      transportNeeded: isTransportNeeded ? "yes" : "no",
+      isDateFlexible: isFlexibleDate ? "yes" : "no",
+      address: isTransportNeeded ? addressVal : "",
+      phone: countryCallingCode + mobileVal,
+      message: messageVal,
     };
     console.log("data", data);
+
     let isValid = true;
     if (/(.+)@(.+){2,}\.(.+){2,}/.test(data.email)) {
       // valid email
-      setEmailError(false);
+      //setEmailError(false);
+      dispatch(setEmailError(false));
     } else {
       // invalid email
       isValid = false;
-      setEmailError(true);
+      //setEmailError(true);
+      dispatch(setEmailError(true));
     }
 
     if (!data.name) {
       isValid = false;
-      setNameError(true);
+      //setNameError(true);
+      dispatch(setNameError(true));
     } else {
-      setNameError(false);
+      //setNameError(false);
+      dispatch(setNameError(false));
     }
 
     if (data.phone.length < 7) {
       isValid = false;
-      setPhoneError(true);
+      //setPhoneError(true);
+      dispatch(setPhoneError(true));
     } else {
-      setPhoneError(false);
+      //setPhoneError(false);
+      dispatch(setPhoneError(false));
     }
 
     if (!data.subject) {
-      setSubjectError(true);
+      //setSubjectError(true);
+      dispatch(setSubjectError(true));
+
       isValid = false;
     } else {
-      setSubjectError(false);
+      //setSubjectError(false);
+      dispatch(setSubjectError(false));
     }
 
     if (!isValid) {
       return;
     }
 
-    // Send the data to the server in JSON format.
     const JSONdata = JSON.stringify(data);
-    // // API endpoint where we send form data.
-    //const endpoint = process.env.NODE_ENV==='production'? process.env.NODE_ENV.PROD_URL+'/api/mail':process.env.LOCAL_URL+'/api/mail';
-    console.log("process.env.PROD_URL", process.env.NEXT_PUBLIC_PROD_URL);
+
     const endpoint = process.env.NEXT_PUBLIC_PROD_URL + "/api/mail";
 
-    // Form the request for sending data to the server.
     const options = {
-      // The method is POST because we are sending data.
       method: "POST",
-      // Tell the server we're sending JSON.
       headers: {
         "Content-Type": "application/json",
       },
-      // Body of the request is the JSON data we created above.
       body: JSONdata,
     };
 
     const response = await fetch(endpoint, options);
-    // // Get the response data from server as JSON.
-    // // If server returns the name submitted, that means the form works.
+
     const result = await response.json();
     console.log("data message", result);
 
@@ -177,11 +205,8 @@ export default function ContactForm(props) {
   };
 
   const validateInputFields = (input) => {
-    // /console.log('inputs', input.target.id);
-
     if (!input) {
       setTimeout(() => {
-        //console.log('inputs', $('#subject')[0].innerText);
         validate();
       }, 100);
     }
@@ -199,46 +224,61 @@ export default function ContactForm(props) {
 
   const validate = () => {
     if (
-      $("#name")[0].value &&
-      $("#email")[0].value &&
-      $("#phone")[0].value &&
-      $("#subject")[0].innerText
+      // $("#name")[0].value &&
+      // $("#email")[0].value &&
+      // $("#phone")[0].value &&
+      // $("#subject")[0].innerText
+      nameVal &&
+      emailVal &&
+      mobileVal &&
+      subjectVal
     ) {
-      setCanSubmit(true);
+      //setCanSubmit(true);
+      dispatch(setCanSubmit(true));
     } else {
-      setCanSubmit(false);
+      //setCanSubmit(false);
+      dispatch(setCanSubmit(false));
     }
   };
 
   const displayOptions = (selectOptions) => {
     let options = [];
     selectOptions.map((item, i) => {
-      options.push(<Option key={item.title}>{item.title}</Option>);
+      options.push(
+        <Option key={item.title} value={item.title}>
+          {item.title}
+        </Option>
+      );
     });
-    options.push(<Option key="General request">General request</Option>);
+    options.push(
+      <Option key="General request" value={"General request"}>
+        General request
+      </Option>
+    );
     return options;
   };
 
   useEffect(() => {
-    const input = document.getElementById("address");
-    autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-      input,
-      options
-    );
+    // const input = document.getElementById("address");
+    // autoCompleteRef.current = new window.google.maps.places.Autocomplete(
+    //   input,
+    //   options
+    // );
 
     setCountry(204);
-    console.log("country");
 
     //$('.address input').prop('autoComplete', 'address')
   }, []);
 
-  useEffect(() => {
-    if (transportNeeded) {
-      $(".contact-form .address").addClass("show");
-    } else {
-      $(".contact-form .address").removeClass("show");
-    }
-  }, [transportNeeded]);
+  // useEffect(() => {
+  //   console.log('isTransportNeeded1', isTransportNeeded)
+  //   // if (isTransportNeeded) {
+  //   //   $(".contact-form .address").addClass("show");
+  //   // } else {
+  //   //   $(".contact-form .address").removeClass("show");
+  //   // }
+  //
+  // }, [isTransportNeeded]);
 
   return (
     <div className="contact-form">
@@ -257,7 +297,11 @@ export default function ContactForm(props) {
               variant="standard"
               label="Select Tour"
               id="subject"
-              onChange={validateInputFields}
+              value={subjectVal}
+              onChange={(aOption) => {
+                dispatch(setSubject(aOption));
+                validate();
+              }}
             >
               {displayOptions(selectOptions)}
             </Select>
@@ -273,7 +317,11 @@ export default function ContactForm(props) {
               color="light-blue"
               label="Name"
               className="input-field"
-              onChange={validateInputFields}
+              value={nameVal}
+              onChange={(event) => {
+                dispatch(setName(event.target.value));
+                validateInputFields(event);
+              }}
             />
             <p className="required-field">*Required field</p>
           </div>
@@ -347,7 +395,11 @@ export default function ContactForm(props) {
                 variant="standard"
                 color="light-blue"
                 label="Mobile number"
-                onChange={validateInputFields}
+                value={mobileVal}
+                onChange={(event) => {
+                  dispatch(setMobile(event.target.value));
+                  validateInputFields(event);
+                }}
                 className="input-field country-input"
                 labelProps={{
                   className: "before:content-none after:content-none",
@@ -370,7 +422,11 @@ export default function ContactForm(props) {
               color="light-blue"
               label="Email"
               className="input-field"
-              onChange={validateInputFields}
+              value={emailVal}
+              onChange={(event) => {
+                dispatch(setEmail(event.target.value));
+                validateInputFields(event);
+              }}
             />
             <p className="required-field">*Required field</p>
           </div>
@@ -380,7 +436,7 @@ export default function ContactForm(props) {
             <p>Preferred date:</p>
             <DatePicker
               selected={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => dispatch(setStartDate(date))}
               className="input-field"
             />
           </div>
@@ -388,7 +444,8 @@ export default function ContactForm(props) {
             className="input-field-container"
             onChange={(e) => {
               e.stopPropagation();
-              setFlexibleDate(!flexibleDate);
+              //setFlexibleDate(!flexibleDate);
+              dispatch(setFlexibleDate(!isFlexibleDate));
             }}
           >
             <label className="label-check">
@@ -407,7 +464,8 @@ export default function ContactForm(props) {
               className="label-check"
               onChange={(e) => {
                 e.stopPropagation();
-                setTransportNeeded(!transportNeeded);
+                // setTransportNeeded(!transportNeeded);
+                dispatch(setTransportNeeded(!isTransportNeeded));
               }}
             >
               Do you need transport?
@@ -420,19 +478,27 @@ export default function ContactForm(props) {
               />
             </label>
           </div>
-          <div className="input-field-container address">
-            <Input
-              autoCapitalize="off"
-              autoComplete="off"
-              autoCorrect="off"
-              name="address"
-              id="address"
-              variant="standard"
-              color="light-blue"
-              label="Address/Hotel"
-              className="input-field"
-            />
-          </div>
+          {isTransportNeeded ? (
+            <div className="input-field-container address">
+              <Input
+                autoCapitalize="off"
+                autoComplete="off"
+                autoCorrect="off"
+                name="address"
+                id="address"
+                variant="standard"
+                color="light-blue"
+                label="Address/Hotel"
+                className="input-field"
+                value={addressVal}
+                onChange={(event) => {
+                  dispatch(setAddress(event.target.value));
+                }}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
           <div className="input-field-container message">
             <Textarea
               autoComplete="off"
@@ -441,6 +507,11 @@ export default function ContactForm(props) {
               color="light-blue"
               label="Message"
               className="input-field"
+              value={messageVal}
+              onChange={(event) => {
+                dispatch(setMessage(event.target.value));
+                validateInputFields(event);
+              }}
             />
           </div>
           <div className="input-field-container">

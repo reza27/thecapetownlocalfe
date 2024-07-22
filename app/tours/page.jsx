@@ -1,21 +1,21 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 import React from "react";
 import Tours from "./tours-page";
 import client from "../../helpers/apollo-client";
 
 export async function getToursData() {
-    //(where: {tag:{name:{equals:"Tours"}}})
-    const { data } = await client.query({
-        query: gql`
-    query GetActivities {
-        activities  {
+  //(where: {tag:{name:{equals:"Tours"}}})
+  const { data } = await client.query({
+    query: gql`
+      query GetActivities {
+        activities {
           id
           title
           faq {
             question
             answer
           }
-          activityItemHeading  {
+          activityItemHeading {
             id
             title
             activityItemsCount
@@ -42,19 +42,19 @@ export async function getToursData() {
         }
       }
     `,
-        fetchPolicy:'no-cache'
-    });
-    console.log('data>>>', data)
-    return {
-        props: {
-            data: data,
-        },
-    };
+    fetchPolicy: "no-cache",
+  });
+  console.log("data>>>", data);
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
 export default async function ToursPageData() {
-    // Fetch data directly in a Server Component
-    const data = await getToursData()
-    // Forward fetched data to your Client Component
-    return <Tours data={data} />
+  // Fetch data directly in a Server Component
+  const data = await getToursData();
+  // Forward fetched data to your Client Component
+  return <Tours data={data} />;
 }

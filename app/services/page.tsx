@@ -1,61 +1,61 @@
-import {gql} from "@apollo/client";
+import { gql } from "@apollo/client";
 import client from "../../helpers/apollo-client";
 import React from "react";
 import Services from "./services-page";
 
 export async function getServicesData() {
-    const { data } = await client.query({
-        query: gql`
-    query GetServices {
-      activities  {
-        id
-        title
-
-        activityItemHeading  {
+  const { data } = await client.query({
+    query: gql`
+      query GetServices {
+        activities {
           id
           title
-          activityItemsCount
-          activityItems {
+
+          activityItemHeading {
             id
             title
-            anchor
-          }
-        }
-      }
-
-       services {
-        title
-        serviceItems {
-          id
-          title
-          content {
-            document
-          }
-          price
-          images {
-            image {
-              publicUrl
+            activityItemsCount
+            activityItems {
               id
+              title
+              anchor
             }
-            altText
+          }
+        }
+
+        services {
+          title
+          serviceItems {
+            id
+            title
+            content {
+              document
+            }
+            price
+            images {
+              image {
+                publicUrl
+                id
+              }
+              altText
+            }
           }
         }
       }
-    }
     `,
-        fetchPolicy:'no-cache'
-    });
-    console.log('data about>>>', data)
-    return {
-        props: {
-            data: data,
-        },
-    };
+    fetchPolicy: "no-cache",
+  });
+  console.log("data about>>>", data);
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
 export default async function ServicesPageData() {
-    // Fetch data directly in a Server Component
-    const data = await getServicesData()
-    // Forward fetched data to your Client Component
-    return <Services data={data} />
+  // Fetch data directly in a Server Component
+  const data = await getServicesData();
+  // Forward fetched data to your Client Component
+  return <Services data={data} />;
 }

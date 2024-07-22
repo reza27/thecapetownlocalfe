@@ -1,4 +1,4 @@
-"use-client";
+"use client";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons'
 import $ from 'jquery';
