@@ -30,7 +30,6 @@ const affiliateImageStyle = {
 
 export default function About(aData) {
   const data = aData.data.props.data;
-  console.log("about", data);
   const featureImageStyle = {
     objectFit: "cover",
     height: "500px",
@@ -67,13 +66,7 @@ export default function About(aData) {
 
   useEffect(() => {
     const handleScroll = (event) => {
-      //console.log('window.scrollY', window.scrollY);
-      //if (window.scrollY > 0) {
       $("#navbar").addClass("scrolled");
-      // }
-      // else {
-      //   $('#navbar').removeClass('scrolled')
-      // }
     };
 
     window.addEventListener("scroll", handleScroll);

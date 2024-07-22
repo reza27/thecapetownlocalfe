@@ -38,7 +38,6 @@ export async function getAboutPage() {
     `,
     fetchPolicy: "no-cache",
   });
-  console.log("data about>>>", data);
   return {
     props: {
       data: data,

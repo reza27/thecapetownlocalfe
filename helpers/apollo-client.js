@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 
-console.log("111process.env.PROD_URL apollo", process.env.PROD_URL);
+console.log("process.env.PROD_URL apollo", process.env.PROD_URL);
 const client = new ApolloClient({
   uri:
     process.env.APP_ENV === "production"

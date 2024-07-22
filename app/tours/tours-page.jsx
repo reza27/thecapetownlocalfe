@@ -117,25 +117,7 @@ export default function Tours(aData) {
   };
 
   useEffect(() => {
-    //getFormOptions(data.activities[0].activityItemHeading)
-    // const handleScroll = event => {
-    //   //console.log('window.scrollY', window.scrollY);
-    //   if (window.scrollY > 0) {
     $("#navbar").addClass("scrolled");
-    //   }
-    //   else {
-    //     $('#navbar').removeClass('scrolled')
-    //   }
-    // };
-    //
-    // window.addEventListener('scroll', handleScroll);
-    //
-    // return () => {
-    //   window.removeEventListener('scroll', handleScroll);
-    // };
-    // $(document.body).animate({
-    //   'scrollTop':   $('#anchorName2').offset().top
-    // }, 2000);
 
     function selectTab() {
       var url = new URL(window.location.href);
@@ -143,8 +125,6 @@ export default function Tours(aData) {
       var anchor = url.searchParams.get("anchor")?.toLowerCase();
 
       if (tab1) {
-        console.log("tab", tab);
-
         setTab(tab1);
         setTimeout(() => {
           $("html").animate(
@@ -154,27 +134,10 @@ export default function Tours(aData) {
             1000
           );
         }, 300);
-
-        //var listItems =   $('.ul-tabs li');
-
-        // listItems.each(function(idx, li) {
-        //     var $tab = $(li);
-        //
-        //     //$tab.removeClass('selected')
-        //     if ($tab.attr('id') === tab)
-        //     {
-        //       $tab.addClass('selected');
-        //       console.log('tab',$tab.attr('id'), tab)
-        //
-        //     }
-        //
-        //     // and the rest of your code
-        // });
       }
     }
     setTimeout(selectTab, 300);
   }, []);
-  //<li>Choose Tour</li>
   return (
     <>
       <Head>

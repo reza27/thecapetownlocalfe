@@ -44,7 +44,6 @@ export async function getToursData() {
     `,
     fetchPolicy: "no-cache",
   });
-  console.log("data>>>", data);
   return {
     props: {
       data: data,

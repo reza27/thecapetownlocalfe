@@ -22,7 +22,6 @@ export const metadata: Metadata = {
 };
 
 export default function Home({ data }: { data }) {
-  console.log("home data", data.props.data.home);
   const [isMobi, setIsMobi] = useState(false);
 
   const reviews: IReview[] = [
@@ -90,21 +89,7 @@ export default function Home({ data }: { data }) {
   };
 
   useEffect(() => {
-    //  const handleScroll = event => {
-    //console.log('window.scrollY', window.scrollY);
-    //if (window.scrollY > 0) {
     $("#navbar").addClass("scrolled");
-    //   }
-    //   else {
-    //     $('#navbar').removeClass('scrolled')
-    //   }
-    //};
-
-    // window.addEventListener('scroll', handleScroll);
-    //
-    // return () => {
-    //   window.removeEventListener('scroll', handleScroll);
-    // };
 
     if (window.innerWidth <= 768) {
       setIsMobi(true);

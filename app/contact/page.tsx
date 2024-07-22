@@ -23,7 +23,6 @@ export async function getContactData() {
       }
     `,
   });
-  console.log("data>>>", data);
   return {
     props: {
       data: data,

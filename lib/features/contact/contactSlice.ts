@@ -21,7 +21,6 @@ export const contactSlice = createSlice({
   reducers: {
     setTransportNeeded: (state, action) => {
       state.isTransportNeeded = action.payload;
-      console.log("redux transport", action.payload);
     },
     setFlexibleDate: (state, action) => {
       state.isFlexibleDate = action.payload;
@@ -44,7 +43,6 @@ export const contactSlice = createSlice({
     },
     setCanSubmit: (state, action) => {
       state.canSubmit = action.payload;
-      console.log("redux can submit", action.payload);
     },
 
     setStartDate: (state, action) => {

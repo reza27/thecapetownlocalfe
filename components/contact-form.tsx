@@ -111,17 +111,6 @@ export default function ContactForm(props) {
 
     let formattedDate = day + " " + monthNames[month - 1] + " " + year;
 
-    // let data = {
-    //   name: $("#name")[0].value,
-    //   email: $("#email")[0].value,
-    //   subject: $("#subject")[0].innerText,
-    //   date: formattedDate,
-    //   transportNeeded: isTransportNeeded ? "yes" : "no",
-    //   isDateFlexible: isFlexibleDate ? "yes" : "no",
-    //   //address: $("#address")[0].value,
-    //   phone: countryCallingCode + $("#phone").val(),
-    //   message: $("#message").val(),
-    // };
     let data = {
       name: nameVal,
       email: emailVal,
@@ -133,45 +122,36 @@ export default function ContactForm(props) {
       phone: countryCallingCode + mobileVal,
       message: messageVal,
     };
-    console.log("data", data);
 
     let isValid = true;
     if (/(.+)@(.+){2,}\.(.+){2,}/.test(data.email)) {
       // valid email
-      //setEmailError(false);
       dispatch(setEmailError(false));
     } else {
       // invalid email
       isValid = false;
-      //setEmailError(true);
       dispatch(setEmailError(true));
     }
 
     if (!data.name) {
       isValid = false;
-      //setNameError(true);
       dispatch(setNameError(true));
     } else {
-      //setNameError(false);
       dispatch(setNameError(false));
     }
 
     if (data.phone.length < 7) {
       isValid = false;
-      //setPhoneError(true);
       dispatch(setPhoneError(true));
     } else {
-      //setPhoneError(false);
       dispatch(setPhoneError(false));
     }
 
     if (!data.subject) {
-      //setSubjectError(true);
       dispatch(setSubjectError(true));
 
       isValid = false;
     } else {
-      //setSubjectError(false);
       dispatch(setSubjectError(false));
     }
 
@@ -194,7 +174,6 @@ export default function ContactForm(props) {
     const response = await fetch(endpoint, options);
 
     const result = await response.json();
-    console.log("data message", result);
 
     gtag("event", "submit_form", {
       action: "Form submit",
@@ -223,16 +202,7 @@ export default function ContactForm(props) {
   };
 
   const validate = () => {
-    if (
-      // $("#name")[0].value &&
-      // $("#email")[0].value &&
-      // $("#phone")[0].value &&
-      // $("#subject")[0].innerText
-      nameVal &&
-      emailVal &&
-      mobileVal &&
-      subjectVal
-    ) {
+    if (nameVal && emailVal && mobileVal && subjectVal) {
       //setCanSubmit(true);
       dispatch(setCanSubmit(true));
     } else {
@@ -259,26 +229,8 @@ export default function ContactForm(props) {
   };
 
   useEffect(() => {
-    // const input = document.getElementById("address");
-    // autoCompleteRef.current = new window.google.maps.places.Autocomplete(
-    //   input,
-    //   options
-    // );
-
     setCountry(204);
-
-    //$('.address input').prop('autoComplete', 'address')
   }, []);
-
-  // useEffect(() => {
-  //   console.log('isTransportNeeded1', isTransportNeeded)
-  //   // if (isTransportNeeded) {
-  //   //   $(".contact-form .address").addClass("show");
-  //   // } else {
-  //   //   $(".contact-form .address").removeClass("show");
-  //   // }
-  //
-  // }, [isTransportNeeded]);
 
   return (
     <div className="contact-form">
@@ -326,21 +278,6 @@ export default function ContactForm(props) {
             <p className="required-field">*Required field</p>
           </div>
           <div className="input-field-container">
-            {/* <Input
-              autoComplete="off"
-              error={phoneError}
-              type="tel"
-              pattern="^[0-9-+\s()]*$"
-              minLength="7"
-              maxLength="15"
-              required
-              id="phone"
-              variant="standard"
-              color="light-blue"
-              label="Phone (include country code)"
-              className="input-field"
-              onChange={validateInputFields}
-            /> */}
             <div className="relative flex w-full">
               <Menu placement="bottom-start">
                 <MenuHandler>
@@ -444,7 +381,6 @@ export default function ContactForm(props) {
             className="input-field-container"
             onChange={(e) => {
               e.stopPropagation();
-              //setFlexibleDate(!flexibleDate);
               dispatch(setFlexibleDate(!isFlexibleDate));
             }}
           >
@@ -464,7 +400,6 @@ export default function ContactForm(props) {
               className="label-check"
               onChange={(e) => {
                 e.stopPropagation();
-                // setTransportNeeded(!transportNeeded);
                 dispatch(setTransportNeeded(!isTransportNeeded));
               }}
             >
@@ -555,10 +490,3 @@ export default function ContactForm(props) {
     </div>
   );
 }
-
-// <Checkbox checked={transportNeeded} label="Transport needed" onClick={(e) => {
-//   e.stopPropagation();setTransportNeeded(!transportNeeded)}}/>
-// <div className="input-field-container">
-//   <Checkbox checked={isDateFlexible} label="Is date flexible?" onClick={(e) => {
-//     e.stopPropagation();setIsDateFlexible(!isDateFlexible)}}/>
-// </div>

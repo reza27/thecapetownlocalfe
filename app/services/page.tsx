@@ -45,7 +45,6 @@ export async function getServicesData() {
     `,
     fetchPolicy: "no-cache",
   });
-  console.log("data about>>>", data);
   return {
     props: {
       data: data,
