@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import ImageSlider from "../../components/image-slider";
 import Image from "next/image";
 import { Button } from "@material-tailwind/react";
@@ -34,27 +33,16 @@ import {
 
 import Head from "next/head";
 import { Metadata } from "next";
-import Tours from "../tours/tours-page";
 import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Services",
 };
 
-// type About = {
-//   id: String,
-//   title: String,
-//   featureImage: String,
-//   content: JSON,
-//   guides: [Guide],
-//   guidesCount: Int
-// };
-
 const guideImageStyle = {
   objectFit: "cover",
   height: "400px",
   width: "100%",
-  //padding:'15px',
   overflow: "hidden",
 };
 
@@ -102,17 +90,6 @@ export default function Services(aData) {
     };
   }, []);
 
-  // <div className="header">
-  //   <h1 className="drop-shadow-md">{data.about.title}</h1>
-  //
-  // <Image
-  //   loader={ImageLoader}
-  //   src={data.about.featureImage.url}
-  //    width={100}
-  //    height={100}
-  //    style={featureImageStyle}/>
-  // </div>
-
   return (
     <>
       <Head>
@@ -139,15 +116,12 @@ export default function Services(aData) {
                   <Button
                     className="enquire-button"
                     onClick={() => {
-                      //  document.getElementById('tour-contact-form').scrollIntoView();
                       $("html").animate(
                         {
                           scrollTop: $("#tour-contact-form").offset().top - 100,
                         },
                         1000
                       );
-                      //var top = document.getElementById('tour-contact-form').offsetTop + $('#tour-contact-form').height() - 150; //Getting Y of target element
-                      //window.scrollTo(0, top);
                     }}
                   >
                     Enquire now

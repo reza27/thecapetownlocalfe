@@ -1,5 +1,4 @@
 #footer {
-
   display: flex;
   position: relative;
   height: 300px;
@@ -9,9 +8,9 @@
   padding: 0 70px;
 
   @media only screen and (max-width: 768px) {
-      flex-direction: column;
-      height: auto;
-      padding: 40px 0;
+    flex-direction: column;
+    height: auto;
+    padding: 40px 0;
   }
 
   a {
@@ -33,10 +32,8 @@
     padding-bottom: 10px;
   }
 
-
-
   .links {
-    height:100px;
+    height: 100px;
     flex: 2;
     display: flex;
     flex-direction: column;
@@ -44,23 +41,23 @@
     padding-left: 70px;
 
     @media only screen and (max-width: 768px) {
-        align-items: center;
-        justify-content: center;
-        padding-left: 0;
-        padding-bottom: 30px;
+      align-items: center;
+      justify-content: center;
+      padding-left: 0;
+      padding-bottom: 30px;
     }
 
     ul {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
 
-        @media only screen and (max-width: 768px) {
-            align-items: center;
-        }
+      @media only screen and (max-width: 768px) {
+        align-items: center;
+      }
 
       a {
-        font-weight:300;
+        font-weight: 300;
         font-size: 14px;
         color: white;
       }
@@ -75,9 +72,9 @@
     align-items: flex-start;
 
     @media only screen and (max-width: 768px) {
-        justify-content: center;
-        align-items: center;
-        padding: 30px 0;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 0;
     }
 
     .email {
@@ -100,19 +97,15 @@
             height: 14px;
             padding-top: 1px;
             filter: brightness(0) invert(1);
-
           }
 
           @media only screen and (max-width: 768px) {
             &:first-child {
-                margin-right: 10px;
+              margin-right: 10px;
             }
-
           }
-
         }
       }
-
     }
   }
 }

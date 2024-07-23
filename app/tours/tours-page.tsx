@@ -30,24 +30,17 @@ import {
   faArrowLeft,
   faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
-// type Activity = {
-//     id: string;
-//     title: string;
-//     activityItemHeading: ActivityItemHeading
-// };
+
 import Head from "next/head";
 import ImageSlider from "../../components/image-slider";
 import { IActivity } from "../../types/IActivity";
 import dynamic from "next/dynamic";
+
 import { Metadata } from "next";
-// import { Metadata } from 'next'
-// import HomePage from "../home-page";
-// import {IActivity} from "../../types/IActivity";
 
-// const metadata: Metadata = {
-//     title: 'Tours'
-// }
-
+export const metadata: Metadata = {
+  title: "Tours",
+};
 export default function Tours(aData) {
   const data = aData.data.props.data;
 
@@ -62,7 +55,6 @@ export default function Tours(aData) {
     objectFit: "cover",
     height: "300px",
     width: "100%",
-    //  overflow: 'hidden'
   };
 
   let firstTab = data.activities[0]?.activityItemHeading[0].title.toLowerCase();
@@ -191,7 +183,6 @@ export default function Tours(aData) {
                             <Button
                               className="enquire-button"
                               onClick={() => {
-                                //  document.getElementById('tour-contact-form').scrollIntoView();
                                 $("html").animate(
                                   {
                                     scrollTop:
@@ -200,8 +191,6 @@ export default function Tours(aData) {
                                   },
                                   1000
                                 );
-                                //var top = document.getElementById('tour-contact-form').offsetTop + $('#tour-contact-form').height() - 150; //Getting Y of target element
-                                //window.scrollTo(0, top);
                               }}
                             >
                               Enquire now

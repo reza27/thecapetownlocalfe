@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import $ from "jquery";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import Image from "next/image";
