@@ -44,7 +44,6 @@ export default function RootLayout({
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Alexandria&family=Roboto:wght@300;500;700;800&display=swap"
             rel="stylesheet"
           />
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAitjjkU75KclxN66oxm8q2_oMMPY4fA0E&libraries=places"></script>
         </head>
         <body>
           <Navbar />
