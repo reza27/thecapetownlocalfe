@@ -10,68 +10,62 @@
     border-radius: 2px;
     position: absolute;
     bottom: 10px;
-    //top: 0;
-    //margin: auto;
     z-index: 5;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     cursor: pointer;
     opacity: 0.9;
-    //border: 1px solid white;
 
     svg {
       color: #333;
     }
 
     &:hover {
-        opacity: 1;
+      opacity: 1;
     }
   }
 
-    .slider-button {
-      &.disabled {
-        cursor: default;
-        opacity: 0.9;
-      }
+  .slider-button {
+    &.disabled {
+      cursor: default;
+      opacity: 0.9;
     }
+  }
 
-    .left-button {
-      width: 30px;
-      svg {
-        color: #333;
-      }
-      //border: 1px solid #333;
-      @media only screen and (max-width: 768px) {
-          left: 10px;
-      }
-
-      left: -40px;
+  .left-button {
+    width: 30px;
+    svg {
+      color: #333;
     }
-
-    .right-button {
-      background: white;
+    @media only screen and (max-width: 768px) {
       left: 10px;
-
-      @media only screen and (max-width: 768px) {
-          left: 50px;
-      }
     }
 
-    .panel-images-slider {
-      //width: 300%;
-      height: 550px;
-      display: flex;
-      position: relative;
-      transition: all 0.3s;
+    left: -40px;
+  }
 
+  .right-button {
+    background: white;
+    left: 10px;
 
-      .panel-image {
-        width: 100%;
-        height:100%;
-        flex: 1 0 100%;
-        background-size: cover;
-      }
+    @media only screen and (max-width: 768px) {
+      left: 50px;
+    }
+  }
 
+  .panel-images-slider {
+    //width: 300%;
+    height: 550px;
+    display: flex;
+    position: relative;
+    transition: all 0.3s;
+
+    .panel-image {
+      width: 100%;
+      height: 100%;
+      flex: 1 0 100%;
+      background-size: cover;
+    }
   }
 }

@@ -65,18 +65,7 @@ export default function ContactForm(props) {
   const dispatch = useAppDispatch();
 
   const { selectOptions } = props;
-  //const [transportNeeded, setTransportNeeded] = useState(false);
-  //const [flexibleDate, setFlexibleDate] = useState(true);
-  //const [isDateFlexible, setIsDateFlexible] = useState(false);
-  //const [canSubmit, setCanSubmit] = useState(false);
   const [messageSubmitted, setMessageSubmitted] = useState(false);
-  //const [emailError, setEmailError] = useState(false);
-  //const [subjectError, setSubjectError] = useState(false);
-  //const [nameError, setNameError] = useState(false);
-  // const [phoneError, setPhoneError] = useState(false);
-  //const [startDate, setStartDate] = useState(new Date());
-  const inputRef = useRef();
-  const autoCompleteRef = useRef();
   const { countries } = useCountries();
   const [country, setCountry] = React.useState(0);
   const { name, flags, countryCallingCode } = countries[country];
@@ -87,9 +76,6 @@ export default function ContactForm(props) {
   };
 
   const onSubmit = async (e) => {
-    //e.preventDefault();
-    //if (canSubmit) {
-
     let selectedDate = new Date(startDate);
     let month = selectedDate.getUTCMonth() + 1; //months from 1-12
     let day = selectedDate.getUTCDate();
@@ -180,7 +166,6 @@ export default function ContactForm(props) {
     });
 
     setMessageSubmitted(true);
-    //}
   };
 
   const validateInputFields = (input) => {
@@ -203,10 +188,8 @@ export default function ContactForm(props) {
 
   const validate = () => {
     if (nameVal && emailVal && mobileVal && subjectVal) {
-      //setCanSubmit(true);
       dispatch(setCanSubmit(true));
     } else {
-      //setCanSubmit(false);
       dispatch(setCanSubmit(false));
     }
   };

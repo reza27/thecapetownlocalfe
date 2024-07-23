@@ -20,56 +20,46 @@
     border-radius: 2px;
     position: absolute;
     bottom: 25px;
-    //top: 0;
-    //margin: auto;
     z-index: 5;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     cursor: pointer;
     opacity: 0.9;
-    //border: 1px solid white;
 
     svg {
       color: #333;
     }
 
     &:hover {
-        opacity: 1;
+      opacity: 1;
     }
   }
 
-    .slider-button {
-      &.disabled {
-        cursor: default;
-        opacity: 0.9;
-      }
+  .slider-button {
+    &.disabled {
+      cursor: default;
+      opacity: 0.9;
+    }
+  }
+
+  .left-button {
+    width: 30px;
+    svg {
+      color: #333;
     }
 
-    .left-button {
-      width: 30px;
-      svg {
-        color: #333;
-      }
-      //border: 1px solid #333;
-      //@media only screen and (max-width: 768px) {
-          left: 25px;
-      //}
+    left: 25px;
+  }
 
-      //left: -40px;
+  .right-button {
+    background: #dceaf6;
+    svg {
+      color: #333;
     }
 
-    .right-button {
-      background: #dceaf6;
-      svg {
-        color: #333;
-      }
-      //left: 10px;
-
-      //@media only screen and (max-width: 768px) {
-          left: 65px;
-      //}
-    }
+    left: 65px;
+  }
 
   .review {
     width: 100%;
@@ -93,7 +83,6 @@
 
     h3 {
       margin-bottom: 15px;
-      //color: white;
     }
     .stars {
       display: flex;
@@ -107,7 +96,6 @@
       font-size: 12px;
       max-height: 110px;
       overflow: scroll;
-      //color: white;
       opacity: 0.8;
     }
   }

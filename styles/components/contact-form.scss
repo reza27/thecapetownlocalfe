@@ -103,8 +103,6 @@
   }
 
   .input-field-container.address {
-    //display: none;
-
     &.show {
       display: block;
     }
@@ -188,7 +186,6 @@
 
     &.disabled {
       cursor: not-allowed;
-      //background: #1454a1;
       background: #1454a1;
     }
   }
