@@ -46,14 +46,9 @@ export default function Tours(aData) {
   let firstTab = data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
-  const [formOpen, setFormOpen] = useState(false);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
-  };
-
-  const handleFormOpen = (value) => {
-    setFormOpen(formOpen === value ? 0 : value);
   };
 
   const Tabs = (aItem) => {
