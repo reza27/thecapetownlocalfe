@@ -13,7 +13,6 @@ export default function ReviewSlider(props) {
   const { reviews, id }: { reviews: IReview[]; id: string } = props;
   const leftButton = useRef<HTMLInputElement | null>(null);
   const rightButton = useRef<HTMLInputElement | null>(null);
-  const panelReviewSlider = useRef<HTMLInputElement | null>(null);
   const [xpos, setXpos] = useState<number>(0);
   const currIndex = useRef<number>(0);
 
