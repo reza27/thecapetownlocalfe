@@ -6,6 +6,10 @@
   border-radius: 6px;
   border: 1px solid #dceaf6;
 
+  .hide {
+    display: none;
+  }
+
   .panel-review-slider {
     height: 100%;
     display: flex;
