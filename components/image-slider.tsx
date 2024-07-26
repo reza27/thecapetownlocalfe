@@ -2,30 +2,28 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import $ from "jquery";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function ImageSlider(props) {
   const { images, id } = props;
-  let currIndex = 0;
+  const leftButton = useRef<HTMLInputElement | null>(null);
+  const rightButton = useRef<HTMLInputElement | null>(null);
+  const [xpos, setXpos] = useState<number>(0);
+  const currIndex = useRef<number>(0);
+
+  //let currIndex = 0;
   const sliderStyle = {
     width: images.length * 100 + "%",
   };
 
   const setButtonStates = () => {
-    $("#" + id)
-      .find(".left-button")
-      .removeClass("disabled");
-    $("#" + id)
-      .find(".right-button")
-      .removeClass("disabled");
-    if (currIndex === 0) {
-      $("#" + id)
-        .find(".left-button")
-        .addClass("disabled");
-    } else if (currIndex === images.length - 1) {
-      $("#" + id)
-        .find(".right-button")
-        .addClass("disabled");
+    leftButton.current?.classList.remove("disabled");
+    rightButton.current?.classList.remove("disabled");
+
+    if (currIndex.current === 0) {
+      leftButton.current?.classList.add("disabled");
+    } else if (currIndex.current === images.length - 1) {
+      rightButton.current?.classList.add("disabled");
     }
   };
 
@@ -43,39 +41,46 @@ export default function ImageSlider(props) {
   }, []);
 
   const onLeftClick = () => {
-    if (currIndex > 0) {
-      currIndex--;
+    if (currIndex.current > 0) {
+      currIndex.current--;
+      let xposVal = xpos;
+      setXpos((xposVal += 100));
     }
-    let xpos = -(100 * currIndex);
     setButtonStates();
-    $("#" + id)
-      .find(".panel-images-slider")
-      .css("transform", "translateX(" + xpos + "%)");
   };
 
   const onRightClick = () => {
-    if (currIndex < images.length - 1) {
-      currIndex++;
+    if (currIndex.current < images.length - 1) {
+      currIndex.current++;
+      let xposVal = xpos;
+      setXpos((xposVal -= 100));
     }
-    let xpos = -(100 * currIndex);
     setButtonStates();
-    $("#" + id)
-      .find(".panel-images-slider")
-      .css("transform", "translateX(" + xpos + "%)");
   };
 
   return (
     <div id={id} className="image-slider">
-      <div className="left-button slider-button" onClick={() => onLeftClick()}>
+      <div
+        ref={leftButton}
+        className="left-button slider-button"
+        onClick={() => onLeftClick()}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </div>
       <div
+        ref={rightButton}
         className="right-button slider-button"
         onClick={() => onRightClick()}
       >
         <FontAwesomeIcon icon={faArrowRight} />
       </div>
-      <div className="panel-images-slider" style={sliderStyle}>
+      <div
+        className="panel-images-slider"
+        style={{
+          width: images.length * 100 + "%",
+          transform: `translateX(${xpos}%)`,
+        }}
+      >
         {images.map((image, index) => (
           <div
             key={image.id + "-" + index}

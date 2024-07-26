@@ -1,21 +1,21 @@
 "use client";
-import ContactForm from "../components/contact-form";
 import React, { useState, useEffect } from "react";
 import $ from "jquery";
 
 import Image from "next/image";
-import ReviewSlider from "../components/review-slider";
+import Slider from "../components/slider";
 import ImageLoader from "../components/image-loader";
-import { DocumentRenderer } from "@keystone-6/document-renderer";
 import { Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTag, faClock, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Head from "next/head";
 
 import { Metadata } from "next";
 import { IReview } from "../types/IReview";
-import { IHomeTour, IHomeTours } from "../types/IHomeTour";
+import { IHomeTours } from "../types/IHomeTour";
+import Reviews from "../components/reviews";
+import { SliderContext } from "../lib/slider-context";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -212,7 +212,16 @@ export default function Home({ data }: { data }) {
             </a>
           </div>
           <div className="right">
-            <ReviewSlider reviews={reviews} id="reviews-slider" />
+            <SliderContext.Provider value={reviews}>
+              <Slider
+                id="reviews-slider"
+                containerClass="review-slider"
+                panelClass="panel-review-slider"
+                type="reviews"
+              >
+                <Reviews />
+              </Slider>
+            </SliderContext.Provider>
           </div>
         </div>
       </div>
