@@ -2,7 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import $ from "jquery";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect } from "react";
 
 export default function ImageSlider(props) {
   const { images, id } = props;
