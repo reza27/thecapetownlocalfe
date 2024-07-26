@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { IBookingRequest } from "../../../types/IBookingRequest";
 
 export const contactSlice = createSlice({
   name: "contact",
@@ -17,6 +18,7 @@ export const contactSlice = createSlice({
     subject: "",
     address: "",
     message: "",
+    bookingRequestSubmitted: false,
   },
   reducers: {
     setTransportNeeded: (state, action) => {
@@ -73,7 +75,40 @@ export const contactSlice = createSlice({
       state.message = action.payload;
     },
   },
+  extraReducers(builder) {
+    builder
+      .addCase(postBookingRequest.pending, (state) => {
+        console.log("loading...");
+      })
+      .addCase(postBookingRequest.fulfilled, (state, action) => {
+        state.bookingRequestSubmitted = action.payload;
+      });
+  },
 });
+
+export const postBookingRequest = createAsyncThunk(
+  "contact/postBookingRequest",
+  async (data: IBookingRequest) => {
+    const JSONdata = JSON.stringify(data);
+
+    const endpoint = process.env.NEXT_PUBLIC_PROD_URL + "/api/mail";
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSONdata,
+    };
+
+    const response = await fetch(endpoint, options);
+
+    const result = await response.json();
+    console.log("result", result);
+
+    return true;
+  }
+);
 
 // Action creators are generated for each case reducer function
 export const {

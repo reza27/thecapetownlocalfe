@@ -1,5 +1,7 @@
 "use client";
 
+import { sendGAEvent } from "@next/third-parties/google";
+
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import {
   setTransportNeeded,
@@ -16,6 +18,7 @@ import {
   setSubject,
   setAddress,
   setMessage,
+  postBookingRequest,
 } from "../lib/features/contact/contactSlice";
 
 import { useCountries } from "use-react-countries";
@@ -34,6 +37,8 @@ import $ from "jquery";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { IBookingRequest } from "../types/IBookingRequest";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -97,7 +102,7 @@ export default function ContactForm(props) {
 
     let formattedDate = day + " " + monthNames[month - 1] + " " + year;
 
-    let data = {
+    let data: IBookingRequest = {
       name: nameVal,
       email: emailVal,
       subject: subjectVal,
@@ -145,23 +150,9 @@ export default function ContactForm(props) {
       return;
     }
 
-    const JSONdata = JSON.stringify(data);
+    dispatch(postBookingRequest(data));
 
-    const endpoint = process.env.NEXT_PUBLIC_PROD_URL + "/api/mail";
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSONdata,
-    };
-
-    const response = await fetch(endpoint, options);
-
-    const result = await response.json();
-
-    gtag("event", "submit_form", {
+    sendGAEvent("event", "submit_form", {
       action: "Form submit",
     });
 
@@ -455,7 +446,7 @@ export default function ContactForm(props) {
         href="https://wa.me/27789803335"
         target="_blank"
         onClick={() => {
-          gtag("event", "whatsapp", {
+          sendGAEvent("event", "whatsapp", {
             action: "WhatsApp opened",
           });
         }}
