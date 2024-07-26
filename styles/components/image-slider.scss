@@ -3,6 +3,10 @@
   display: flex;
   overflow: hidden;
 
+  .hide {
+    display: none;
+  }
+
   .slider-button {
     background: $yellowTheme;
     width: 30px;
@@ -55,7 +59,6 @@
   }
 
   .panel-images-slider {
-    //width: 300%;
     height: 550px;
     display: flex;
     position: relative;

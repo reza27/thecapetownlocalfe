@@ -1,16 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@material-tailwind/react";
 import $ from "jquery";
-import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from "@material-tailwind/react";
+
 import React, { useState, useEffect } from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 const ContactForm = dynamic(() => import("../../components/contact-form"), {
@@ -22,21 +14,15 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMountainSun,
-  faMountainCity,
-  faClock,
-  faTag,
-  faArrowLeft,
-  faArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClock, faTag } from "@fortawesome/free-solid-svg-icons";
 
 import Head from "next/head";
-import ImageSlider from "../../components/image-slider";
-import { IActivity } from "../../types/IActivity";
 import dynamic from "next/dynamic";
 
 import { Metadata } from "next";
+import Slider from "../../components/slider";
+import TourImages from "../../components/tour-images";
+import { SliderContext } from "../../lib/slider-context";
 
 export const metadata: Metadata = {
   title: "Tours",
@@ -198,10 +184,16 @@ export default function Tours(aData) {
                           </div>
                         </div>
                         <div className="panel-images">
-                          <ImageSlider
-                            images={activityItem.images}
-                            id={activityItem.id}
-                          />
+                          <SliderContext.Provider value={activityItem.images}>
+                            <Slider
+                              id={activityItem.id}
+                              containerClass="image-slider"
+                              panelClass="panel-images-slider"
+                              type="tours"
+                            >
+                              <TourImages />
+                            </Slider>
+                          </SliderContext.Provider>
                         </div>
                       </div>
                     )
