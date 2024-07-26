@@ -1,7 +1,5 @@
 "use client";
 
-import ImageSlider from "../../components/image-slider";
-import Image from "next/image";
 import { Button } from "@material-tailwind/react";
 import $ from "jquery";
 import {
@@ -11,7 +9,7 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 const ContactForm = dynamic(() => import("../../components/contact-form"), {
   ssr: false,
@@ -34,6 +32,9 @@ import {
 import Head from "next/head";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
+import Slider from "../../components/slider";
+import { SliderContext } from "../../lib/slider-context";
+import TourImages from "../../components/tour-images";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -129,7 +130,16 @@ export default function Services(aData) {
                 </div>
               </div>
               <div className="panel-images">
-                <ImageSlider images={serviceItem.images} id={serviceItem.id} />
+                <SliderContext.Provider value={serviceItem.images}>
+                  <Slider
+                    id={serviceItem.id}
+                    containerClass="image-slider"
+                    panelClass="panel-images-slider"
+                    type="tours"
+                  >
+                    <TourImages />
+                  </Slider>
+                </SliderContext.Provider>
               </div>
             </div>
           ))}
