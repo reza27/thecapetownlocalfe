@@ -5,34 +5,25 @@ import {
   faArrowRight,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
-import $ from "jquery";
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { IReview } from "../types/IReview";
 
 export default function ReviewSlider(props) {
   const { reviews, id }: { reviews: IReview[]; id: string } = props;
-  let currIndex = 0;
-
-  const sliderStyle = {
-    width: reviews.length * 100 + "%",
-  };
+  const leftButton = useRef<HTMLInputElement | null>(null);
+  const rightButton = useRef<HTMLInputElement | null>(null);
+  const [xpos, setXpos] = useState<number>(0);
+  const currIndex = useRef<number>(0);
 
   const setButtonStates = () => {
-    $("#" + id)
-      .find(".left-button")
-      .removeClass("disabled");
-    $("#" + id)
-      .find(".right-button")
-      .removeClass("disabled");
-    if (currIndex === 0) {
-      $("#" + id)
-        .find(".left-button")
-        .addClass("disabled");
-    } else if (currIndex === reviews.length - 1) {
-      $("#" + id)
-        .find(".right-button")
-        .addClass("disabled");
+    leftButton.current?.classList.remove("disabled");
+    rightButton.current?.classList.remove("disabled");
+
+    if (currIndex.current === 0) {
+      leftButton.current?.classList.add("disabled");
+    } else if (currIndex.current === reviews.length - 1) {
+      rightButton.current?.classList.add("disabled");
     }
   };
 
@@ -40,36 +31,28 @@ export default function ReviewSlider(props) {
     setButtonStates();
 
     if (reviews.length <= 1) {
-      $("#" + id)
-        .find(".left-button")
-        .hide();
-      $("#" + id)
-        .find(".right-button")
-        .hide();
+      leftButton.current?.classList.add("hide");
+
+      rightButton.current?.classList.add("hide");
     }
   }, []);
 
-  let xpos = 0;
   const onLeftClick = () => {
-    if (currIndex > 0) {
-      currIndex--;
-      xpos += 100 / reviews.length;
+    if (currIndex.current > 0) {
+      currIndex.current--;
+      let xposVal = xpos;
+      setXpos((xposVal += 100 / reviews.length));
     }
     setButtonStates();
-    $("#" + id)
-      .find(".panel-review-slider")
-      .css("transform", "translateX(" + xpos + "%)");
   };
 
   const onRightClick = () => {
-    if (currIndex < reviews.length - 1) {
-      currIndex++;
-      xpos -= 100 / reviews.length;
+    if (currIndex.current < reviews.length - 1) {
+      currIndex.current++;
+      let xposVal = xpos;
+      setXpos((xposVal -= 100 / reviews.length));
     }
     setButtonStates();
-    $("#" + id)
-      .find(".panel-review-slider")
-      .css("transform", "translateX(" + xpos + "%)");
   };
   let getStars = (numStars) => {
     let stars = [];
@@ -86,16 +69,27 @@ export default function ReviewSlider(props) {
 
   return (
     <div id={id} className="review-slider">
-      <div className="left-button slider-button" onClick={() => onLeftClick()}>
+      <div
+        ref={leftButton}
+        className="left-button slider-button"
+        onClick={() => onLeftClick()}
+      >
         <FontAwesomeIcon icon={faArrowLeft} />
       </div>
       <div
+        ref={rightButton}
         className="right-button slider-button"
         onClick={() => onRightClick()}
       >
         <FontAwesomeIcon icon={faArrowRight} />
       </div>
-      <div className="panel-review-slider" style={sliderStyle}>
+      <div
+        className="panel-review-slider"
+        style={{
+          width: reviews.length * 100 + "%",
+          transform: `translateX(${xpos}%)`,
+        }}
+      >
         {reviews.map((review, index) => (
           <div key={review.name} className="review">
             <div className="inner-review">
