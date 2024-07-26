@@ -104,8 +104,6 @@ export const postBookingRequest = createAsyncThunk(
     const response = await fetch(endpoint, options);
 
     const result = await response.json();
-    console.log("result", result);
-
     return true;
   }
 );

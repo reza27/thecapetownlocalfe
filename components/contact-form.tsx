@@ -1,7 +1,6 @@
 "use client";
 
 import { sendGAEvent } from "@next/third-parties/google";
-
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import {
   setTransportNeeded,
@@ -31,13 +30,12 @@ import {
 
 import { Input, Radio } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
-import { Button, Checkbox, Select, Option } from "@material-tailwind/react";
+import { Button, Select, Option } from "@material-tailwind/react";
 import React, { useState, useEffect, useRef } from "react";
 import $ from "jquery";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { IBookingRequest } from "../types/IBookingRequest";
 
 const waImageStyle = {
