@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect } from "react";
-import $ from "jquery";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import Image from "next/image";
 import ImageLoader from "../../components/image-loader";
@@ -63,18 +62,6 @@ export default function About(aData) {
       );
     }
   };
-
-  useEffect(() => {
-    const handleScroll = (event) => {
-      $("#navbar").addClass("scrolled");
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <>

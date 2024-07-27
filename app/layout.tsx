@@ -1,7 +1,5 @@
 import "../styles/globals.scss";
-import Layout from "../components/layout";
 import "@fortawesome/fontawesome-svg-core/styles.css"; //importing font awesome css
-import { config } from "@fortawesome/fontawesome-svg-core";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";

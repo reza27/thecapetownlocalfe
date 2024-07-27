@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import $ from "jquery";
 
 import Image from "next/image";
 import Slider from "../components/slider";
@@ -89,8 +88,6 @@ export default function Home({ data }: { data }) {
   };
 
   useEffect(() => {
-    $("#navbar").addClass("scrolled");
-
     if (window.innerWidth <= 768) {
       setIsMobi(true);
     }

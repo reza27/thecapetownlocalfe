@@ -1,7 +1,6 @@
 "use client";
 import ContactForm from "../../components/contact-form";
 import React, { useState, useEffect } from "react";
-import $ from "jquery";
 import Head from "next/head";
 
 import { Metadata } from "next";
@@ -14,7 +13,7 @@ export default function Contact(aData) {
   const data = aData.data.props.data;
 
   const getFormOptions = (activity) => {
-    let ItemsArr = [];
+    let ItemsArr: any[] = [];
     let activityItemHeadings = activity?.activityItemHeading;
     for (var i = 0; i < activityItemHeadings?.length; i++) {
       for (var j = 0; j < activityItemHeadings[i]?.activityItems.length; j++) {
@@ -23,10 +22,6 @@ export default function Contact(aData) {
     }
     return ItemsArr;
   };
-
-  useEffect(() => {
-    $("#navbar").addClass("scrolled");
-  }, []);
 
   return (
     <>
