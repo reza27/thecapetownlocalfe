@@ -1,7 +1,7 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useReducer, useRef } from "react";
 import { useSliderContext } from "../lib/slider-context";
 
 export default function Slider({
@@ -15,76 +15,105 @@ export default function Slider({
 
   const leftButton = useRef<HTMLInputElement | null>(null);
   const rightButton = useRef<HTMLInputElement | null>(null);
-  const [xpos, setXpos] = useState<number>(0);
-  const [leftButtonClasses, setLeftButtonClasses] = useState<string>(
-    "left-button slider-button"
-  );
-  const [rightButtonClasses, setRightButtonClasses] = useState<string>(
-    "right-button slider-button"
-  );
-  const currIndex = useRef<number>(0);
-
   const REVIEWS: string = "reviews";
 
-  const setButtonStates = () => {
-    setLeftButtonClasses("left-button slider-button hide");
-    setRightButtonClasses("right-button slider-button hide");
+  interface State {
+    currentIndex: number;
+    xpos: number;
+    leftButtonClasses: string;
+    rightButtonClasses: string;
+  }
 
-    if (currIndex.current === 0) {
-      setLeftButtonClasses("left-button slider-button disabled");
-    } else if (currIndex.current === sliderObjects.length - 1) {
-      setRightButtonClasses("right-button slider-button disabled");
+  interface Action {
+    actionType: "increment" | "decrement" | "hideButtons";
+  }
+
+  const reducer = (state: State, action: Action) => {
+    const { actionType } = action;
+
+    switch (actionType) {
+      case "increment": {
+        const newIndex = state.currentIndex + 1;
+        const xPosVal =
+          type === REVIEWS
+            ? state.xpos - 100 / sliderObjects.length
+            : state.xpos - 100;
+
+        return {
+          ...state,
+          currentIndex: newIndex,
+          xpos: xPosVal,
+          rightButtonClasses:
+            newIndex === sliderObjects.length - 1
+              ? "right-button slider-button disabled"
+              : "right-button slider-button",
+          leftButtonClasses: "left-button slider-button",
+        };
+      }
+      case "decrement": {
+        const newIndex = state.currentIndex - 1;
+        const xPosVal =
+          type === REVIEWS
+            ? state.xpos + 100 / sliderObjects.length
+            : state.xpos + 100;
+
+        return {
+          ...state,
+          currentIndex: newIndex,
+          xpos: xPosVal,
+          rightButtonClasses: "right-button slider-button",
+          leftButtonClasses:
+            newIndex === 0
+              ? "left-button slider-button disabled"
+              : "left-button slider-button",
+        };
+      }
+      case "hideButtons": {
+        return {
+          ...state,
+          rightButtonClasses: "right-button slider-button hide",
+          leftButtonClasses: "left-button slider-button hide",
+        };
+      }
+      default:
+        return state;
     }
   };
+
+  const [state, dispatch] = useReducer(reducer, {
+    currentIndex: 0,
+    xpos: 0,
+    leftButtonClasses: "left-button slider-button",
+    rightButtonClasses: "right-button slider-button",
+  });
 
   useEffect(() => {
-    setButtonStates();
-
     if (sliderObjects.length <= 1) {
-      setLeftButtonClasses("left-button slider-button hide");
-      setRightButtonClasses("right-button slider-button hide");
+      dispatch({ actionType: "hideButtons" });
     }
   }, []);
-
-  const onLeftClick = () => {
-    if (currIndex.current > 0) {
-      currIndex.current--;
-      let xposVal = xpos;
-      if (type === REVIEWS) {
-        setXpos((xposVal += 100 / sliderObjects.length));
-      } else {
-        setXpos((xposVal += 100));
-      }
-    }
-    setButtonStates();
-  };
-
-  const onRightClick = () => {
-    if (currIndex.current < sliderObjects.length - 1) {
-      currIndex.current++;
-      let xposVal = xpos;
-      if (type === REVIEWS) {
-        setXpos((xposVal -= 100 / sliderObjects.length));
-      } else {
-        setXpos((xposVal -= 100));
-      }
-    }
-    setButtonStates();
-  };
 
   return (
     <div id={id} className={containerClass}>
       <div
         ref={leftButton}
-        className={leftButtonClasses}
-        onClick={() => onLeftClick()}
+        className={state.leftButtonClasses}
+        onClick={() => {
+          if (state.currentIndex > 0) {
+            dispatch({ actionType: "decrement" });
+          }
+        }}
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </div>
       <div
         ref={rightButton}
-        className={rightButtonClasses}
-        onClick={() => onRightClick()}
+        className={state.rightButtonClasses}
+        onClick={() => {
+          if (state.currentIndex < sliderObjects.length - 1) {
+            dispatch({ actionType: "increment" });
+          }
+        }}
       >
         <FontAwesomeIcon icon={faArrowRight} />
       </div>
@@ -92,7 +121,7 @@ export default function Slider({
         className={panelClass}
         style={{
           width: `${sliderObjects.length * 100}%`,
-          transform: `translateX(${xpos}%)`,
+          transform: `translateX(${state.xpos}%)`,
         }}
       >
         {children}
