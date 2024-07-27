@@ -51,12 +51,11 @@ export default function Navbar() {
         <div className="links">
           <ul>
             {links.map((val: ILink) => (
-              <li>
+              <li key={val.key}>
                 <Link
                   href={val.href}
                   onClick={linkSelected.bind(this, val)}
                   className={activeClass === val.id ? "selected" : ""}
-                  key={val.key}
                 >
                   {val.text}
                 </Link>
@@ -81,12 +80,11 @@ export default function Navbar() {
       <div ref={mobiLinks} className="mobi-links" style={mobiLinksPosition}>
         <ul>
           {links.map((val) => (
-            <li>
+            <li key={val.mobiKey}>
               <Link
                 href={val.href}
                 onClick={linkSelected.bind(this, val)}
                 className={activeClass === val.id ? "selected" : ""}
-                key={val.mobiKey}
               >
                 {val.text}
               </Link>

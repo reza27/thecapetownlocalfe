@@ -79,7 +79,7 @@ export default function Tours(aData) {
   };
 
   const getFormOptions = (activity) => {
-    let ItemsArr = [];
+    let ItemsArr: any = [];
     let activityItemHeadings = activity.activityItemHeading;
     for (var i = 0; i < activityItemHeadings.length; i++) {
       for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
@@ -90,8 +90,6 @@ export default function Tours(aData) {
   };
 
   useEffect(() => {
-    $("#navbar").addClass("scrolled");
-
     function selectTab() {
       var url = new URL(window.location.href);
       var tab1 = url.searchParams.get("tab")?.toLowerCase();

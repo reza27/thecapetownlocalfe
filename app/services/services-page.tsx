@@ -2,32 +2,13 @@
 
 import { Button } from "@material-tailwind/react";
 import $ from "jquery";
-import {
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-} from "@material-tailwind/react";
-import React, { useEffect } from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 const ContactForm = dynamic(() => import("../../components/contact-form"), {
   ssr: false,
 });
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMountainSun,
-  faMountainCity,
-  faClock,
-  faTag,
-  faArrowLeft,
-  faArrowRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTag } from "@fortawesome/free-solid-svg-icons";
 
 import Head from "next/head";
 import { Metadata } from "next";
@@ -78,18 +59,6 @@ export default function Services(aData) {
     }
     return ItemsArr;
   };
-
-  useEffect(() => {
-    const handleScroll = (event) => {
-      $("#navbar").addClass("scrolled");
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   return (
     <>
