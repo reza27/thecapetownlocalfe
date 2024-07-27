@@ -16,18 +16,24 @@ export default function Slider({
   const leftButton = useRef<HTMLInputElement | null>(null);
   const rightButton = useRef<HTMLInputElement | null>(null);
   const [xpos, setXpos] = useState<number>(0);
+  const [leftButtonClasses, setLeftButtonClasses] = useState<string>(
+    "left-button slider-button"
+  );
+  const [rightButtonClasses, setRightButtonClasses] = useState<string>(
+    "right-button slider-button"
+  );
   const currIndex = useRef<number>(0);
 
   const REVIEWS: string = "reviews";
 
   const setButtonStates = () => {
-    leftButton.current?.classList.remove("disabled");
-    rightButton.current?.classList.remove("disabled");
+    setLeftButtonClasses("left-button slider-button hide");
+    setRightButtonClasses("right-button slider-button hide");
 
     if (currIndex.current === 0) {
-      leftButton.current?.classList.add("disabled");
+      setLeftButtonClasses("left-button slider-button disabled");
     } else if (currIndex.current === sliderObjects.length - 1) {
-      rightButton.current?.classList.add("disabled");
+      setRightButtonClasses("right-button slider-button disabled");
     }
   };
 
@@ -35,8 +41,8 @@ export default function Slider({
     setButtonStates();
 
     if (sliderObjects.length <= 1) {
-      leftButton.current?.classList.add("hide");
-      rightButton.current?.classList.add("hide");
+      setLeftButtonClasses("left-button slider-button hide");
+      setRightButtonClasses("right-button slider-button hide");
     }
   }, []);
 
@@ -70,14 +76,14 @@ export default function Slider({
     <div id={id} className={containerClass}>
       <div
         ref={leftButton}
-        className="left-button slider-button"
+        className={leftButtonClasses}
         onClick={() => onLeftClick()}
       >
         <FontAwesomeIcon icon={faArrowLeft} />
       </div>
       <div
         ref={rightButton}
-        className="right-button slider-button"
+        className={rightButtonClasses}
         onClick={() => onRightClick()}
       >
         <FontAwesomeIcon icon={faArrowRight} />

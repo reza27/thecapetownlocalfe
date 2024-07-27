@@ -12,14 +12,16 @@ export default function Navbar() {
     id: number;
     text: string;
     href: string;
+    key: string;
+    mobiKey: string;
   }
 
   const links: ILink[] = [
-    { id: 1, text: "Home", href: "/" },
-    { id: 2, text: "Tours", href: "/tours" },
-    { id: 3, text: "Services", href: "/services" },
-    { id: 4, text: "About", href: "/about" },
-    { id: 5, text: "Contact", href: "/contact" },
+    { id: 1, key: "01", mobiKey: "001", text: "Home", href: "/" },
+    { id: 2, key: "02", mobiKey: "002", text: "Tours", href: "/tours" },
+    { id: 3, key: "03", mobiKey: "003", text: "Services", href: "/services" },
+    { id: 4, key: "04", mobiKey: "004", text: "About", href: "/about" },
+    { id: 5, key: "05", mobiKey: "005", text: "Contact", href: "/contact" },
   ];
 
   const [activeClass, setActiveClass] = useState(1);
@@ -31,10 +33,6 @@ export default function Navbar() {
       checkBox.current.checked = false;
     }
   };
-
-  useEffect(() => {
-    console.log("activeClass", activeClass);
-  }, [activeClass]);
 
   const onHamburgerClick = () => {
     setOpenMenu(!openMenu);
@@ -58,7 +56,7 @@ export default function Navbar() {
                   href={val.href}
                   onClick={linkSelected.bind(this, val)}
                   className={activeClass === val.id ? "selected" : ""}
-                  key={val.id}
+                  key={val.key}
                 >
                   {val.text}
                 </Link>
@@ -88,7 +86,7 @@ export default function Navbar() {
                 href={val.href}
                 onClick={linkSelected.bind(this, val)}
                 className={activeClass === val.id ? "selected" : ""}
-                key={val.id}
+                key={val.mobiKey}
               >
                 {val.text}
               </Link>
