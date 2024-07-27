@@ -1,25 +1,47 @@
 "use client";
 import Link from "next/link";
-import $ from "jquery";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
+  const [mobiLinksPosition, setMobiLinksPosition] = useState({ top: "-100vh" });
+  const mobiLinks = useRef<HTMLInputElement | null>(null);
+  const checkBox = useRef<HTMLInputElement | null>(null);
 
-  const linkSelected = (link) => {
-    $("#navbar a").removeClass("selected");
-    $(link.target).addClass("selected");
+  interface ILink {
+    id: number;
+    text: string;
+    href: string;
+  }
+
+  const links: ILink[] = [
+    { id: 1, text: "Home", href: "/" },
+    { id: 2, text: "Tours", href: "/tours" },
+    { id: 3, text: "Services", href: "/services" },
+    { id: 4, text: "About", href: "/about" },
+    { id: 5, text: "Contact", href: "/contact" },
+  ];
+
+  const [activeClass, setActiveClass] = useState(1);
+
+  const linkSelected = (event: ILink) => {
+    setActiveClass(event.id);
     onHamburgerClick();
-    $("#check").prop("checked", false);
+    if (checkBox.current) {
+      checkBox.current.checked = false;
+    }
   };
 
+  useEffect(() => {
+    console.log("activeClass", activeClass);
+  }, [activeClass]);
+
   const onHamburgerClick = () => {
-    let isOpen = !openMenu;
     setOpenMenu(!openMenu);
     if (!openMenu) {
-      $(".mobi-links").css("top", "0");
+      setMobiLinksPosition({ top: "0" });
     } else {
-      $(".mobi-links").css("top", "-100vh");
+      setMobiLinksPosition({ top: "-100vh" });
     }
   };
   return (
@@ -30,69 +52,48 @@ export default function Navbar() {
         </Link>
         <div className="links">
           <ul>
-            <li>
-              <Link href="/" onClick={linkSelected}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/tours" onClick={linkSelected}>
-                Tours
-              </Link>
-            </li>
-            <li>
-              <Link href="/services" onClick={linkSelected}>
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" onClick={linkSelected}>
-                About
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" onClick={linkSelected}>
-                Contact
-              </Link>
-            </li>
+            {links.map((val: ILink) => (
+              <li>
+                <Link
+                  href={val.href}
+                  onClick={linkSelected.bind(this, val)}
+                  className={activeClass === val.id ? "selected" : ""}
+                  key={val.id}
+                >
+                  {val.text}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="hamburger-container">
           <label htmlFor="check">
-            <input type="checkbox" id="check" onClick={onHamburgerClick} />
+            <input
+              type="checkbox"
+              ref={checkBox}
+              id="check"
+              onClick={onHamburgerClick}
+            />
             <span></span>
             <span></span>
             <span></span>
           </label>
         </div>
       </div>
-      <div className="mobi-links">
+      <div ref={mobiLinks} className="mobi-links" style={mobiLinksPosition}>
         <ul>
-          <li>
-            <Link href="/" onClick={linkSelected}>
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link href="/tours" onClick={linkSelected}>
-              Tours
-            </Link>
-          </li>
-          <li>
-            <Link href="/services" onClick={linkSelected}>
-              Services
-            </Link>
-          </li>
-          <li>
-            <Link href="/about" onClick={linkSelected}>
-              About
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" onClick={linkSelected}>
-              Contact
-            </Link>
-          </li>
+          {links.map((val) => (
+            <li>
+              <Link
+                href={val.href}
+                onClick={linkSelected.bind(this, val)}
+                className={activeClass === val.id ? "selected" : ""}
+                key={val.id}
+              >
+                {val.text}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
