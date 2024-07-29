@@ -32,7 +32,6 @@ import { Input, Radio } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
 import { Button, Select, Option } from "@material-tailwind/react";
 import React, { useState, useEffect, useRef } from "react";
-import $ from "jquery";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
@@ -162,14 +161,6 @@ export default function ContactForm(props) {
       setTimeout(() => {
         validate();
       }, 100);
-    }
-
-    if (input && input.target.id === "phone") {
-      $(input.target).val(
-        $(input.target)
-          .val()
-          .match(/\d*\.?\d+/)
-      );
     }
 
     validate();

@@ -13,8 +13,8 @@ export default function Slider({
 }) {
   const sliderObjects = useSliderContext();
 
-  const leftButton = useRef<HTMLInputElement | null>(null);
-  const rightButton = useRef<HTMLInputElement | null>(null);
+  const leftButton = useRef<HTMLElement | null>(null);
+  const rightButton = useRef<HTMLElement | null>(null);
   const REVIEWS: string = "reviews";
 
   interface State {

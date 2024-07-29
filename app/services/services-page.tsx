@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@material-tailwind/react";
-import $ from "jquery";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 const ContactForm = dynamic(() => import("../../components/contact-form"), {
   ssr: false,
@@ -16,6 +15,7 @@ import dynamic from "next/dynamic";
 import Slider from "../../components/slider";
 import { SliderContext } from "../../lib/slider-context";
 import TourImages from "../../components/tour-images";
+import { useRef } from "react";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -46,6 +46,7 @@ export default function Services(aData) {
     width: "100%",
     overflow: "hidden",
   };
+  const contactRef = useRef<HTMLElement | null>(null);
 
   const activity = data.activities[0];
 
@@ -86,12 +87,10 @@ export default function Services(aData) {
                   <Button
                     className="enquire-button"
                     onClick={() => {
-                      $("html").animate(
-                        {
-                          scrollTop: $("#tour-contact-form").offset().top - 100,
-                        },
-                        1000
-                      );
+                      contactRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "end",
+                      });
                     }}
                   >
                     Enquire now
@@ -113,7 +112,11 @@ export default function Services(aData) {
             </div>
           ))}
         </div>
-        <div id="tour-contact-form" className="tour-contact-form">
+        <div
+          ref={contactRef}
+          id="tour-contact-form"
+          className="tour-contact-form"
+        >
           <ContactForm selectOptions={getFormOptions(activity)} />
         </div>
       </div>

@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@material-tailwind/react";
-import $ from "jquery";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 const ContactForm = dynamic(() => import("../../components/contact-form"), {
   ssr: false,
@@ -46,6 +45,7 @@ export default function Tours(aData) {
   let firstTab = data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
+  const contactRef = useRef<HTMLElement | null>(null);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -91,19 +91,26 @@ export default function Tours(aData) {
 
   useEffect(() => {
     function selectTab() {
-      var url = new URL(window.location.href);
-      var tab1 = url.searchParams.get("tab")?.toLowerCase();
-      var anchor = url.searchParams.get("anchor")?.toLowerCase();
+      let url = new URL(window.location.href);
+      let tab1 = url.searchParams.get("tab")?.toLowerCase();
+      let anchor = url.searchParams.get("anchor")?.toLowerCase();
 
       if (tab1) {
         setTab(tab1);
         setTimeout(() => {
-          $("html").animate(
-            {
-              scrollTop: $("#" + anchor).offset().top - 100,
-            },
-            1000
-          );
+          if (anchor) {
+            let element = document.getElementById(anchor); // Your target element
+            const headerOffset = 110;
+            const elementPosition = element?.getBoundingClientRect().top;
+            const offsetPosition = elementPosition
+              ? elementPosition + window.scrollY - headerOffset
+              : 0;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: "smooth",
+            });
+          }
         }, 300);
       }
     }
@@ -162,14 +169,10 @@ export default function Tours(aData) {
                             <Button
                               className="enquire-button"
                               onClick={() => {
-                                $("html").animate(
-                                  {
-                                    scrollTop:
-                                      $("#tour-contact-form").offset().top -
-                                      100,
-                                  },
-                                  1000
-                                );
+                                contactRef.current?.scrollIntoView({
+                                  behavior: "smooth",
+                                  block: "end",
+                                });
                               }}
                             >
                               Enquire now
@@ -194,7 +197,11 @@ export default function Tours(aData) {
                 </div>
               ))}
 
-              <div id="tour-contact-form" className="tour-contact-form">
+              <div
+                ref={contactRef}
+                id="tour-contact-form"
+                className="tour-contact-form"
+              >
                 <ContactForm selectOptions={getFormOptions(item)} />
               </div>
               {item.faq.length > 0 ? (
