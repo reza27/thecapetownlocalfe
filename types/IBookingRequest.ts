@@ -3,6 +3,7 @@ export interface IBookingRequest {
   email: string;
   subject: string;
   date: string;
+  numberOfPeople: number;
   transportNeeded: string;
   isDateFlexible: string;
   address: string;
