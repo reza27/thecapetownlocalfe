@@ -17,7 +17,7 @@ import {
 import { Input } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
 import { Button, Select, Option } from "@material-tailwind/react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
