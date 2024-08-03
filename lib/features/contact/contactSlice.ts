@@ -22,7 +22,6 @@ export const postBookingRequest = createAsyncThunk(
   "contact/postBookingRequest",
   async (data: IBookingRequest) => {
     const JSONdata = JSON.stringify(data);
-    console.log("form data", JSONdata);
 
     const endpoint = process.env.NEXT_PUBLIC_APP_ENV
       ? process.env.NEXT_PUBLIC_LOCAL_URL + "/api/mail"
