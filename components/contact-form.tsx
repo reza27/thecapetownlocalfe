@@ -16,8 +16,8 @@ import {
 
 import { Input } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
-import { Button, Select, Option } from "@material-tailwind/react";
-import React, { useEffect } from "react";
+import { Button, Select, Option, Spinner } from "@material-tailwind/react";
+import React, { useEffect, useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
@@ -38,14 +38,21 @@ export default function ContactForm(props) {
   const messageSubmitted = useAppSelector(
     (state) => state.contact.bookingRequestSubmitted
   );
+  const bookingRequestIsSubmitting = useAppSelector(
+    (state) => state.contact.bookingRequestIsSubmitting
+  );
 
   const dispatch = useAppDispatch();
 
   const { selectOptions } = props;
   const { countries } = useCountries();
-  const [country, setCountry] = React.useState(0);
-  const { name, flags, countryCallingCode } = countries[country];
+  const [countryCodes, setCountryCodes] = useState(countries);
+  const [countryMenuOpen, setCountryMenuOpen] = useState(false);
+
   const SOUTH_AFRICA = 204;
+
+  const [country, setCountry] = useState(SOUTH_AFRICA);
+  const { name, flags, countryCallingCode } = countryCodes[country];
 
   const displayOptions = (selectOptions: Array<any>) => {
     let options = selectOptions.slice().map((item, i) => {
@@ -74,8 +81,30 @@ export default function ContactForm(props) {
     });
   };
 
+  const displayCountries = useMemo(() => {
+    return countryCodes.map(({ name, flags, countryCallingCode }, index) => {
+      return (
+        <MenuItem
+          key={name}
+          value={name}
+          className="flex items-center gap-2"
+          onClick={() => setCountry(index)}
+        >
+          <img
+            src={flags.svg}
+            alt={name}
+            className="h-5 w-5 rounded-full object-cover"
+          />
+          {name} <span className="ml-auto">{countryCallingCode}</span>
+        </MenuItem>
+      );
+    });
+  }, [country]);
+
   useEffect(() => {
-    setCountry(SOUTH_AFRICA);
+    const sortedCountryCodes = [...countryCodes];
+    sortedCountryCodes.sort((a, b) => (a.name > b.name ? 1 : -1));
+    setCountryCodes(sortedCountryCodes);
   }, []);
 
   return (
@@ -130,7 +159,10 @@ export default function ContactForm(props) {
         }}
       >
         {(formik) => (
-          <form className="contact-form-inner" onSubmit={formik.handleSubmit}>
+          <form
+            className="contact-form-inner relative"
+            onSubmit={formik.handleSubmit}
+          >
             <div className="left-block">
               <div className="input-field-container">
                 <Select
@@ -170,7 +202,7 @@ export default function ContactForm(props) {
 
               <div className="input-field-container">
                 <div className="relative flex w-full">
-                  <Menu placement="bottom-start">
+                  <Menu placement="bottom-start relative">
                     <MenuHandler>
                       <Button
                         ripple={false}
@@ -187,30 +219,9 @@ export default function ContactForm(props) {
                         {countryCallingCode}
                       </Button>
                     </MenuHandler>
-                    <MenuList className="max-h-[20rem] max-w-[18rem]">
-                      {countries
 
-                        .sort((a, b) => (a.name > b.name ? 1 : -1))
-                        .map(({ name, flags, countryCallingCode }, index) => {
-                          return (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                              className="flex items-center gap-2"
-                              onClick={() => setCountry(index)}
-                            >
-                              <img
-                                src={flags.svg}
-                                alt={name}
-                                className="h-5 w-5 rounded-full object-cover"
-                              />
-                              {name}{" "}
-                              <span className="ml-auto">
-                                {countryCallingCode}
-                              </span>
-                            </MenuItem>
-                          );
-                        })}
+                    <MenuList className="max-h-[20rem] max-w-[18rem]">
+                      {displayCountries}
                     </MenuList>
                   </Menu>
                   <Input
@@ -290,6 +301,7 @@ export default function ContactForm(props) {
                   <TCTLRadioButton
                     label="Yes"
                     name="isFlexibleDate"
+                    color="blue"
                     onChange={() => {
                       formik.setFieldValue("isFlexibleDate", true);
                     }}
@@ -298,6 +310,7 @@ export default function ContactForm(props) {
                   <TCTLRadioButton
                     label="No"
                     name="isFlexibleDate"
+                    color="blue"
                     onChange={() => {
                       formik.setFieldValue("isFlexibleDate", false);
                     }}
@@ -311,6 +324,7 @@ export default function ContactForm(props) {
                     id="transportYes"
                     label="Yes"
                     name="isTransportNeeded"
+                    color="blue"
                     onChange={() => {
                       formik.setFieldValue("isTransportNeeded", true);
                     }}
@@ -319,6 +333,7 @@ export default function ContactForm(props) {
                     id="transportNo"
                     label="No"
                     name="isTransportNeeded"
+                    color="blue"
                     onChange={() => {
                       formik.setFieldValue("isTransportNeeded", false);
                     }}
@@ -356,7 +371,11 @@ export default function ContactForm(props) {
                 />
               </div>
               <div className="input-field-container">
-                <Button type="submit" className={"form-button"}>
+                <Button
+                  type="submit"
+                  className="form-button flex justify-center"
+                  loading={bookingRequestIsSubmitting}
+                >
                   Submit
                 </Button>
                 <p

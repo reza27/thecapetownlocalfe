@@ -21,21 +21,6 @@ export const metadata: Metadata = {
   title: "Services",
 };
 
-const guideImageStyle = {
-  objectFit: "cover",
-  height: "400px",
-  width: "100%",
-  overflow: "hidden",
-};
-
-const affiliateImageStyle = {
-  objectFit: "contain",
-  height: "120px",
-  width: "120px",
-  padding: "5px",
-  overflow: "hidden",
-};
-
 export default function Services(aData) {
   const data = aData.data.props.data;
 
