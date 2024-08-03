@@ -119,6 +119,7 @@ export default function ContactForm(props) {
             date: moment(values.date).format("MMMM Do YYYY"),
             isFlexibleDate: values.isFlexibleDate ? "Yes" : "No",
             isTransportNeeded: values.isTransportNeeded ? "Yes" : "No",
+            phone: countryCallingCode + values.phone,
           });
 
           dispatch(postBookingRequest(formattedValues));
@@ -137,7 +138,6 @@ export default function ContactForm(props) {
                   label="Select Tour"
                   id="subject"
                   onChange={(aOption) => {
-                    console.log(aOption);
                     formik.setFieldValue("subject", aOption);
                   }}
                 >
@@ -278,6 +278,9 @@ export default function ContactForm(props) {
 
                 <DatePicker
                   selected={formik.values.date}
+                  onChange={(val) => {
+                    formik.setFieldValue("date", val);
+                  }}
                   className="input-field"
                 />
               </div>
