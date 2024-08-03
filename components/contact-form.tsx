@@ -16,7 +16,7 @@ import {
 
 import { Input } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
-import { Button, Select, Option, Spinner } from "@material-tailwind/react";
+import { Button, Select, Option } from "@material-tailwind/react";
 import React, { useEffect, useMemo, useState } from "react";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
@@ -47,7 +47,6 @@ export default function ContactForm(props) {
   const { selectOptions } = props;
   const { countries } = useCountries();
   const [countryCodes, setCountryCodes] = useState(countries);
-  const [countryMenuOpen, setCountryMenuOpen] = useState(false);
 
   const SOUTH_AFRICA = 204;
 
@@ -167,7 +166,7 @@ export default function ContactForm(props) {
               <div className="input-field-container">
                 <Select
                   variant="standard"
-                  label="Select Tour"
+                  label="Select Tour*"
                   id="subject"
                   onChange={(aOption) => {
                     formik.setFieldValue("subject", aOption);
@@ -186,10 +185,9 @@ export default function ContactForm(props) {
                 <Input
                   autoComplete="off"
                   id="name"
-                  required
                   variant="standard"
                   color="light-blue"
-                  label="Name"
+                  label="Name*"
                   className="input-field"
                   {...formik.getFieldProps("name")}
                 />
@@ -227,11 +225,9 @@ export default function ContactForm(props) {
                   <Input
                     autoComplete="off"
                     type="tel"
-                    required
-                    id="phone"
                     variant="standard"
                     color="light-blue"
-                    label="Mobile number"
+                    label="Mobile number*"
                     {...formik.getFieldProps("phone")}
                     className="input-field country-input"
                     labelProps={{
@@ -251,12 +247,10 @@ export default function ContactForm(props) {
               <div className="input-field-container email">
                 <Input
                   autoComplete="off"
-                  required
                   type="email"
-                  id="email"
                   variant="standard"
                   color="light-blue"
-                  label="Email"
+                  label="Email*"
                   className="input-field"
                   {...formik.getFieldProps("email")}
                 />
@@ -269,7 +263,7 @@ export default function ContactForm(props) {
               <div className="input-field-container message">
                 <Select
                   variant="standard"
-                  label="Number of people"
+                  label="Number of people*"
                   onChange={(aOption) => {
                     formik.setFieldValue("numberOfPeople", aOption);
                   }}
