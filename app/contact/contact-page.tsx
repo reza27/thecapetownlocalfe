@@ -1,6 +1,6 @@
 "use client";
 import ContactForm from "../../components/contact-form";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Head from "next/head";
 
 import { Metadata } from "next";
@@ -9,9 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
 };
 
-export default function Contact(aData) {
-  const data = aData.data.props.data;
-
+export default function Contact({ data }) {
   const getFormOptions = (activity) => {
     let ItemsArr: any[] = [];
     let activityItemHeadings = activity?.activityItemHeading;
@@ -30,7 +28,9 @@ export default function Contact(aData) {
       </Head>
       <div id="contact">
         <div>
-          <ContactForm selectOptions={getFormOptions(data.activities[0])} />
+          <ContactForm
+            selectOptions={getFormOptions(data.props.data.activities[0])}
+          />
         </div>
       </div>
     </>

@@ -27,8 +27,7 @@ const affiliateImageStyle = {
   overflow: "hidden",
 };
 
-export default function About(aData) {
-  const data = aData.data.props.data;
+export default function About({ data }) {
   const featureImageStyle = {
     objectFit: "cover",
     height: "500px",
@@ -37,12 +36,12 @@ export default function About(aData) {
   };
 
   const Affilates = () => {
-    if (data.about?.affiliations?.length > 0) {
+    if (data.props.data.about?.affiliations?.length > 0) {
       return (
         <div className="affiliations-container">
           <h2 className="section-heading">Affiliations</h2>
           <div className="affiliations">
-            {data.about?.affiliations.map((affiliate) => (
+            {data.props.data.about?.affiliations.map((affiliate) => (
               <div className="affiliate" key={affiliate.id}>
                 <Image
                   loader={ImageLoader}
@@ -71,8 +70,10 @@ export default function About(aData) {
       <div id="about">
         <h2 className="main-heading">About us</h2>
         <div className="about-description">
-          {data.about ? (
-            <DocumentRenderer document={data.about?.content?.document} />
+          {data.props.data.about ? (
+            <DocumentRenderer
+              document={data.props.data.about?.content?.document}
+            />
           ) : (
             ""
           )}
@@ -80,15 +81,17 @@ export default function About(aData) {
         <div className="guides-container">
           <h2>Meet the team</h2>
           <div className="guides-description">
-            {data.about ? (
-              <DocumentRenderer document={data.about?.guidesInfo?.document} />
+            {data.props.data.about ? (
+              <DocumentRenderer
+                document={data.props.data.about?.guidesInfo?.document}
+              />
             ) : (
               ""
             )}
           </div>
           <div className="guides">
-            {data.about
-              ? data.about?.guides?.map((guide) => (
+            {data.props.data.about
+              ? data.props.data.about?.guides?.map((guide) => (
                   <div className="guide" key={guide.id}>
                     <Image
                       loader={ImageLoader}
