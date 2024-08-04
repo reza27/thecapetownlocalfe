@@ -26,9 +26,7 @@ import { SliderContext } from "../../lib/slider-context";
 export const metadata: Metadata = {
   title: "Tours",
 };
-export default function Tours(aData) {
-  const data = aData.data.props.data;
-
+export default function Tours({ data }) {
   const featureImageStyle = {
     objectFit: "cover",
     height: "500px",
@@ -42,7 +40,8 @@ export default function Tours(aData) {
     width: "100%",
   };
 
-  let firstTab = data.activities[0]?.activityItemHeading[0].title.toLowerCase();
+  let firstTab =
+    data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
   const contactRef = useRef<HTMLElement | null>(null);
@@ -122,7 +121,7 @@ export default function Tours(aData) {
         <title>Tours - The Cape Town Local</title>
       </Head>
       <div id="tours">
-        {data.activities.map((item) => (
+        {data.props.data.activities.map((item) => (
           <div key={item.id}>
             <div className="header">
               <h1>Tours</h1>
