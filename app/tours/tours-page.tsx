@@ -45,6 +45,7 @@ export default function Tours({ data }) {
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
   const contactRef = useRef<HTMLElement | null>(null);
+  const HEADER_OFFSET = 110;
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -99,10 +100,9 @@ export default function Tours({ data }) {
         setTimeout(() => {
           if (anchor) {
             let element = document.getElementById(anchor); // Your target element
-            const headerOffset = 110;
             const elementPosition = element?.getBoundingClientRect().top;
             const offsetPosition = elementPosition
-              ? elementPosition + window.scrollY - headerOffset
+              ? elementPosition + window.scrollY - HEADER_OFFSET
               : 0;
 
             window.scrollTo({
@@ -168,9 +168,18 @@ export default function Tours({ data }) {
                             <Button
                               className="enquire-button"
                               onClick={() => {
-                                contactRef.current?.scrollIntoView({
+                                const elementPosition =
+                                  contactRef.current?.getBoundingClientRect()
+                                    .top;
+                                const offsetPosition = elementPosition
+                                  ? elementPosition +
+                                    window.scrollY -
+                                    HEADER_OFFSET
+                                  : 0;
+
+                                window.scrollTo({
+                                  top: offsetPosition,
                                   behavior: "smooth",
-                                  block: "end",
                                 });
                               }}
                             >
