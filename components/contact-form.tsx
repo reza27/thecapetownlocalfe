@@ -1,7 +1,5 @@
 "use client";
 
-import * as Yup from "yup";
-
 import { sendGAEvent } from "@next/third-parties/google";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { postBookingRequest } from "../lib/features/contact/contactSlice";
@@ -25,6 +23,7 @@ import { IBookingRequest } from "../types/IBookingRequest";
 import { Formik } from "formik";
 import moment from "moment";
 import { TCTLRadioButton } from "./TCTLRadioButton";
+import contactSchema from "../app/contact/contact.schema";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -98,7 +97,7 @@ export default function ContactForm(props) {
         </MenuItem>
       );
     });
-  }, [country]);
+  }, [country, countryCodes]);
 
   useEffect(() => {
     const sortedCountryCodes = [...countryCodes];
@@ -128,20 +127,7 @@ export default function ContactForm(props) {
           address: "",
           message: "",
         }}
-        validationSchema={Yup.object({
-          subject: Yup.string().required("Subject is required"),
-          name: Yup.string().required("Name is required"),
-          phone: Yup.string().min(7, "Invalid mobile number"),
-          email: Yup.string()
-            .email("Invalid email address")
-            .required("Required"),
-          numberOfPeople: Yup.string().required("Number of people is required"),
-          date: Yup.date().default(() => new Date()),
-          isFlexibleDate: Yup.boolean(),
-          isTransportNeeded: Yup.boolean(),
-          address: Yup.string(),
-          message: Yup.string(),
-        })}
+        validationSchema={contactSchema}
         onSubmit={(values) => {
           let formattedValues: IBookingRequest = Object.assign({}, values, {
             date: moment(values.date).format("MMMM Do YYYY"),
@@ -348,6 +334,11 @@ export default function ContactForm(props) {
                     className="input-field"
                     {...formik.getFieldProps("address")}
                   />
+                  {formik.touched.address && formik.errors.address ? (
+                    <div className="text-xs text-red-900 pt-2 w-full">
+                      {formik.errors.address}
+                    </div>
+                  ) : null}
                 </div>
               ) : (
                 <></>
@@ -402,7 +393,7 @@ export default function ContactForm(props) {
           style={waImageStyle}
           alt="whatsapp"
         />
-        <p>Reach out via WhatsApp</p>
+        <p className="hover:text-gray-700">Contact us on WhatsApp</p>
       </a>
     </div>
   );
