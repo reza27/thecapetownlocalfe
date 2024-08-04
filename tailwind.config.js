@@ -1,20 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 const withMT = require("@material-tailwind/react/utils/withMT");
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = withMT({
-   darkMode: "class",
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-  ],
+  darkMode: "class",
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Proxima Nova', ...defaultTheme.fontFamily.sans],
+        sans: ["Proxima Nova", ...defaultTheme.fontFamily.sans],
       },
-    }
+    },
   },
-  plugins: [require('@tailwindcss/typography')],
-
+  plugins: [require("@tailwindcss/typography")],
 });
