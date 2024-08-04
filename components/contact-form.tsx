@@ -393,7 +393,7 @@ export default function ContactForm(props) {
           style={waImageStyle}
           alt="whatsapp"
         />
-        <p>Reach out via WhatsApp</p>
+        <p>Contact us on WhatsApp</p>
       </a>
     </div>
   );
