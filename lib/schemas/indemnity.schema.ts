@@ -7,7 +7,9 @@ const indemnitySchema = object({
   firstName: string().required("First name is required"),
   lastName: string().required("Last name is required"),
   email: string().email().required("Email is required"),
-  mobile: string().matches(phoneRegExp, "Mobile number is not valid"),
+  mobile: string()
+    .matches(phoneRegExp, "Mobile number is not valid")
+    .required(),
   acceptIndemnity: boolean().oneOf(
     [true],
     "Acceptence of the terms is required"
