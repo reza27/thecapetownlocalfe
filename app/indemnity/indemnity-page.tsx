@@ -102,7 +102,7 @@ export default function IndemnityPage({ data }) {
               By completing and submitting this form you are agreeing to the
               following:
             </div>
-            <div className="w-full max-w-96 my-10 border border-gray-200 p-3">
+            <div className="w-full max-w-96 my-10 border border-gray-200 p-3 text-gray-900">
               {data.props.data.indemnityFormText ? (
                 <DocumentRenderer
                   document={
