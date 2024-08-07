@@ -98,7 +98,7 @@ export default function IndemnityPage({ data }) {
                 </div>
               ) : null}
             </div>
-            <div className="w-full max-w-96 mt-10">
+            <div className="w-full max-w-96 mt-10  text-gray-900">
               By completing and submitting this form you are agreeing to the
               following:
             </div>
