@@ -13,7 +13,7 @@ class TCTLService {
         ? process.env.NEXT_PUBLIC_LOCAL_URL + "/api/mail"
         : process.env.NEXT_PUBLIC_PROD_URL + "/api/mail";
 
-      const response = await this.httpClient.post(endpoint, data);
+      await this.httpClient.post(endpoint, data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -26,8 +26,7 @@ class TCTLService {
         ? process.env.NEXT_PUBLIC_LOCAL_URL + "/api/indemnity"
         : process.env.NEXT_PUBLIC_PROD_URL + "/api/indemnity";
 
-      const response = await this.httpClient.post(endpoint, data);
-      console.log("res", response);
+      await this.httpClient.post(endpoint, data);
     } catch (error) {
       console.error(error);
       throw error;

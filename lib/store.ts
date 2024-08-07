@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contactSlice from "./features/contact/contactSlice";
-import indemnitySlice from "./features/contact/indemnitySlice";
+import indemnitySlice from "./features/indemnity/indemnitySlice";
 
 export const makeStore = () => {
   return configureStore({
