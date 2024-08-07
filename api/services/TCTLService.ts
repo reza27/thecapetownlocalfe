@@ -1,4 +1,5 @@
 import { IBookingRequest } from "../../types/IBookingRequest";
+import { IIndemnityForm } from "../../types/IIndemnityForm";
 
 class TCTLService {
   httpClient: any;
@@ -13,6 +14,20 @@ class TCTLService {
         : process.env.NEXT_PUBLIC_PROD_URL + "/api/mail";
 
       const response = await this.httpClient.post(endpoint, data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async PostIndemnityForm(data: IIndemnityForm) {
+    try {
+      const endpoint = process.env.NEXT_PUBLIC_APP_ENV
+        ? process.env.NEXT_PUBLIC_LOCAL_URL + "/api/indemnity"
+        : process.env.NEXT_PUBLIC_PROD_URL + "/api/indemnity";
+
+      const response = await this.httpClient.post(endpoint, data);
+      console.log("res", response);
     } catch (error) {
       console.error(error);
       throw error;
