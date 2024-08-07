@@ -23,7 +23,7 @@ import { IBookingRequest } from "../types/IBookingRequest";
 import { Formik } from "formik";
 import moment from "moment";
 import { TCTLRadioButton } from "./TCTLRadioButton";
-import contactSchema from "../app/contact/contact.schema";
+import contactSchema from "../lib/schemas/contact.schema";
 
 const waImageStyle = {
   objectFit: "contain",
