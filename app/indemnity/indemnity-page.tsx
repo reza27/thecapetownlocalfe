@@ -2,7 +2,7 @@
 import { Button, Checkbox, Input } from "@material-tailwind/react";
 import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
-import { postIndemnityForm } from "../../lib/features/contact/indemnitySlice";
+import { postIndemnityForm } from "../../lib/features/indemnity/indemnitySlice";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import indemnitySchema from "../../lib/schemas/indemnity.schema";
 
