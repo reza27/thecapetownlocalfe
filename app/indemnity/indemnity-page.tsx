@@ -25,6 +25,7 @@ export default function IndemnityPage({ data }) {
           lastName: "",
           email: "",
           mobile: "",
+          passportId: "",
           acceptIndemnity: false,
         }}
         validationSchema={indemnitySchema}
@@ -95,6 +96,21 @@ export default function IndemnityPage({ data }) {
               {formik.touched.mobile && formik.errors.mobile ? (
                 <div className="text-xs text-red-900 pt-2">
                   {formik.errors.mobile}
+                </div>
+              ) : null}
+            </div>
+            <div className="w-full max-w-96 mt-5">
+              <Input
+                autoComplete="off"
+                variant="standard"
+                color="light-blue"
+                label="Passport/ID*"
+                className="input-field"
+                {...formik.getFieldProps("passportId")}
+              />
+              {formik.touched.passportId && formik.errors.passportId ? (
+                <div className="text-xs text-red-900 pt-2">
+                  {formik.errors.passportId}
                 </div>
               ) : null}
             </div>
