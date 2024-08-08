@@ -358,6 +358,8 @@ export default function ContactForm(props) {
               <div className="input-field-container">
                 <Button
                   type="submit"
+                  size="lg"
+                  color="blue"
                   className="form-button flex justify-center"
                   loading={bookingRequestIsSubmitting}
                 >
