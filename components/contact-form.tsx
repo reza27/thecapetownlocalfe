@@ -356,22 +356,21 @@ export default function ContactForm(props) {
                 />
               </div>
               <div className="input-field-container">
-                <Button
-                  type="submit"
-                  size="lg"
-                  color="blue"
-                  className="form-button flex justify-center"
-                  loading={bookingRequestIsSubmitting}
-                >
-                  Submit
-                </Button>
-                <p
-                  className={
-                    messageSubmitted ? "feedback-field" : "feedback-field hide"
-                  }
-                >
-                  Enquiry sent.
-                </p>
+                {messageSubmitted ? (
+                  <p className="text-white text-base font-bold">
+                    Enquiry submitted.
+                  </p>
+                ) : (
+                  <Button
+                    type="submit"
+                    size="lg"
+                    color="blue"
+                    className="form-button flex justify-center"
+                    loading={bookingRequestIsSubmitting}
+                  >
+                    Submit
+                  </Button>
+                )}
               </div>
             </div>
           </form>
