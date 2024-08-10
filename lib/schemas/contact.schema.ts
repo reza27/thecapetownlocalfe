@@ -7,7 +7,7 @@ const contactSchema = object({
   subject: string().required("Subject is required"),
   name: string().required("Name is required"),
   phone: string().matches(phoneRegExp, "Mobile number is not valid"),
-  email: string().email("Invalid email address").required("Required"),
+  email: string().email("Invalid email address").required("Email Required"),
   numberOfPeople: string().required("Number of people is required"),
   date: date().default(() => new Date()),
   isFlexibleDate: boolean(),

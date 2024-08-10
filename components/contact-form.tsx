@@ -22,7 +22,7 @@ import ImageLoader from "../components/image-loader";
 import { IBookingRequest } from "../types/IBookingRequest";
 import { Formik } from "formik";
 import moment from "moment";
-import { TCTLRadioButton } from "./TCTLRadioButton";
+import { TCTLRadioButton } from "./forms/TCTLRadioButton";
 import contactSchema from "../lib/schemas/contact.schema";
 
 const waImageStyle = {
