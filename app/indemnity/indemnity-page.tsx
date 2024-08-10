@@ -1,10 +1,12 @@
 "use client";
 import { Button, Checkbox, Input } from "@material-tailwind/react";
-import { Formik } from "formik";
+import { Formik, useFormikContext } from "formik";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { postIndemnityForm } from "../../lib/features/indemnity/indemnitySlice";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import indemnitySchema from "../../lib/schemas/indemnity.schema";
+import { useEffect, useRef } from "react";
+import { ScrollToErrors } from "../../components/forms/ScrollToErrors";
 
 export default function IndemnityPage({ data }) {
   const indemnityFormSubmitted = useAppSelector(
@@ -13,6 +15,20 @@ export default function IndemnityPage({ data }) {
   const indemnityFormIsSubmitting = useAppSelector(
     (state) => state.indemnity.indemnityFormIsSubmitting
   );
+
+  const firstName = useRef<HTMLElement | null>(null);
+  const lastName = useRef<HTMLElement | null>(null);
+  const email = useRef<HTMLElement | null>(null);
+  const mobile = useRef<HTMLElement | null>(null);
+  const passportId = useRef<HTMLElement | null>(null);
+
+  const refs = [
+    { ref: firstName, id: "firstName" },
+    { ref: lastName, id: "lastName" },
+    { ref: email, id: "email" },
+    { ref: mobile, id: "mobile" },
+    { ref: passportId, id: "passportId" },
+  ];
 
   const dispatch = useAppDispatch();
 
@@ -38,9 +54,11 @@ export default function IndemnityPage({ data }) {
             className="relative flex flex-col justify-center mb-28 mt-20 w-full"
             onSubmit={formik.handleSubmit}
           >
+            <ScrollToErrors refs={refs} />
             <div className="w-full sm:px-12 px-3">
               <div className="w-full mt-5">
                 <Input
+                  ref={firstName}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -56,6 +74,7 @@ export default function IndemnityPage({ data }) {
               </div>
               <div className="w-full mt-5">
                 <Input
+                  ref={lastName}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -71,6 +90,7 @@ export default function IndemnityPage({ data }) {
               </div>
               <div className="w-full mt-5">
                 <Input
+                  ref={email}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -78,15 +98,16 @@ export default function IndemnityPage({ data }) {
                   className="input-field"
                   {...formik.getFieldProps("email")}
                 />
-                {formik.touched.lastName && formik.errors.lastName ? (
+                {formik.touched.email && formik.errors.email ? (
                   <div className="text-xs text-red-900 pt-2">
-                    {formik.errors.lastName}
+                    {formik.errors.email}
                   </div>
                 ) : null}
               </div>
 
               <div className="w-full mt-5">
                 <Input
+                  ref={mobile}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -102,6 +123,7 @@ export default function IndemnityPage({ data }) {
               </div>
               <div className="w-full mt-5">
                 <Input
+                  ref={passportId}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
