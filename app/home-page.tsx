@@ -62,8 +62,9 @@ export default function Home({ data }) {
         <div className="header-home">
           <div className="left">
             <h1 className="home-title">
-              Join us for <br />a trip you&apos;ll <br />
-              never forget.
+              Discover <br />
+              breathtaking landscapes <br />
+              on our guided hikes.
             </h1>
             <p>We live your experience.</p>
             <a href="/tours">
