@@ -5,10 +5,11 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { postIndemnityForm } from "../../lib/features/indemnity/indemnitySlice";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import indemnitySchema from "../../lib/schemas/indemnity.schema";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ScrollToErrors } from "../../components/forms/ScrollToErrors";
 import { TCTLCountryCodeMobileNumberInput } from "../../components/forms/TCTLCountryCodeMobileNumberInput";
 import { IIndemnityForm } from "../../types/IIndemnityForm";
+import SignatureCanvas from "react-signature-canvas";
 
 export default function IndemnityPage({ data }) {
   const indemnityFormSubmitted = useAppSelector(
@@ -25,6 +26,7 @@ export default function IndemnityPage({ data }) {
   const email = useRef<HTMLDivElement | null>(null);
   const mobile = useRef<HTMLDivElement | null>(null);
   const passportId = useRef<HTMLDivElement | null>(null);
+  const signatureCanvas = useRef(null);
 
   const errorRefs = [
     { ref: firstName, id: "firstName" },
@@ -50,12 +52,16 @@ export default function IndemnityPage({ data }) {
           email: "",
           mobile: "",
           passportId: "",
-          acceptIndemnity: false,
+          // acceptIndemnity: false,
+          hasSigned: false,
         }}
         validationSchema={indemnitySchema}
         onSubmit={(values) => {
           let formattedValues: IIndemnityForm = Object.assign({}, values, {
             mobile: countryCallingCode + values.mobile,
+            signature: (signatureCanvas.current as SignatureCanvas)
+              .getTrimmedCanvas()
+              .toDataURL("image/png"),
           });
 
           dispatch(postIndemnityForm(formattedValues));
@@ -115,20 +121,6 @@ export default function IndemnityPage({ data }) {
               </div>
 
               <div className="w-full mt-5" ref={mobile}>
-                {/* <Input
-                  ref={mobile}
-                  autoComplete="off"
-                  variant="standard"
-                  color="light-blue"
-                  label="Mobile*"
-                  className="input-field"
-                  {...formik.getFieldProps("mobile")}
-                />
-                {formik.touched.mobile && formik.errors.mobile ? (
-                  <div className="text-xs text-red-900 pt-2">
-                    {formik.errors.mobile}
-                  </div>
-                ) : null} */}
                 <TCTLCountryCodeMobileNumberInput
                   onCountryCodeChange={onCountryCodeChange}
                   {...formik.getFieldProps("mobile")}
@@ -173,28 +165,43 @@ export default function IndemnityPage({ data }) {
                   ""
                 )}
               </div>
-              <div className="flex justify-start w-full flex-col">
-                <Checkbox
-                  color="blue"
-                  className="xs:text-xs"
-                  label="I agree to these terms and conditions"
-                  onChange={(aOption) => {
-                    formik.setFieldValue(
-                      "acceptIndemnity",
-                      aOption.target.checked
-                    );
-                  }}
-                />
-                <div>
-                  {formik.touched.acceptIndemnity &&
-                  formik.errors.acceptIndemnity ? (
+
+              <div className="w-full max-w-[500px] mt-8 flex">
+                <div className="flex flex-col text-sm">
+                  <label className="text-blue-gray-400 font-medium">
+                    Signature*
+                  </label>
+                  <SignatureCanvas
+                    ref={signatureCanvas}
+                    penColor="black"
+                    canvasProps={{
+                      width: 230,
+                      height: 140,
+                      className: "border border-grey-200",
+                    }}
+                    onBegin={() => {
+                      formik.setFieldValue("hasSigned", true);
+                    }}
+                  />
+                  {formik.touched.hasSigned && formik.errors.hasSigned ? (
                     <div className="text-xs text-red-900 pt-2">
-                      {formik.errors.acceptIndemnity}
+                      {formik.errors.hasSigned}
                     </div>
                   ) : null}
                 </div>
+                <Button
+                  color="blue-gray"
+                  size="lg"
+                  className="justify-center text-blue text-white h-8 flex items-center mt-6 ml-2 text-xs"
+                  onClick={() => {
+                    formik.setFieldValue("hasSigned", false);
+                    (signatureCanvas.current as SignatureCanvas).clear();
+                  }}
+                >
+                  Clear
+                </Button>
               </div>
-              <div className="w-full  max-w-[500px] mt-8 flex ">
+              <div className="w-full  max-w-[500px] mt-8 flex">
                 {indemnityFormSubmitted ? (
                   <p className="text-base font-bold text-center">
                     Indemnity Submitted
