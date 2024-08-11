@@ -44,7 +44,7 @@ export default function IndemnityPage({ data }) {
 
   return (
     <div className="pt-48 flex flex-col w-full min-h-60 bg-white justify-center  items-center p-6">
-      <h1 className="text-gray-900 text-center">Indemnity Form</h1>
+      <h2 className="text-gray-900 text-center">Indemnity Form</h2>
       <Formik
         initialValues={{
           firstName: "",
