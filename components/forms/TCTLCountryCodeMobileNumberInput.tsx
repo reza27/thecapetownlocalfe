@@ -26,8 +26,6 @@ export const TCTLCountryCodeMobileNumberInput = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("props", props);
-
     props.onCountryCodeChange(countryCallingCode);
   }, [country]);
 

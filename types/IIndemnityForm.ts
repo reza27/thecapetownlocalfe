@@ -4,4 +4,5 @@ export interface IIndemnityForm {
   email: string;
   mobile: string;
   passportId: string;
+  signature: string;
 }
