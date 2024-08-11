@@ -47,7 +47,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
-          <GoogleAnalytics gaId="G-NC9WGWVD6X" />
+          <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_ANALYTICS}`} />
         </body>
       </html>
     </StoreProvider>
