@@ -15,7 +15,7 @@
 
     .left {
       padding: 70px 20px 0 70px;
-      flex:1;
+      flex: 1;
 
       @media only screen and (max-width: 768px) {
         padding: 10px $mobi-gutter-padding;
@@ -28,28 +28,27 @@
 
       p {
         font-family: Roboto;
-        color:#6c6c6c;
+        color: #6c6c6c;
         font-size: 13px;
         padding: 20px 20px 0 0;
       }
     }
 
     .right {
-      flex:1;
+      flex: 1;
 
       @media only screen and (max-width: 768px) {
         img {
-          width:100%!important;
-          height: auto!important;
+          width: 100% !important;
+          height: auto !important;
         }
       }
-
     }
 
     .home-title {
       font-family: Alexandria;
       font-weight: 800;
-      font-size: 60px;
+      font-size: 50px;
       color: #333;
       text-transform: none;
       line-height: 1.2;
@@ -77,19 +76,19 @@
     .left {
       width: 50%;
 
-        @media only screen and (max-width: 768px) {
-          width: 100%;
-        }
+      @media only screen and (max-width: 768px) {
+        width: 100%;
+      }
 
       h2 {
         font-size: 60px;
         margin-bottom: 5px;
-        color:#333;
+        color: #333;
       }
 
       .reviews-button {
         background: $yellowTheme;
-        color:#333;
+        color: #333;
       }
 
       p {
@@ -99,7 +98,7 @@
       }
 
       h3 {
-        color:#333;
+        color: #333;
         font-size: 30px;
         span {
           color: $yellowTheme;
@@ -118,7 +117,6 @@
 
     h2 {
       margin-bottom: 40px;
-
     }
   }
 
@@ -126,9 +124,9 @@
     padding: 70px 70px 20px;
     text-align: center;
 
-      @media only screen and (max-width: 768px) {
-        padding: 50px 70px 10px;
-      }
+    @media only screen and (max-width: 768px) {
+      padding: 50px 70px 10px;
+    }
   }
 
   .tours {
@@ -148,9 +146,9 @@
         align-items: center;
         flex-direction: column;
         position: absolute;
-        top:0;
-        left:20px;
-        right:20px;
+        top: 0;
+        left: 20px;
+        right: 20px;
         bottom: 0;
         margin: auto;
       }
@@ -161,18 +159,17 @@
         justify-content: space-between;
       }
       .icon {
-          // &:not(:first-child) {
-          //   margin-left: 30px;
-          // }
-          color: $yellowTheme;
-          span {
-            padding-left: 10px;
-            color: #333333;
-            font-family: Roboto;
-            font-weight: 400;
-            font-size: 14px;
-
-          }
+        // &:not(:first-child) {
+        //   margin-left: 30px;
+        // }
+        color: $yellowTheme;
+        span {
+          padding-left: 10px;
+          color: #333333;
+          font-family: Roboto;
+          font-weight: 400;
+          font-size: 14px;
+        }
       }
       h2 {
         margin: 20px 0;
@@ -180,12 +177,12 @@
         text-align: center;
       }
       p {
-          margin: 20px 0;
+        margin: 20px 0;
       }
 
       .description {
         margin-top: 20px;
-        border-top:1px solid #e8e8e8;
+        border-top: 1px solid #e8e8e8;
         height: 110px;
       }
 
@@ -229,7 +226,7 @@
 
       span {
         font-family: Alexandria;
-        color:white;
+        color: white;
         font-size: 11px;
         font-weight: 300;
         line-height: 1.2;
