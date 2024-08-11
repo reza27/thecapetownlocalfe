@@ -4,18 +4,10 @@ import { sendGAEvent } from "@next/third-parties/google";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { postBookingRequest } from "../lib/features/contact/contactSlice";
 
-import { useCountries } from "use-react-countries";
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-} from "@material-tailwind/react";
-
 import { Input } from "@material-tailwind/react";
 import { Textarea } from "@material-tailwind/react";
 import { Button, Select, Option } from "@material-tailwind/react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
@@ -24,6 +16,8 @@ import { Formik } from "formik";
 import moment from "moment";
 import { TCTLRadioButton } from "./forms/TCTLRadioButton";
 import contactSchema from "../lib/schemas/contact.schema";
+import { ScrollToErrors } from "./forms/ScrollToErrors";
+import { TCTLCountryCodeMobileNumberInput } from "./forms/TCTLCountryCodeMobileNumberInput";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -44,13 +38,8 @@ export default function ContactForm(props) {
   const dispatch = useAppDispatch();
 
   const { selectOptions } = props;
-  const { countries } = useCountries();
-  const [countryCodes, setCountryCodes] = useState(countries);
 
-  const SOUTH_AFRICA = 204;
-
-  const [country, setCountry] = useState(SOUTH_AFRICA);
-  const { name, flags, countryCallingCode } = countryCodes[country];
+  const [countryCallingCode, setCountryCallingCode] = useState(null);
 
   const displayOptions = (selectOptions: Array<any>) => {
     let options = selectOptions.slice().map((item, i) => {
@@ -79,31 +68,23 @@ export default function ContactForm(props) {
     });
   };
 
-  const displayCountries = useMemo(() => {
-    return countryCodes.map(({ name, flags, countryCallingCode }, index) => {
-      return (
-        <MenuItem
-          key={name}
-          value={name}
-          className="flex items-center gap-2"
-          onClick={() => setCountry(index)}
-        >
-          <img
-            src={flags.svg}
-            alt={name}
-            className="h-5 w-5 rounded-full object-cover"
-          />
-          {name} <span className="ml-auto">{countryCallingCode}</span>
-        </MenuItem>
-      );
-    });
-  }, [country, countryCodes]);
+  const subject = useRef<HTMLDivElement | null>(null);
+  const name1 = useRef<HTMLDivElement | null>(null);
+  const email = useRef<HTMLDivElement | null>(null);
+  const phone = useRef<HTMLDivElement | null>(null);
+  const numberOfPeople = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const sortedCountryCodes = [...countryCodes];
-    sortedCountryCodes.sort((a, b) => (a.name > b.name ? 1 : -1));
-    setCountryCodes(sortedCountryCodes);
-  }, []);
+  const errorRefs = [
+    { ref: subject, id: "subject" },
+    { ref: name1, id: "name" },
+    { ref: email, id: "email" },
+    { ref: numberOfPeople, id: "numberOfPeople" },
+    { ref: phone, id: "phone" },
+  ];
+
+  const onCountryCodeChange = (value) => {
+    setCountryCallingCode(value);
+  };
 
   return (
     <div className="contact-form">
@@ -148,8 +129,9 @@ export default function ContactForm(props) {
             className="contact-form-inner relative"
             onSubmit={formik.handleSubmit}
           >
+            <ScrollToErrors refs={errorRefs} />
             <div className="left-block">
-              <div className="input-field-container">
+              <div className="input-field-container" ref={subject}>
                 <Select
                   variant="standard"
                   label="Select Tour*"
@@ -167,7 +149,7 @@ export default function ContactForm(props) {
                   </div>
                 ) : null}
               </div>
-              <div className="input-field-container">
+              <div className="input-field-container" ref={name1}>
                 <Input
                   autoComplete="off"
                   id="name"
@@ -184,53 +166,19 @@ export default function ContactForm(props) {
                 ) : null}
               </div>
 
-              <div className="input-field-container">
-                <div className="relative flex w-full">
-                  <Menu placement="bottom-start relative">
-                    <MenuHandler>
-                      <Button
-                        ripple={false}
-                        id="countryCode"
-                        variant="text"
-                        color="blue-gray"
-                        className="flex h-11 items-center gap-2 rounded-r-none border-b border-blue-gray-200  pl-3"
-                      >
-                        <img
-                          src={flags.svg}
-                          alt={name}
-                          className="h-4 w-4 rounded-full object-cover"
-                        />
-                        {countryCallingCode}
-                      </Button>
-                    </MenuHandler>
+              <div className="input-field-container" ref={phone}>
+                <TCTLCountryCodeMobileNumberInput
+                  onCountryCodeChange={onCountryCodeChange}
+                  {...formik.getFieldProps("phone")}
+                />
 
-                    <MenuList className="max-h-[20rem] max-w-[18rem]">
-                      {displayCountries}
-                    </MenuList>
-                  </Menu>
-                  <Input
-                    autoComplete="off"
-                    type="tel"
-                    variant="standard"
-                    color="light-blue"
-                    label="Mobile number*"
-                    {...formik.getFieldProps("phone")}
-                    className="input-field country-input"
-                    labelProps={{
-                      className: "before:content-none after:content-none",
-                    }}
-                    containerProps={{
-                      className: "min-w-0",
-                    }}
-                  />
-                </div>
                 {formik.touched.phone && formik.errors.phone ? (
                   <div className="text-xs text-red-900 pt-2 w-full">
                     {formik.errors.phone}
                   </div>
                 ) : null}
               </div>
-              <div className="input-field-container email">
+              <div className="input-field-container email" ref={email}>
                 <Input
                   autoComplete="off"
                   type="email"
@@ -246,7 +194,10 @@ export default function ContactForm(props) {
                   </div>
                 ) : null}
               </div>
-              <div className="input-field-container message">
+              <div
+                className="input-field-container message"
+                ref={numberOfPeople}
+              >
                 <Select
                   variant="standard"
                   label="Number of people*"

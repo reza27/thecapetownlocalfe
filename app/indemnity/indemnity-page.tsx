@@ -1,12 +1,14 @@
 "use client";
 import { Button, Checkbox, Input } from "@material-tailwind/react";
-import { Formik, useFormikContext } from "formik";
+import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { postIndemnityForm } from "../../lib/features/indemnity/indemnitySlice";
 import { DocumentRenderer } from "@keystone-6/document-renderer";
 import indemnitySchema from "../../lib/schemas/indemnity.schema";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollToErrors } from "../../components/forms/ScrollToErrors";
+import { TCTLCountryCodeMobileNumberInput } from "../../components/forms/TCTLCountryCodeMobileNumberInput";
+import { IIndemnityForm } from "../../types/IIndemnityForm";
 
 export default function IndemnityPage({ data }) {
   const indemnityFormSubmitted = useAppSelector(
@@ -16,19 +18,25 @@ export default function IndemnityPage({ data }) {
     (state) => state.indemnity.indemnityFormIsSubmitting
   );
 
-  const firstName = useRef<HTMLElement | null>(null);
-  const lastName = useRef<HTMLElement | null>(null);
-  const email = useRef<HTMLElement | null>(null);
-  const mobile = useRef<HTMLElement | null>(null);
-  const passportId = useRef<HTMLElement | null>(null);
+  const [countryCallingCode, setCountryCallingCode] = useState(null);
 
-  const refs = [
+  const firstName = useRef<HTMLDivElement | null>(null);
+  const lastName = useRef<HTMLDivElement | null>(null);
+  const email = useRef<HTMLDivElement | null>(null);
+  const mobile = useRef<HTMLDivElement | null>(null);
+  const passportId = useRef<HTMLDivElement | null>(null);
+
+  const errorRefs = [
     { ref: firstName, id: "firstName" },
     { ref: lastName, id: "lastName" },
     { ref: email, id: "email" },
     { ref: mobile, id: "mobile" },
     { ref: passportId, id: "passportId" },
   ];
+
+  const onCountryCodeChange = (value) => {
+    setCountryCallingCode(value);
+  };
 
   const dispatch = useAppDispatch();
 
@@ -46,7 +54,11 @@ export default function IndemnityPage({ data }) {
         }}
         validationSchema={indemnitySchema}
         onSubmit={(values) => {
-          dispatch(postIndemnityForm(values));
+          let formattedValues: IIndemnityForm = Object.assign({}, values, {
+            mobile: countryCallingCode + values.mobile,
+          });
+
+          dispatch(postIndemnityForm(formattedValues));
         }}
       >
         {(formik) => (
@@ -54,11 +66,10 @@ export default function IndemnityPage({ data }) {
             className="relative flex flex-col justify-center mb-28 mt-20 w-full"
             onSubmit={formik.handleSubmit}
           >
-            <ScrollToErrors refs={refs} />
+            <ScrollToErrors refs={errorRefs} />
             <div className="w-full sm:px-12 px-3">
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" ref={firstName}>
                 <Input
-                  ref={firstName}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -72,9 +83,8 @@ export default function IndemnityPage({ data }) {
                   </div>
                 ) : null}
               </div>
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" ref={lastName}>
                 <Input
-                  ref={lastName}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -88,9 +98,8 @@ export default function IndemnityPage({ data }) {
                   </div>
                 ) : null}
               </div>
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" ref={email}>
                 <Input
-                  ref={email}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"
@@ -105,8 +114,8 @@ export default function IndemnityPage({ data }) {
                 ) : null}
               </div>
 
-              <div className="w-full mt-5">
-                <Input
+              <div className="w-full mt-5" ref={mobile}>
+                {/* <Input
                   ref={mobile}
                   autoComplete="off"
                   variant="standard"
@@ -119,11 +128,21 @@ export default function IndemnityPage({ data }) {
                   <div className="text-xs text-red-900 pt-2">
                     {formik.errors.mobile}
                   </div>
-                ) : null}
+                ) : null} */}
+                <TCTLCountryCodeMobileNumberInput
+                  onCountryCodeChange={onCountryCodeChange}
+                  {...formik.getFieldProps("mobile")}
+                />
+                {formik.touched.mobile && formik.errors.mobile ? (
+                  <div className="text-xs text-red-900 pt-2">
+                    {formik.errors.mobile}
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-              <div className="w-full mt-5">
+              <div className="w-full mt-5" ref={passportId}>
                 <Input
-                  ref={passportId}
                   autoComplete="off"
                   variant="standard"
                   color="light-blue"

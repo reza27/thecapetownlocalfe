@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import { MutableRefObject, Ref, useEffect } from "react";
+import { MutableRefObject, useEffect } from "react";
 
 interface ErrorElement {
   ref: MutableRefObject<HTMLElement> | null;
