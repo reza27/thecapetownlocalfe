@@ -190,7 +190,7 @@ export default function IndemnityPage({ data }) {
                   ) : null}
                 </div>
                 <Button
-                  color="green"
+                  color="blue-gray"
                   size="lg"
                   className="justify-center text-blue text-white h-8 flex items-center mt-6 ml-2 text-xs"
                   onClick={() => {
