@@ -175,7 +175,7 @@ export default function IndemnityPage({ data }) {
                     ref={signatureCanvas}
                     penColor="black"
                     canvasProps={{
-                      width: 230,
+                      width: 210,
                       height: 140,
                       className: "border border-grey-200",
                     }}
@@ -192,7 +192,7 @@ export default function IndemnityPage({ data }) {
                 <Button
                   color="blue-gray"
                   size="lg"
-                  className="justify-center text-blue text-white h-8 flex items-center mt-6 ml-2 text-xs"
+                  className="justify-center text-blue text-white max-w-10 h-8 flex items-center mt-6 ml-2 text-xs"
                   onClick={() => {
                     formik.setFieldValue("hasSigned", false);
                     (signatureCanvas.current as SignatureCanvas).clear();
