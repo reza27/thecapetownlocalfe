@@ -11,10 +11,6 @@ const indemnitySchema = object({
     .matches(phoneRegExp, "Mobile number is not valid")
     .required(),
   passportId: string().required("Passport or ID is required"),
-  // acceptIndemnity: boolean().oneOf(
-  //   [true],
-  //   "Acceptence of the terms is required"
-  // ),
   hasSigned: boolean().oneOf([true], "Your signature is required"),
 });
 

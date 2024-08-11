@@ -165,27 +165,7 @@ export default function IndemnityPage({ data }) {
                   ""
                 )}
               </div>
-              {/* <div className="flex justify-start w-full flex-col">
-                <Checkbox
-                  color="blue"
-                  className="xs:text-xs"
-                  label="I agree to these terms and conditions"
-                  onChange={(aOption) => {
-                    formik.setFieldValue(
-                      "acceptIndemnity",
-                      aOption.target.checked
-                    );
-                  }}
-                />
-                <div>
-                  {formik.touched.acceptIndemnity &&
-                  formik.errors.acceptIndemnity ? (
-                    <div className="text-xs text-red-900 pt-2">
-                      {formik.errors.acceptIndemnity}
-                    </div>
-                  ) : null}
-                </div>
-              </div> */}
+
               <div className="w-full max-w-[500px] mt-8 flex">
                 <div className="flex flex-col text-sm">
                   <label className="text-blue-gray-400 font-medium">
