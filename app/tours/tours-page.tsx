@@ -21,7 +21,8 @@ import dynamic from "next/dynamic";
 import { Metadata } from "next";
 import Slider from "../../components/slider";
 import TourImages from "../../components/tour-images";
-import { SliderContext } from "../../lib/slider-context";
+import { SliderContext } from "../../lib/contexts/slider-context";
+import { getFormOptions } from "../../components/forms/getFormOptions";
 
 export const metadata: Metadata = {
   title: "Tours",
@@ -78,17 +79,6 @@ export default function Tours({ data }) {
     }
   };
 
-  const getFormOptions = (activity) => {
-    let ItemsArr: any = [];
-    let activityItemHeadings = activity.activityItemHeading;
-    for (var i = 0; i < activityItemHeadings.length; i++) {
-      for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
-        ItemsArr.push(activityItemHeadings[i].activityItems[j]);
-      }
-    }
-    return ItemsArr;
-  };
-
   useEffect(() => {
     function selectTab() {
       let url = new URL(window.location.href);
@@ -99,7 +89,7 @@ export default function Tours({ data }) {
         setTab(tab1);
         setTimeout(() => {
           if (anchor) {
-            let element = document.getElementById(anchor); // Your target element
+            let element = document.getElementById(anchor);
             const elementPosition = element?.getBoundingClientRect().top;
             const offsetPosition = elementPosition
               ? elementPosition + window.scrollY - HEADER_OFFSET

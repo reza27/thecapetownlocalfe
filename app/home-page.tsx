@@ -12,7 +12,7 @@ import Head from "next/head";
 import { Metadata } from "next";
 import { IHomeTours } from "../types/IHomeTour";
 import Reviews from "../components/reviews";
-import { SliderContext } from "../lib/slider-context";
+import { SliderContext } from "../lib/contexts/slider-context";
 import { reviews } from "./home-reviews";
 
 export const metadata: Metadata = {

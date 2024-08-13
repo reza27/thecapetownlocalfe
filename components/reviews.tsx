@@ -2,7 +2,7 @@ import { IReview } from "../types/IReview";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faStar } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import { useSliderContext } from "../lib/slider-context";
+import { useSliderContext } from "../lib/contexts/slider-context";
 
 export default function Reviews() {
   const reviews = useSliderContext();

@@ -13,9 +13,10 @@ import Head from "next/head";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Slider from "../../components/slider";
-import { SliderContext } from "../../lib/slider-context";
+import { SliderContext } from "../../lib/contexts/slider-context";
 import TourImages from "../../components/tour-images";
 import { useRef } from "react";
+import { getFormOptions } from "../../components/forms/getFormOptions";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -34,17 +35,6 @@ export default function Services(aData) {
   const contactRef = useRef<HTMLElement | null>(null);
 
   const activity = data.activities[0];
-
-  const getFormOptions = (activity) => {
-    let ItemsArr = [];
-    let activityItemHeadings = activity?.activityItemHeading;
-    for (var i = 0; i < activityItemHeadings?.length; i++) {
-      for (var j = 0; j < activityItemHeadings[i].activityItems.length; j++) {
-        ItemsArr.push(activityItemHeadings[i].activityItems[j]);
-      }
-    }
-    return ItemsArr;
-  };
 
   return (
     <>
