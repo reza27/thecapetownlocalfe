@@ -1,4 +1,4 @@
-import { useSliderContext } from "../lib/slider-context";
+import { useSliderContext } from "../lib/contexts/slider-context";
 
 export default function Reviews() {
   const images = useSliderContext();

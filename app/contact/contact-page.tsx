@@ -4,23 +4,13 @@ import React from "react";
 import Head from "next/head";
 
 import { Metadata } from "next";
+import { getFormOptions } from "../../components/forms/getFormOptions";
 
 export const metadata: Metadata = {
   title: "Contact",
 };
 
 export default function Contact({ data }) {
-  const getFormOptions = (activity) => {
-    let ItemsArr: any[] = [];
-    let activityItemHeadings = activity?.activityItemHeading;
-    for (var i = 0; i < activityItemHeadings?.length; i++) {
-      for (var j = 0; j < activityItemHeadings[i]?.activityItems.length; j++) {
-        ItemsArr.push(activityItemHeadings[i]?.activityItems[j]);
-      }
-    }
-    return ItemsArr;
-  };
-
   return (
     <>
       <Head>
