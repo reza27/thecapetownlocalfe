@@ -56,7 +56,7 @@ export default function Footer() {
         <p className="footer-heading">Legal</p>
         <ul>
           <Link href="/indemnity">Indemnity Form</Link>
-          <Link href="/">Privacy Policy</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
         </ul>
       </div>
     </div>
