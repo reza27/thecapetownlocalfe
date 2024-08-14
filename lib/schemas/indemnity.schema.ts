@@ -7,9 +7,8 @@ const indemnitySchema = object({
   firstName: string().required("First name is required"),
   lastName: string().required("Last name is required"),
   email: string().email("Invalid email address").required("Email required"),
-  mobile: string()
-    .matches(phoneRegExp, "Mobile number is not valid")
-    .required(),
+  mobile: string().matches(phoneRegExp, "Mobile number is not valid"),
+  tour: string().required("Tour is required"),
   passportId: string().required("Passport or ID is required"),
   hasSigned: boolean().oneOf([true], "Your signature is required"),
 });

@@ -18,6 +18,7 @@ import { TCTLRadioButton } from "./forms/TCTLRadioButton";
 import contactSchema from "../lib/schemas/contact.schema";
 import { ScrollToErrors } from "./forms/ScrollToErrors";
 import { TCTLCountryCodeMobileNumberInput } from "./forms/TCTLCountryCodeMobileNumberInput";
+import { IActivityItem } from "../types/IActivity";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -41,10 +42,10 @@ export default function ContactForm(props) {
 
   const [countryCallingCode, setCountryCallingCode] = useState(null);
 
-  const displayOptions = (selectOptions: Array<any>) => {
+  const displayOptions = (selectOptions: Array<IActivityItem>) => {
     let options = selectOptions.slice().map((item, i) => {
       return (
-        <Option key={item.title} value={item.title}>
+        <Option key={item.id} value={item.title}>
           {item.title}
         </Option>
       );

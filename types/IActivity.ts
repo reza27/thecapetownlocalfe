@@ -7,7 +7,7 @@ interface ActivityItemImages {
   name: string;
   images: ActivityItemImage[];
 }
-export interface ActivityItem {
+export interface IActivityItem {
   id: string;
   title: string;
   anchor: string;
@@ -20,7 +20,7 @@ interface ActivityItemHeading {
   id: string;
   title: string;
   activityItemsCount: string;
-  activityItems: ActivityItem[];
+  activityItems: IActivityItem[];
 }
 export interface IActivity {
   id: string;

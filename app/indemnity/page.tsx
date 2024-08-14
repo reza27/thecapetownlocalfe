@@ -11,6 +11,19 @@ export async function getIndemnityPage() {
             document
           }
         }
+        activities {
+          id
+          title
+          activityItemHeading {
+            id
+            title
+            activityItemsCount
+            activityItems {
+              id
+              title
+            }
+          }
+        }
       }
     `,
     fetchPolicy: "no-cache",
