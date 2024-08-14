@@ -1,7 +1,7 @@
-import { IActivity, ActivityItem } from "../../types/IActivity";
+import { IActivity, IActivityItem } from "../../types/IActivity";
 
 export const getFormOptions = (activity: IActivity) => {
-  let itemsArr: Array<ActivityItem> = [];
+  let itemsArr: Array<IActivityItem> = [];
   let activityItemHeadings = activity?.activityItemHeading;
 
   itemsArr = activityItemHeadings?.flatMap((item) =>
