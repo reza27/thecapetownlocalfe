@@ -1,5 +1,11 @@
 "use client";
-import { Button, Option, Input, Select } from "@material-tailwind/react";
+import {
+  Button,
+  Option,
+  Input,
+  Select,
+  Checkbox,
+} from "@material-tailwind/react";
 import { Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { postIndemnityForm } from "../../lib/features/indemnity/indemnitySlice";
@@ -68,6 +74,7 @@ export default function IndemnityPage({ data }) {
             mobile: "",
             tour: "",
             passportId: "",
+            agreeToMarketing: false,
             hasSigned: false,
           }}
           validationSchema={indemnitySchema}
@@ -200,6 +207,27 @@ export default function IndemnityPage({ data }) {
                   ) : (
                     ""
                   )}
+                </div>
+                <div className="flex justify-start w-full flex-col">
+                  <Checkbox
+                    color="blue"
+                    className="xs:text-xs"
+                    label="I agree to receive marketing communications"
+                    onChange={(aOption) => {
+                      formik.setFieldValue(
+                        "agreeToMarketing",
+                        aOption.target.checked
+                      );
+                    }}
+                  />
+                  <div>
+                    {formik.touched.agreeToMarketing &&
+                    formik.errors.agreeToMarketing ? (
+                      <div className="text-xs text-red-900 pt-2">
+                        {formik.errors.agreeToMarketing}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div className="w-full max-w-[500px] mt-8 flex">
