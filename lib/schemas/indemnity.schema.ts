@@ -10,6 +10,7 @@ const indemnitySchema = object({
   mobile: string().matches(phoneRegExp, "Mobile number is not valid"),
   tour: string().required("Tour is required"),
   passportId: string().required("Passport or ID is required"),
+  agreeToMarketing: boolean(),
   hasSigned: boolean().oneOf([true], "Your signature is required"),
 });
 
