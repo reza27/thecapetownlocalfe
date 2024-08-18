@@ -28,25 +28,15 @@ export const metadata: Metadata = {
   title: "Tours",
 };
 export default function Tours({ data }) {
-  const featureImageStyle = {
-    objectFit: "cover",
-    height: "500px",
-    width: "100%",
-    overflow: "hidden",
-  };
-
-  const panelImageStyle = {
-    objectFit: "cover",
-    height: "300px",
-    width: "100%",
-  };
-
   let firstTab =
     data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
-  const contactRef = useRef<HTMLElement | null>(null);
+  const contactRef = useRef<HTMLDivElement | null>(null);
   const HEADER_OFFSET = 110;
+  const anchorRefs = useRef<
+    Array<{ anchorRef: HTMLDivElement | null; id: string }>
+  >([]);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -79,31 +69,31 @@ export default function Tours({ data }) {
     }
   };
 
-  useEffect(() => {
-    function selectTab() {
-      let url = new URL(window.location.href);
-      let tab1 = url.searchParams.get("tab")?.toLowerCase();
-      let anchor = url.searchParams.get("anchor")?.toLowerCase();
+  const selectTabAndScrollToAnchor = () => {
+    const url = new URL(window.location.href);
+    const tab1 = url.searchParams.get("tab")?.toLowerCase();
+    const anchor = url.searchParams.get("anchor")?.toLowerCase();
 
-      if (tab1) {
-        setTab(tab1);
-        setTimeout(() => {
-          if (anchor) {
-            let element = document.getElementById(anchor);
-            const elementPosition = element?.getBoundingClientRect().top;
-            const offsetPosition = elementPosition
-              ? elementPosition + window.scrollY - HEADER_OFFSET
-              : 0;
+    if (tab1) {
+      setTab(tab1);
+      if (anchor) {
+        const element = anchorRefs.current.find((obj) => obj.id === anchor);
+        const elementPosition = element?.anchorRef?.getBoundingClientRect().top;
+        const offsetPosition = elementPosition
+          ? elementPosition + window.scrollY - HEADER_OFFSET
+          : 0;
 
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: "smooth",
-            });
-          }
-        }, 300);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
       }
     }
-    setTimeout(selectTab, 300);
+  };
+
+  useEffect(() => {
+    const DELAY: number = 300;
+    setTimeout(selectTabAndScrollToAnchor, DELAY);
   }, []);
   return (
     <>
@@ -136,6 +126,12 @@ export default function Tours({ data }) {
                           <div
                             className="tab-panel"
                             id={activityItem.anchor.toLowerCase()}
+                            ref={(ref) => {
+                              anchorRefs.current[index] = {
+                                anchorRef: ref,
+                                id: activityItem.anchor.toLowerCase(),
+                              };
+                            }}
                           >
                             <h2>{activityItem.title}</h2>
                             <div className="doc">
