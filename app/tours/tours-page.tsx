@@ -42,6 +42,27 @@ export default function Tours({ data }) {
     setOpen(open === value ? 0 : value);
   };
 
+  function Icon({ id, open }) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className={`${
+          id === open ? "rotate-180" : ""
+        } h-5 w-5 transition-transform`}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+        />
+      </svg>
+    );
+  }
+
   const Tabs = (aItem) => {
     const item = aItem.item;
     if (item.activityItemHeading?.length > 1) {
@@ -203,7 +224,11 @@ export default function Tours({ data }) {
                   <h2>FAQs</h2>
                   <div className="faqs-accordion">
                     {item.faq.map((faq, i) => (
-                      <Accordion open={open === i + 1} key={faq.id}>
+                      <Accordion
+                        open={open === i + 1}
+                        key={faq.id}
+                        icon={<Icon id={1} open={open} />}
+                      >
                         <AccordionHeader
                           key={faq.question}
                           onClick={() => handleOpen(i + 1)}
@@ -211,7 +236,7 @@ export default function Tours({ data }) {
                           {faq.question}
                         </AccordionHeader>
                         <AccordionBody key={faq.answer}>
-                          {faq.answer}
+                          <DocumentRenderer document={faq.answer.document} />
                         </AccordionBody>
                       </Accordion>
                     ))}
