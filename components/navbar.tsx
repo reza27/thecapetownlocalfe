@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
-  const [mobiLinksPosition, setMobiLinksPosition] = useState({ top: "-100vh" });
-  const mobiLinks = useRef<HTMLInputElement | null>(null);
+  const mobiLinks = useRef<HTMLDivElement | null>(null);
   const checkBox = useRef<HTMLInputElement | null>(null);
 
   interface ILink {
@@ -28,20 +28,15 @@ export default function Navbar() {
 
   const linkSelected = (event: ILink) => {
     setActiveClass(event.id);
-    onHamburgerClick();
     if (checkBox.current) {
       checkBox.current.checked = false;
     }
-  };
 
-  const onHamburgerClick = () => {
-    setOpenMenu(!openMenu);
-    if (!openMenu) {
-      setMobiLinksPosition({ top: "0" });
-    } else {
-      setMobiLinksPosition({ top: "-100vh" });
+    if (isMobile) {
+      setOpenMenu(false);
     }
   };
+
   return (
     <div id="navbar" className="bg-white dark:bg-black">
       <div id="navbar-inner">
@@ -69,7 +64,7 @@ export default function Navbar() {
               type="checkbox"
               ref={checkBox}
               id="check"
-              onClick={onHamburgerClick}
+              onClick={() => setOpenMenu(!openMenu)}
             />
             <span></span>
             <span></span>
@@ -77,9 +72,13 @@ export default function Navbar() {
           </label>
         </div>
       </div>
-      <div ref={mobiLinks} className="mobi-links" style={mobiLinksPosition}>
+      <div
+        ref={mobiLinks}
+        className="mobi-links"
+        style={{ top: openMenu ? "0" : "-100vh" }}
+      >
         <ul>
-          {links.map((val) => (
+          {links.map((val: ILink) => (
             <li key={val.mobiKey}>
               <Link
                 href={val.href}
