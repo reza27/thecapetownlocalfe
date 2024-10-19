@@ -53,10 +53,11 @@ export default function Footer() {
         </ul>
       </div>
       <div className="links">
-        <p className="footer-heading">Legal</p>
+        <p className="footer-heading">Other links</p>
         <ul>
           <Link href="/indemnity">Indemnity Form</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/refund-policy">Refund Policy</Link>
         </ul>
       </div>
     </div>
