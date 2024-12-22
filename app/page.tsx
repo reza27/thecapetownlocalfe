@@ -38,5 +38,5 @@ export default async function HomePageData() {
   // Fetch data directly in a Server Component
   const data = await getHomeData();
   // Forward fetched data to your Client Component
-  return <Home data={data} />;
+  return <Home homeData={data} />;
 }

@@ -13,14 +13,24 @@ import { Metadata } from "next";
 import { IHomeTours } from "../types/IHomeTour";
 import Reviews from "../components/reviews";
 import { SliderContext } from "../lib/contexts/slider-context";
-import { reviews } from "./home-reviews";
+import { defaultReviews } from "./home-reviews";
+
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { useGetReviewsQuery } from "../api/services/RTKService";
+import {
+  IGoogleReviewObject,
+  IGoogleReviewError,
+} from "../types/IGoogleReview";
 
 export const metadata: Metadata = {
   title: "Home",
 };
 
-export default function Home({ data }) {
+export default function Home({ homeData }) {
   const [isMobi, setIsMobi] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const { data, error, isLoading } = useGetReviewsQuery();
 
   const featureImageStyle = {
     objectFit: "contain",
@@ -46,6 +56,13 @@ export default function Home({ data }) {
 
   const getImageUrl = (images) => {
     return images[0]?.image?.publicUrl ? images[0].image?.publicUrl : "";
+  };
+
+  const getReviewsOrError = (obj) => {
+    if ("reviews" in obj) {
+      return obj.reviews;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -114,7 +131,7 @@ export default function Home({ data }) {
         </div>
         <h2 className="toursHeading">Most popular tours</h2>
         <div className="tours">
-          {data.props.data.home?.homeTours.map(
+          {homeData.props.data.home?.homeTours.map(
             (homeTour: IHomeTours, index: number) => (
               <div className="tour" key={homeTour.homeTour.id}>
                 <Image
@@ -171,16 +188,36 @@ export default function Home({ data }) {
             </a>
           </div>
           <div className="right">
-            <SliderContext.Provider value={reviews}>
-              <Slider
-                id="reviews-slider"
-                containerClass="review-slider"
-                panelClass="panel-review-slider"
-                type="reviews"
+            {" "}
+            {error ? (
+              <SliderContext.Provider value={defaultReviews || []}>
+                <Slider
+                  id="reviews-slider"
+                  containerClass="review-slider"
+                  panelClass="panel-review-slider"
+                  type="reviews"
+                >
+                  <Reviews />
+                </Slider>
+              </SliderContext.Provider>
+            ) : isLoading ? (
+              <div className="w-full h-full flex justify-center items-center">
+                <img src="/spinner.svg" className="w-10 h-auto" />
+              </div>
+            ) : data ? (
+              <SliderContext.Provider
+                value={getReviewsOrError(data) || defaultReviews}
               >
-                <Reviews />
-              </Slider>
-            </SliderContext.Provider>
+                <Slider
+                  id="reviews-slider"
+                  containerClass="review-slider"
+                  panelClass="panel-review-slider"
+                  type="reviews"
+                >
+                  <Reviews />
+                </Slider>
+              </SliderContext.Provider>
+            ) : null}
           </div>
         </div>
       </div>

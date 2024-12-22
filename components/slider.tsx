@@ -1,8 +1,9 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { useSliderContext } from "../lib/contexts/slider-context";
+import { IGoogleReview } from "../types/IGoogleReview";
 
 export default function Slider({
   id,
@@ -11,11 +12,12 @@ export default function Slider({
   type,
   children,
 }) {
+  const REVIEWS: string = "reviews";
+
   const sliderObjects = useSliderContext();
 
   const leftButton = useRef<HTMLElement | null>(null);
   const rightButton = useRef<HTMLElement | null>(null);
-  const REVIEWS: string = "reviews";
 
   interface State {
     currentIndex: number;
