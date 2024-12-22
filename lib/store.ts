@@ -1,13 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contactSlice from "./features/contact/contactSlice";
 import indemnitySlice from "./features/indemnity/indemnitySlice";
+import { RTKApi } from "../api/services/RTKService";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       contact: contactSlice,
       indemnity: indemnitySlice,
+      [RTKApi.reducerPath]: RTKApi.reducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(RTKApi.middleware),
   });
 };
 

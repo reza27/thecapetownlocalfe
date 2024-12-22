@@ -1,4 +1,5 @@
 import { IBookingRequest } from "../../types/IBookingRequest";
+import { IGoogleReview } from "../../types/IGoogleReview";
 import { IIndemnityForm } from "../../types/IIndemnityForm";
 
 class TCTLService {

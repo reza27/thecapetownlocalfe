@@ -3,7 +3,7 @@ import TCTLApi from "../../../api/TCTLApi";
 import TCTLService from "../../../api/services/TCTLService";
 import { IIndemnityForm } from "../../../types/IIndemnityForm";
 
-export const contactSlice = createSlice({
+export const indemnitySlice = createSlice({
   name: "indemnity",
   initialState: {
     indemnityFormSubmitted: false,
@@ -31,6 +31,6 @@ export const postIndemnityForm = createAsyncThunk(
   }
 );
 
-export const {} = contactSlice.actions;
+export const {} = indemnitySlice.actions;
 
-export default contactSlice.reducer;
+export default indemnitySlice.reducer;
