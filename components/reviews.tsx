@@ -31,7 +31,7 @@ export default function Reviews() {
                 <div className="overflow-hidden rounded w-7 h-auto ">
                   <img src={review.authorAttribution.photoUri.toString()}></img>
                 </div>
-                <div className="font-medium pl-4">
+                <div className="font-medium pl-4 text-black">
                   {review.authorAttribution.displayName}
                 </div>
               </div>
