@@ -11,6 +11,12 @@ module.exports = withMT({
         sans: ["Proxima Nova", ...defaultTheme.fontFamily.sans],
       },
     },
+    colors: {
+      transparent: "transparent",
+      yellow: "#FCB400",
+      blue: "#095AB8",
+      "cpt-black": "#081B18",
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 });

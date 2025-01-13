@@ -19,7 +19,7 @@ export default function Navbar() {
   const links: ILink[] = [
     { id: 1, key: "01", mobiKey: "001", text: "Home", href: "/" },
     { id: 2, key: "02", mobiKey: "002", text: "Tours", href: "/tours" },
-    { id: 3, key: "03", mobiKey: "003", text: "Services", href: "/services" },
+    // { id: 3, key: "03", mobiKey: "003", text: "Services", href: "/services" },
     { id: 4, key: "04", mobiKey: "004", text: "About", href: "/about" },
     { id: 5, key: "05", mobiKey: "005", text: "Contact", href: "/contact" },
   ];
@@ -38,19 +38,23 @@ export default function Navbar() {
   };
 
   return (
-    <div id="navbar" className="bg-white dark:bg-black">
-      <div id="navbar-inner">
-        <Link className="logo-link" href="/">
-          <img className="logo" src="/thecptlocal3.png" />
+    <div className="bg-white h-32 flex w-full relative items-center px-12">
+      <div className="flex w-full">
+        <Link className="cursor-pointer" href="/">
+          <img className="w-56 h-auto" src="/thecptlocal3.png" />
         </Link>
-        <div className="links">
-          <ul>
+        <div className="flex ml-auto">
+          <ul className=" text-cpt-black hidden md:flex items-center text-sm ">
             {links.map((val: ILink) => (
               <li key={val.key}>
                 <Link
                   href={val.href}
                   onClick={linkSelected.bind(this, val)}
-                  className={activeClass === val.id ? "selected" : ""}
+                  className={
+                    activeClass === val.id
+                      ? "selected pl-3 text-sm font-normal"
+                      : "pl-3 text-sm font-normal"
+                  }
                 >
                   {val.text}
                 </Link>
@@ -58,7 +62,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <div className="hamburger-container">
+        <div className="absolute top-5 right-3 md:hidden">
           <label htmlFor="check">
             <input
               type="checkbox"
@@ -74,7 +78,7 @@ export default function Navbar() {
       </div>
       <div
         ref={mobiLinks}
-        className="mobi-links"
+        className="md:hidden"
         style={{ top: openMenu ? "0" : "-100vh" }}
       >
         <ul>

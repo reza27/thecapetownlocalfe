@@ -1,65 +1,88 @@
 "use client";
 import Link from "next/link";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faYoutube,
-  faFacebook,
-  faTwitter,
-  faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
-
 export default function Footer() {
   return (
-    <div id="footer" className="bg-white dark:bg-black">
-      <div className="social-media-links">
-        <img className="logo" src="/thecptlocal2.png" />
-        <p className="email">info@thecapetownlocal.com</p>
-        <ul>
-          <li>
-            <Link
-              target="blank"
-              href="https://www.instagram.com/thecapetownlocal/?hl=en"
-            >
-              <FontAwesomeIcon icon={faInstagram} />
-            </Link>
-          </li>
-          <li>
-            <Link
-              target="blank"
-              href="https://www.facebook.com/thecapetownlocal"
-            >
-              <FontAwesomeIcon icon={faFacebook} />
-            </Link>
-          </li>
-          <li>
-            <Link
-              target="blank"
-              href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.html"
-            >
-              <img src="/tripadvisor-logo.png" />
-            </Link>
-          </li>
-        </ul>
+    <footer className="bg-black relative h-80 py-10 px-16 font-sans">
+      <div className="flex">
+        <div className="flex flex-col">
+          <img className="w-60 h-auto grayscale" src="/thecptlocal2.png" />
+          <p className="text-yellow text-sm pt-3">info@thecapetownlocal.com</p>
+        </div>
+        <div className="flex ml-auto">
+          <div className="pl-20">
+            <p className="text-white text-sm pb-1">Company</p>
+            <ul className="flex flex-col text-xs text-gray-400">
+              <Link className="py-0.5 hover:text-yellow" href="/">
+                Home
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/tours">
+                Tours
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/services">
+                Services
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/about">
+                About
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/contact">
+                Contact
+              </Link>
+            </ul>
+          </div>
+          <div className="pl-20">
+            <p className="text-white text-sm pb-1">Tours</p>
+            <ul className="flex flex-col text-xs text-gray-400">
+              <Link className="py-0.5 hover:text-yellow" href="/">
+                Lion's head
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/tours">
+                Table Mountain
+              </Link>
+            </ul>
+          </div>
+          <div className="pl-20">
+            <p className="text-white text-sm pb-1">Other links</p>
+            <ul className="flex flex-col text-xs text-gray-400">
+              <Link className="py-0.5 hover:text-yellow" href="/indemnity">
+                Indemnity Form
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/privacy-policy">
+                Privacy Policy
+              </Link>
+              <Link className="py-0.5 hover:text-yellow" href="/refund-policy">
+                Refund Policy
+              </Link>
+            </ul>
+          </div>
+          <div className="pl-20">
+            <p className="text-white text-sm pb-1">Social links</p>
+            <ul className="flex flex-col text-xs text-gray-400">
+              <Link
+                className="py-0.5 hover:text-yellow"
+                href="https://www.instagram.com/thecapetownlocal/?hl=en"
+              >
+                Instagram
+              </Link>
+              <Link
+                className="py-0.5 hover:text-yellow"
+                href="https://www.facebook.com/thecapetownlocal"
+              >
+                Facebook
+              </Link>
+              <Link
+                className="py-0.5 hover:text-yellow"
+                href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.htmly"
+              >
+                Trip Advisor
+              </Link>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div className="links ">
-        <p className="footer-heading">Company</p>
-        <ul>
-          <Link href="/">Home</Link>
-          <Link href="/tours">Tours</Link>
-          <Link href="/services">Services</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-        </ul>
+      <div className="absolute bottom-0 h-16 text-xs text-gray-400 border-t border-gray-800 border-1 w-full left-0 flex items-center pl-16 ">
+        &copy; 2025 The Cape Town Local. All rights reserved
       </div>
-      <div className="links">
-        <p className="footer-heading">Other links</p>
-        <ul>
-          <Link href="/indemnity">Indemnity Form</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/refund-policy">Refund Policy</Link>
-        </ul>
-      </div>
-    </div>
+    </footer>
   );
 }

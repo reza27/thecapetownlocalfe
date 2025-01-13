@@ -28,7 +28,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Roboto, system-ui, sans-serif;
+  font-family: "Proxima Nova", system-ui, sans-serif;
   font-weight: 300;
   background: white;
   scroll-behavior: smooth;
@@ -65,7 +65,7 @@ strong {
 a {
   color: inherit;
   text-decoration: none;
-  font-weight: 400;
+  //font-weight: 400;
 }
 p {
   color: #333333;
@@ -95,7 +95,7 @@ p {
 }
 
 @import "components/nav";
-@import "components/footer";
+//@import "components/footer";
 @import "components/contact-form";
 @import "components/image-slider";
 @import "components/review-slider";
