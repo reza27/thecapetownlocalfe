@@ -8,7 +8,7 @@ module.exports = withMT({
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Proxima Nova", ...defaultTheme.fontFamily.sans],
+        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
       },
     },
     colors: {

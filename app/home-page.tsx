@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Slider from "../components/slider";
 import ImageLoader from "../components/image-loader";
-import { Button } from "@material-tailwind/react";
+import { button, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -21,6 +21,8 @@ import {
   IGoogleReviewObject,
   IGoogleReviewError,
 } from "../types/IGoogleReview";
+import { TCPLButton } from "../components/tcptl-button";
+import { url } from "inspector";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -30,7 +32,7 @@ export default function Home({ homeData }) {
   const [isMobi, setIsMobi] = useState(false);
 
   const dispatch = useAppDispatch();
-  const { data, error, isLoading } = useGetReviewsQuery();
+  //const { data, error, isLoading } = useGetReviewsQuery();
 
   const featureImageStyle = {
     objectFit: "contain",
@@ -75,8 +77,39 @@ export default function Home({ homeData }) {
       <Head>
         <title>Home - The Cape Town Local</title>
       </Head>
-      <div id="home">
-        <div className="header-home">
+      <div className="w-full relative px-6 md:px-16 bg-white top-24 md:top-32">
+        <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
+          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl md:text-7xl font-semibold text-white transition-all duration-300">
+            Discover
+            <br />
+            <span className="text-yellow">Breathtaking</span> landscapes
+            <br /> on our guided hikes.
+          </div>
+          <div className="absolute bottom-28 left-6 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
+            We live your experience.
+          </div>
+          <TCPLButton
+            description={{
+              isOutlined: true,
+              buttonText: "VIEW TOUR",
+            }}
+            className="absolute bottom-12 left-6 md:left-12 z-10"
+            url="/tours"
+          />
+          <Image
+            loader={ImageLoader}
+            src="/home_header_img.png"
+            alt="The Cape Town Local - Mountain"
+            // sizes="100vw"
+            fill
+            //sizes="(min-width: 808px) 50vw, 100vw"
+            style={{
+              objectFit: "cover", // cover, contain, none
+              objectPosition: "100% 0%",
+            }}
+          />
+        </div>
+        {/* <div className="header-home">
           <div className="left">
             <h1 className="home-title">
               Discover <br />
@@ -96,9 +129,9 @@ export default function Home({ homeData }) {
               height={100}
               style={featureImageStyle}
             />
-          </div>
-        </div>
-        <div className="info">
+          </div> 
+        </div>*/}
+        {/* <div className="info">
           <p>
             20{" "}
             <span>
@@ -128,8 +161,8 @@ export default function Home({ homeData }) {
               rating
             </span>
           </p>
-        </div>
-        <h2 className="toursHeading">Most popular tours</h2>
+        </div> */}
+        {/* <h2 className="toursHeading">Most popular tours</h2>
         <div className="tours">
           {homeData.props.data.home?.homeTours.map(
             (homeTour: IHomeTours, index: number) => (
@@ -159,7 +192,7 @@ export default function Home({ homeData }) {
               </div>
             )
           )}
-        </div>
+        </div> */}
         <div className="reviews">
           <div className="left">
             <h2>Reviews</h2>
@@ -188,7 +221,7 @@ export default function Home({ homeData }) {
             </a>
           </div>
           <div className="right">
-            {" "}
+            {/* {" "}
             {error ? (
               <SliderContext.Provider value={defaultReviews || []}>
                 <Slider
@@ -217,7 +250,7 @@ export default function Home({ homeData }) {
                   <Reviews />
                 </Slider>
               </SliderContext.Provider>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
       </div>

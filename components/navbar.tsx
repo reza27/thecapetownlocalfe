@@ -38,10 +38,13 @@ export default function Navbar() {
   };
 
   return (
-    <div className="bg-white h-32 flex w-full relative items-center px-12">
+    <div
+      id="navbar"
+      className="bg-white h-24 md:h-28 flex w-full items-center px-6 md:px-16 fixed z-50"
+    >
       <div className="flex w-full">
         <Link className="cursor-pointer" href="/">
-          <img className="w-56 h-auto" src="/thecptlocal3.png" />
+          <img className="w-44 md:w-56 h-auto" src="/thecptlocal3.png" />
         </Link>
         <div className="flex ml-auto">
           <ul className=" text-cpt-black hidden md:flex items-center text-sm ">
@@ -62,17 +65,17 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <div className="absolute top-5 right-3 md:hidden">
-          <label htmlFor="check">
+        <div className="absolute top-6 right-3 md:hidden">
+          <label htmlFor="check" className="flex flex-col w-14 cursor-pointer">
             <input
               type="checkbox"
               ref={checkBox}
               id="check"
               onClick={() => setOpenMenu(!openMenu)}
             />
-            <span></span>
-            <span></span>
-            <span></span>
+            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
+            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
+            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
           </label>
         </div>
       </div>
