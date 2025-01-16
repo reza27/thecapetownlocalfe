@@ -16,8 +16,8 @@ export default function Contact({ data }) {
       <Head>
         <title>Contact - The Cape Town Local</title>
       </Head>
-      <div id="contact">
-        <div>
+      <div className="mx-12">
+        <div className="mt-32 mb-12">
           <ContactForm
             selectOptions={getFormOptions(data.props.data.activities[0])}
           />

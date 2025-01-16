@@ -10,8 +10,8 @@ const contactSchema = object({
   email: string().email("Invalid email address").required("Email Required"),
   numberOfPeople: string().required("Number of people is required"),
   date: date().default(() => new Date()),
-  isFlexibleDate: boolean(),
-  isTransportNeeded: boolean(),
+  isFlexibleDate: string(),
+  isTransportNeeded: string(),
   address: string().when("isTransportNeeded", {
     is: true,
     then: (schema) => schema.required(),

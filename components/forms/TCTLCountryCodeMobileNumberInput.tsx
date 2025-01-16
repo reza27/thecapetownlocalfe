@@ -5,9 +5,11 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
+  ThemeProvider,
 } from "@material-tailwind/react";
 import { useEffect, useMemo, useState } from "react";
 import { useCountries } from "use-react-countries";
+import { InputTheme } from "../../themes/input-theme";
 
 export const TCTLCountryCodeMobileNumberInput = (props) => {
   const { countries } = useCountries();
@@ -56,8 +58,8 @@ export const TCTLCountryCodeMobileNumberInput = (props) => {
             ripple={false}
             id="countryCode"
             variant="text"
-            color="blue-gray"
-            className="flex h-11 items-center gap-2 rounded-r-none border-b border-blue-gray-200  pl-3"
+            color="white"
+            className="flex h-11 items-center gap-2 rounded-none border-b border-blue-gray-200  pl-3"
           >
             <img
               src={flags.svg}
@@ -72,21 +74,23 @@ export const TCTLCountryCodeMobileNumberInput = (props) => {
           {displayCountries}
         </MenuList>
       </Menu>
-      <Input
-        autoComplete="off"
-        type="tel"
-        variant="standard"
-        color="light-blue"
-        label="Mobile number*"
-        {...props}
-        className="input-field country-input"
-        labelProps={{
-          className: "before:content-none after:content-none",
-        }}
-        containerProps={{
-          className: "min-w-0",
-        }}
-      />
+      <ThemeProvider value={InputTheme}>
+        <Input
+          autoComplete="off"
+          type="tel"
+          variant="standard"
+          color="white"
+          label="Mobile number*"
+          {...props}
+          className="input-field country-input"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+          containerProps={{
+            className: "min-w-0",
+          }}
+        />
+      </ThemeProvider>
     </div>
   );
 };

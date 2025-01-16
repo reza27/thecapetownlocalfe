@@ -21,8 +21,10 @@ import {
   IGoogleReviewObject,
   IGoogleReviewError,
 } from "../types/IGoogleReview";
-import { TCPLButton } from "../components/tcptl-button";
+import { TCPTLButton } from "../components/tcptl-button";
 import { url } from "inspector";
+import ContactForm from "../components/contact-form";
+import { getFormOptions } from "../components/forms/getFormOptions";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -88,14 +90,16 @@ export default function Home({ homeData }) {
           <div className="absolute bottom-28 left-6 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
             We live your experience.
           </div>
-          <TCPLButton
+          <TCPTLButton
             description={{
               isOutlined: true,
               buttonText: "VIEW TOUR",
             }}
             className="absolute bottom-12 left-6 md:left-12 z-10"
             url="/tours"
-          />
+          >
+            VIEW TOUR
+          </TCPTLButton>
           <Image
             loader={ImageLoader}
             src="/home_header_img.png"
@@ -253,6 +257,11 @@ export default function Home({ homeData }) {
             ) : null} */}
           </div>
         </div>
+      </div>
+      <div className="my-12 mx-8 md:mx-16 ">
+        <ContactForm
+          selectOptions={getFormOptions(homeData.props.data.activities)}
+        />
       </div>
     </>
   );

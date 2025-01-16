@@ -40,7 +40,7 @@ export default function Navbar() {
   return (
     <div
       id="navbar"
-      className="bg-white h-24 md:h-28 flex w-full items-center px-6 md:px-16 fixed z-50"
+      className="bg-white h-24 md:h-28 flex w-full items-center px-6 md:px-16 fixed z-50 top-0"
     >
       <div className="flex w-full">
         <Link className="cursor-pointer" href="/">

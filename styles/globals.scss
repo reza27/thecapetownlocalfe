@@ -41,8 +41,8 @@ main {
 h1,
 h2,
 h3 {
-  font-weight: 700;
-  font-family: Alexandria;
+  font-weight: 600;
+  //font-family: Alexandria;
   color: #333;
 }
 
@@ -73,6 +73,14 @@ p {
   line-height: 1.8;
 }
 
+label {
+  color: white !important;
+  //border: white !important;
+}
+
+peer:placeholder-shown ~ .peer-placeholder-shown {
+  color: white !important;
+}
 .price {
   font-weight: 700;
   font-family: Roboto;
