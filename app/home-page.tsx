@@ -25,6 +25,8 @@ import { TCPTLButton } from "../components/tcptl-button";
 import { url } from "inspector";
 import ContactForm from "../components/contact-form";
 import { getFormOptions } from "../components/forms/getFormOptions";
+import ReviewsV2 from "../components/reviews-v2";
+import ColumnSlider from "../components/column-slider";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -79,7 +81,7 @@ export default function Home({ homeData }) {
       <Head>
         <title>Home - The Cape Town Local</title>
       </Head>
-      <div className="w-full relative px-6 md:px-16 bg-white top-24 md:top-32">
+      <div className="w-full relative px-6 md:px-16 bg-white flex pt-28 md:pt-32">
         <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
           <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl md:text-7xl font-semibold text-white transition-all duration-300">
             Discover
@@ -197,7 +199,7 @@ export default function Home({ homeData }) {
             )
           )}
         </div> */}
-        <div className="reviews">
+        {/* <div className="reviews">
           <div className="left">
             <h2>Reviews</h2>
             <h3>
@@ -224,8 +226,8 @@ export default function Home({ homeData }) {
               </Button>
             </a>
           </div>
-          <div className="right">
-            {/* {" "}
+          <div className="right"> */}
+        {/* {" "}
             {error ? (
               <SliderContext.Provider value={defaultReviews || []}>
                 <Slider
@@ -255,10 +257,22 @@ export default function Home({ homeData }) {
                 </Slider>
               </SliderContext.Provider>
             ) : null} */}
-          </div>
-        </div>
+        {/* </div> */}
       </div>
-      <div className="my-12 mx-8 md:mx-16 ">
+      <div className="flex h-[620px] bg-light-grey my-12 mx-8 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
+        <p className="text-yellow text-xs text-center w-full font-medium">
+          CLIENT REVIEWS
+        </p>
+        <h3 className="w-full text-4xl text-center pt-4">
+          Don't take our word for it, take theirs!
+        </h3>
+        <SliderContext.Provider value={defaultReviews || []}>
+          <ColumnSlider screenWidth={window.innerWidth}>
+            <ReviewsV2 screenWidth={window.innerWidth} />
+          </ColumnSlider>
+        </SliderContext.Provider>
+      </div>
+      <div className="my-12 mx-8 md:mx-16 flex">
         <ContactForm
           selectOptions={getFormOptions(homeData.props.data.activities)}
         />
