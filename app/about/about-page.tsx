@@ -73,17 +73,20 @@ export default function About({ data }) {
       >
         <h1 className="text-center py-9">
           <span className="text-yellow ">'Local is lekker'</span>. That
-          statement is perfectly fitting to Cape Town.
+          statement <br /> is perfectly fitting to Cape Town.
         </h1>
-        <div className="text-sm text-center pt-14 px-4 md:px-20">
-          {data.props.data.about ? (
-            <DocumentRenderer
-              document={data.props.data.about?.content?.document}
-            />
-          ) : (
-            ""
-          )}
+        <div className="flex justify-center items-center">
+          <div className="text-sm text-center pt-14 px-4 max-w-[800px]">
+            {data.props.data.about ? (
+              <DocumentRenderer
+                document={data.props.data.about?.content?.document}
+              />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
+
         <div className="guides-container">
           <h1 className="text-center pt-24">Meet the team</h1>
           <div className="guides-description">
