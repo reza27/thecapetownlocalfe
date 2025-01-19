@@ -4,7 +4,7 @@ import { faArrowRight, faStar } from "@fortawesome/free-solid-svg-icons";
 import { IGoogleReview } from "../types/IGoogleReview";
 import Link from "next/link";
 
-export default function ReviewsV2({ screenWidth = 400 }) {
+export default function ReviewsV2({ screenWidth }) {
   const reviews = useSliderContext();
 
   const minBlockW = 500;
@@ -47,7 +47,7 @@ export default function ReviewsV2({ screenWidth = 400 }) {
 
   return (
     <>
-      {reviews &&
+      {screenWidth &&
         reviews.map((review: IGoogleReview) => (
           <div
             key={review.publishTime.toString()}

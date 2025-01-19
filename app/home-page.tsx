@@ -27,6 +27,7 @@ import ContactForm from "../components/contact-form";
 import { getFormOptions } from "../components/forms/getFormOptions";
 import ReviewsV2 from "../components/reviews-v2";
 import ColumnSlider from "../components/column-slider";
+import outlined from "@material-tailwind/react/theme/components/timeline/timelineIconColors/outlined";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -81,6 +82,8 @@ export default function Home({ homeData }) {
       setIsMobi(true);
     }
 
+    setScreenWidth(window.innerWidth);
+
     function autoResize() {
       setScreenWidth(window.innerWidth);
     }
@@ -108,7 +111,6 @@ export default function Home({ homeData }) {
           <TCPTLButton
             description={{
               isOutlined: true,
-              buttonText: "VIEW TOUR",
             }}
             className="absolute bottom-12 left-6 md:left-12 z-10"
             url="/tours"
@@ -181,37 +183,7 @@ export default function Home({ homeData }) {
             </span>
           </p>
         </div> */}
-        {/* <h2 className="toursHeading">Most popular tours</h2>
-        <div className="tours">
-          {homeData.props.data.home?.homeTours.map(
-            (homeTour: IHomeTours, index: number) => (
-              <div className="tour" key={homeTour.homeTour.id}>
-                <Image
-                  loader={ImageLoader}
-                  src={getImageUrl(homeTour.homeTour.images)}
-                  width={100}
-                  height={100}
-                  style={tourImageStyle}
-                />
-                <div className="tourContent">
-                  <h2 className="drop-shadow-md">{homeTour.homeTour.title}</h2>
-                  <Link
-                    href={
-                      "/tours?anchor=" +
-                      homeTour.homeTour.anchor +
-                      "&tab=" +
-                      homeTour.homeTour.tab
-                    }
-                  >
-                    <Button className="tour-button">
-                      Discover {homeTour.homeTour.title}
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            )
-          )}
-        </div> */}
+
         {/* <div className="reviews">
           <div className="left">
             <h2>Reviews</h2>
@@ -271,6 +243,53 @@ export default function Home({ homeData }) {
               </SliderContext.Provider>
             ) : null} */}
         {/* </div> */}
+      </div>
+      <div className="my-12 mx-8 md:mx-16">
+        <h2 className="text-center mb-10 mt-6">Most popular tours</h2>
+        <div className="flex">
+          {homeData.props.data.home?.homeTours.map(
+            (homeTour: IHomeTours, index: number) => (
+              <div
+                className="relative rounded-3xl overflow-hidden first:mr-4"
+                key={homeTour.homeTour.id}
+              >
+                <Image
+                  loader={ImageLoader}
+                  src={getImageUrl(homeTour.homeTour.images)}
+                  width={100}
+                  height={100}
+                  style={tourImageStyle}
+                />
+                <div className="flex justify-center items-center flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
+                  <h2 className="text-white text-center drop-shadow-md">
+                    {homeTour.homeTour.title}
+                  </h2>
+                  {/* <Link
+                    href={
+                      "/tours?anchor=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                  > */}
+                  <TCPTLButton
+                    className="tour-button"
+                    description={{ isOutlined: false }}
+                    url={
+                      "/tours?anchor=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                  >
+                    Discover {homeTour.homeTour.title}
+                  </TCPTLButton>
+                  {/* </Link> */}
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </div>
       <div className="flex h-[650px] sm:h-[620px] bg-light-grey my-12 mx-8 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
         <p className="text-yellow text-xs text-center w-full font-medium">

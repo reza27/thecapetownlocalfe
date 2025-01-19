@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useSliderContext } from "../lib/contexts/slider-context";
 
 let lastScreenW = 0;
-export default function ColumnSlider({ screenWidth = 400, children }) {
-  //console.log("sliderObjects", children);
+export default function ColumnSlider({ screenWidth, children }) {
   const [currIndex, setCurrIndex] = useState<number>(0);
+  const [dotHoverIndex, setDotHoverIndex] = useState<number | null>(null);
 
   const items = useSliderContext();
 
@@ -33,14 +33,19 @@ export default function ColumnSlider({ screenWidth = 400, children }) {
     return [...numNavDotsArr].map((dotItem, index) => {
       return (
         <div
-          className="w-3 h-3 rounded-full bg-gray-500 mr-1.5"
+          className="w-3 h-3 rounded-full bg-gray-500 mr-1.5 cursor-pointer transition duration-300"
           style={
             currIndex === index
               ? { backgroundColor: "#FCB400" }
-              : { backgroundColor: "grey" }
+              : {
+                  backgroundColor: dotHoverIndex === index ? "#FCB400" : "grey",
+                  opacity: dotHoverIndex === index ? 0.8 : 1,
+                }
           }
           key={index}
           data-index={index}
+          onMouseEnter={() => setDotHoverIndex(index)}
+          onMouseLeave={() => setDotHoverIndex(null)}
           onClick={(e) => {
             setCurrIndex(+e.target.dataset.index);
           }}
@@ -52,7 +57,7 @@ export default function ColumnSlider({ screenWidth = 400, children }) {
   return (
     <div className="overflow-hidden relative tr flex flex-col">
       <div
-        className="flex w-full transition duration-150 ease-in-out"
+        className="flex w-full transition duration-250 ease-out"
         style={childrenStyle}
       >
         {children}

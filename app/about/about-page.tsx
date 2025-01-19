@@ -67,9 +67,15 @@ export default function About({ data }) {
       <Head>
         <title>About - The Cape Town Local</title>
       </Head>
-      <div id="about">
-        <h2 className="main-heading">About us</h2>
-        <div className="about-description">
+      <div
+        id="about"
+        className="px-6 md:px-16 bg-white flex mt-28 md:mt-32 flex-col"
+      >
+        <h1 className="text-center py-9">
+          <span className="text-yellow ">'Local is lekker'</span>. That
+          statement is perfectly fitting to Cape Town.
+        </h1>
+        <div className="text-sm text-center pt-14 px-4 md:px-20">
           {data.props.data.about ? (
             <DocumentRenderer
               document={data.props.data.about?.content?.document}
@@ -79,7 +85,7 @@ export default function About({ data }) {
           )}
         </div>
         <div className="guides-container">
-          <h2>Meet the team</h2>
+          <h1 className="text-center pt-24">Meet the team</h1>
           <div className="guides-description">
             {data.props.data.about ? (
               <DocumentRenderer

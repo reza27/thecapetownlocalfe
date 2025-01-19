@@ -25,6 +25,12 @@ $blueButtonTheme: #257de6;
 
 $mobi-gutter-padding: 15px;
 
+@layer base {
+  h1 {
+    @apply text-5xl;
+  }
+}
+
 html,
 body {
   padding: 0;

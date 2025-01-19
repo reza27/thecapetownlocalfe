@@ -18,6 +18,10 @@ export default function Contact({ data }) {
       </Head>
       <div className="mx-12">
         <div className="mt-32 mb-12">
+          <h1 className="text-center py-9">
+            Ready to <span className="text-yellow">make a booking</span> with
+            us?
+          </h1>
           <ContactForm
             selectOptions={getFormOptions(data.props.data.activities[0])}
           />

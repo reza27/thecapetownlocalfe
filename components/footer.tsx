@@ -3,14 +3,14 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black relative h-80 py-10 px-16 font-sans">
-      <div className="flex">
-        <div className="flex flex-col">
+    <footer className="bg-black relative min-h-80 pt-10 pb-28 md:pb-0 px-16 font-sans">
+      <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col justify-center items-center lg:justify-normal">
           <img className="w-60 h-auto grayscale" src="/thecptlocal2.png" />
           <p className="text-yellow text-sm pt-3">info@thecapetownlocal.com</p>
         </div>
-        <div className="flex ml-auto">
-          <div className="pl-20">
+        <div className="flex text-center lg:text-left lg:ml-auto flex-col lg:flex-row">
+          <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Company</p>
             <ul className="flex flex-col text-xs text-gray-400">
               <Link className="py-0.5 hover:text-yellow" href="/">
@@ -30,7 +30,7 @@ export default function Footer() {
               </Link>
             </ul>
           </div>
-          <div className="pl-20">
+          <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Tours</p>
             <ul className="flex flex-col text-xs text-gray-400">
               <Link className="py-0.5 hover:text-yellow" href="/">
@@ -41,7 +41,7 @@ export default function Footer() {
               </Link>
             </ul>
           </div>
-          <div className="pl-20">
+          <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Other links</p>
             <ul className="flex flex-col text-xs text-gray-400">
               <Link className="py-0.5 hover:text-yellow" href="/indemnity">
@@ -55,7 +55,7 @@ export default function Footer() {
               </Link>
             </ul>
           </div>
-          <div className="pl-20">
+          <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Social links</p>
             <ul className="flex flex-col text-xs text-gray-400">
               <Link
@@ -80,7 +80,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 h-16 text-xs text-gray-400 border-t border-gray-800 border-1 w-full left-0 flex items-center pl-16 ">
+      <div className="absolute bottom-0 mt-10 h-16 text-xs text-gray-400 border-t border-gray-800 border-1 w-full left-0 flex items-center lg:pl-16 justify-center lg:justify-normal">
         &copy; 2025 The Cape Town Local. All rights reserved
       </div>
     </footer>
