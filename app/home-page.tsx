@@ -245,12 +245,12 @@ export default function Home({ homeData }) {
         {/* </div> */}
       </div>
       <div className="my-12 mx-8 md:mx-16">
-        <h2 className="text-center mb-10 mt-6">Most popular tours</h2>
-        <div className="flex">
+        <h2 className="text-center mb-8 mt-6">Most popular tours</h2>
+        <div className="flex md:flex-row flex-col">
           {homeData.props.data.home?.homeTours.map(
             (homeTour: IHomeTours, index: number) => (
               <div
-                className="relative rounded-3xl overflow-hidden first:mr-4"
+                className="relative rounded-3xl overflow-hidden md:first:mr-4 mt-4 md:mt-0"
                 key={homeTour.homeTour.id}
               >
                 <Image
