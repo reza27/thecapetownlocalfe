@@ -76,7 +76,7 @@ export default function About({ data }) {
           statement <br /> is perfectly fitting to Cape Town.
         </h1>
         <div className="flex justify-center items-center">
-          <div className="text-sm text-center px-4 max-w-[800px]">
+          <div className="text-sm text-center px-4 max-w-[800px] text-light-grey-2">
             {data.props.data.about ? (
               <DocumentRenderer
                 document={data.props.data.about?.content?.document}
