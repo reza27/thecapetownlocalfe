@@ -4,30 +4,40 @@ import { faArrowRight, faStar } from "@fortawesome/free-solid-svg-icons";
 import { IGoogleReview } from "../types/IGoogleReview";
 import Link from "next/link";
 
-export default function ReviewsV2({ screenWidth = 1200 }) {
+export default function ReviewsV2({ screenWidth = 400 }) {
   const reviews = useSliderContext();
 
-  const minBlockW = 300;
+  const minBlockW = 500;
   const maxBlocks = 3;
   const minBlocks = 1;
   const numBlocks = Math.floor(
     Math.min(Math.max(screenWidth / minBlockW, minBlocks), maxBlocks)
   );
 
-  console.log("screenWidth", screenWidth, numBlocks);
+  let basis: string = "full";
 
-  //const reviewContainerCss = `flex w-1/${numBlocks}`;
-  const reviewContainerCss = `w-full`;
-  const reviewStyle = {
-    width: `${100 / numBlocks}%`,
-  };
+  switch (+(100 / numBlocks).toFixed(0)) {
+    case 100:
+      basis = "full";
+      break;
+    case 50:
+      basis = "half";
+      break;
+    case 33:
+      basis = "third";
+      break;
+    default:
+      "full";
+  }
+
+  const reviewContainerCss = `basis-${basis} md:px-6 py-6 h-[380px] grow shrink-0`;
 
   let getStars = (numStars) => {
     let stars: any[] = [];
 
     for (let i = 0; i < numStars; i++) {
       stars.push(
-        <div className="star" key={i}>
+        <div className="text-yellow" key={i}>
           <FontAwesomeIcon icon={faStar} />
         </div>
       );
@@ -41,27 +51,34 @@ export default function ReviewsV2({ screenWidth = 1200 }) {
         reviews.map((review: IGoogleReview) => (
           <div
             key={review.publishTime.toString()}
-            className="flex-[1_0_33.33%] p-6 h-[450px]"
+            className={reviewContainerCss}
           >
-            <div className="bg-white rounded-3xl p-6">
-              <div className="flex items-center mb-2">
-                <div className="overflow-hidden rounded w-7 h-auto ">
-                  <img src={review.authorAttribution.photoUri.toString()}></img>
+            <div className="bg-white rounded-3xl p-6 overflow-scroll h-full">
+              <div className="flex justify-between my-4">
+                <div className="flex items-center">
+                  <div className="font-medium text-black text-xs sm:text-sm">
+                    {review.relativePublishTimeDescription}
+                  </div>
                 </div>
-                <div className="font-medium pl-4 text-black">
+
+                <div className="flex">{getStars(review.rating)}</div>
+              </div>
+              <p className="text-sm leading-relaxed">{review.text.text}</p>
+              <div className="flex items-center justify-end pt-5">
+                <div className="font-medium text-black text-sm sm:text-base pr-4">
                   {review.authorAttribution.displayName}
                 </div>
+                <div className="overflow-hidden rounded w-8 sm:w-10 h-auto">
+                  <Link
+                    href={review.authorAttribution.uri.toString()}
+                    target="blank"
+                  >
+                    <img
+                      src={review.authorAttribution.photoUri.toString()}
+                    ></img>
+                  </Link>
+                </div>
               </div>
-
-              <div className="flex">{getStars(review.rating)}</div>
-              <p>{review.text.text}</p>
-              <Link
-                className="review-link"
-                href={review.authorAttribution.uri.toString()}
-                target="blank"
-              >
-                See full Google review <FontAwesomeIcon icon={faArrowRight} />
-              </Link>
             </div>
           </div>
         ))}

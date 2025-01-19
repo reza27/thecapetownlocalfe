@@ -33,7 +33,8 @@ export const metadata: Metadata = {
 };
 
 export default function Home({ homeData }) {
-  const [isMobi, setIsMobi] = useState(false);
+  const [isMobi, setIsMobi] = useState<boolean>(false);
+  const [screenWidth, setScreenWidth] = useState<number>(400);
 
   const dispatch = useAppDispatch();
   //const { data, error, isLoading } = useGetReviewsQuery();
@@ -72,9 +73,21 @@ export default function Home({ homeData }) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     if (window.innerWidth <= 768) {
       setIsMobi(true);
     }
+
+    function autoResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", autoResize);
+
+    return () => window.removeEventListener("resize", autoResize);
   }, []);
   return (
     <>
@@ -259,16 +272,16 @@ export default function Home({ homeData }) {
             ) : null} */}
         {/* </div> */}
       </div>
-      <div className="flex h-[620px] bg-light-grey my-12 mx-8 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
+      <div className="flex h-[650px] sm:h-[620px] bg-light-grey my-12 mx-8 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
         <p className="text-yellow text-xs text-center w-full font-medium">
           CLIENT REVIEWS
         </p>
-        <h3 className="w-full text-4xl text-center pt-4">
+        <h3 className="w-full text-3xl sm:text-4xl text-center pt-3 pb-6">
           Don't take our word for it, take theirs!
         </h3>
         <SliderContext.Provider value={defaultReviews || []}>
-          <ColumnSlider screenWidth={window.innerWidth}>
-            <ReviewsV2 screenWidth={window.innerWidth} />
+          <ColumnSlider screenWidth={screenWidth}>
+            <ReviewsV2 screenWidth={screenWidth} />
           </ColumnSlider>
         </SliderContext.Provider>
       </div>

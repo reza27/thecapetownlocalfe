@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
 $zinc600: #52525b;
 $zinc200: #e5e5e5;
@@ -100,6 +101,14 @@ peer:placeholder-shown ~ .peer-placeholder-shown {
     color: white;
     background: white;
   }
+}
+
+.basis-half {
+  flex-basis: 50%;
+}
+
+.basis-third {
+  flex-basis: 33%;
 }
 
 @import "components/nav";
