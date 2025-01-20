@@ -126,7 +126,7 @@ export default function About({ data }) {
           <p className="text-xs text-yellow pt-24 text-center font-semibold">
             MEET THE TEAM
           </p>
-          <h1 className="text-center  text-3xl lg:text-6xl">Meet the team</h1>
+          <h1 className="text-center">Meet the team</h1>
           {/* <div className="guides-description">
             {data.props.data.about ? (
               <DocumentRenderer
