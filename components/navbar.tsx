@@ -32,9 +32,7 @@ export default function Navbar() {
       checkBox.current.checked = false;
     }
 
-    if (isMobile) {
-      setOpenMenu(false);
-    }
+    setOpenMenu(false);
   };
 
   return (
@@ -44,7 +42,10 @@ export default function Navbar() {
     >
       <div className="flex w-full">
         <Link className="cursor-pointer" href="/">
-          <img className="w-44 md:w-56 h-auto" src="/thecptlocal3.png" />
+          <img
+            className="w-44 md:w-56 h-auto relative z-50"
+            src="/thecptlocal3.png"
+          />
         </Link>
         <div className="flex ml-auto">
           <ul className=" text-cpt-black hidden md:flex items-center text-sm ">
@@ -65,7 +66,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <div className="absolute top-6 right-3 md:hidden">
+        <div className="absolute top-8 right-4 md:hidden z-50">
           <label htmlFor="check" className="flex flex-col w-14 cursor-pointer">
             <input
               type="checkbox"
@@ -73,24 +74,24 @@ export default function Navbar() {
               id="check"
               onClick={() => setOpenMenu(!openMenu)}
             />
-            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
-            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
-            <span className="rounded-lg h-1 m-1 bg-gray-700"></span>
+            <span className="rounded-lg h-0.5 m-1 bg-red-700"></span>
+            <span className="rounded-lg h-0.5 m-1 bg-gray-700"></span>
+            <span className="rounded-lg h-0.5 m-1 bg-gray-700"></span>
           </label>
         </div>
       </div>
       <div
         ref={mobiLinks}
-        className="md:hidden"
+        className="md:hidden w-full fixed left-0 right-0 h-screen bg-white flex justify-center transition-all duration-300"
         style={{ top: openMenu ? "0" : "-100vh" }}
       >
-        <ul>
+        <ul className="relative top-32 text-center text-5xl font-semibold text-dark-grey">
           {links.map((val: ILink) => (
-            <li key={val.mobiKey}>
+            <li key={val.mobiKey} className="py-2">
               <Link
                 href={val.href}
                 onClick={linkSelected.bind(this, val)}
-                className={activeClass === val.id ? "selected" : ""}
+                className={activeClass === val.id ? "text-yellow" : ""}
               >
                 {val.text}
               </Link>

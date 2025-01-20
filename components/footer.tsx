@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black relative min-h-80 pt-10 pb-28 md:pb-0 px-16 font-sans">
+    <footer className="bg-black relative min-h-80 pt-10 pb-28 lg:pb-0 px-16 font-sans">
       <div className="flex flex-col lg:flex-row">
-        <div className="flex flex-col justify-center items-center lg:justify-normal">
+        <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start">
           <img className="w-60 h-auto grayscale" src="/thecptlocal2.png" />
           <p className="text-yellow text-sm pt-3">info@thecapetownlocal.com</p>
         </div>

@@ -62,7 +62,7 @@ export default function ColumnSlider({ screenWidth, children }) {
       >
         {children}
       </div>
-      <div className="flex justify-center items-center mt-3 sm:mt-6">
+      <div className="flex justify-center items-center my-3 sm:mt-6">
         {getNav()}
       </div>
     </div>
