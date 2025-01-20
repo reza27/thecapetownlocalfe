@@ -97,7 +97,7 @@ export default function Home({ homeData }) {
       <Head>
         <title>Home - The Cape Town Local</title>
       </Head>
-      <div className="w-full relative px-6 md:px-16 bg-white flex pt-28 md:pt-32">
+      <div className="w-full relative px-4 md:px-16 bg-white flex pt-28 md:pt-32">
         <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
           <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl md:text-7xl font-semibold text-white transition-all duration-300">
             Discover
@@ -244,7 +244,7 @@ export default function Home({ homeData }) {
             ) : null} */}
         {/* </div> */}
       </div>
-      <div className="my-12 mx-8 md:mx-16">
+      <div className="my-12 mx-4 md:mx-16">
         <h2 className="text-center mb-8 mt-6 leading-tight">
           Most popular tours
         </h2>
@@ -293,7 +293,7 @@ export default function Home({ homeData }) {
           )}
         </div>
       </div>
-      <div className="flex bg-light-grey my-12 mx-8 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
+      <div className="flex bg-light-grey my-12 mx-4 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
         <p className="text-yellow text-xs text-center w-full font-medium">
           CLIENT REVIEWS
         </p>
@@ -306,7 +306,7 @@ export default function Home({ homeData }) {
           </ColumnSlider>
         </SliderContext.Provider>
       </div>
-      <div className="my-12 mx-8 md:mx-16 flex">
+      <div className="my-12 mx-4 md:mx-16 flex">
         <ContactForm
           selectOptions={getFormOptions(homeData.props.data.activities)}
         />
