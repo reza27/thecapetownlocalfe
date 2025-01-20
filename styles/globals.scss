@@ -27,7 +27,7 @@ $mobi-gutter-padding: 15px;
 
 @layer base {
   h1 {
-    @apply text-5xl;
+    @apply text-4xl sm:text-5xl !leading-none;
   }
 }
 
@@ -51,10 +51,6 @@ h3 {
   font-weight: 600;
   //font-family: Alexandria;
   color: #333;
-}
-
-h1 {
-  font-size: 55px;
 }
 
 h2 {
