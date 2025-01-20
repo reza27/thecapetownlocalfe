@@ -8,7 +8,7 @@ export default function Reviews() {
       {images.map((image, index) => (
         <div
           key={image.id + "-" + index}
-          className="panel-image"
+          className="panel-image rounded-3xl"
           style={{
             backgroundImage: "url(" + image?.image?.publicUrl + ")",
             backgroundPosition: "center",

@@ -124,12 +124,13 @@ export default function Tours({ data }) {
       <div id="tours">
         {data.props.data.activities.map((item) => (
           <div key={item.id}>
-            <div className="header">
+            {/* <div className="header">
               <h1>Tours</h1>
               <p></p>
-            </div>
+
+            </div> */}
             <Tabs item={item} />
-            <div className="tab-panels">
+            <div className="tab-panels pt-28">
               {item.activityItemHeading.map((activityItemHeading) => (
                 <div
                   key={activityItemHeading.id}
