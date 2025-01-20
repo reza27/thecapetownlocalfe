@@ -99,7 +99,7 @@ export default function Home({ homeData }) {
       </Head>
       <div className="w-full relative px-4 md:px-16 bg-white flex pt-28 md:pt-32">
         <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl md:text-7xl font-semibold text-white transition-all duration-300">
+          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
@@ -245,7 +245,7 @@ export default function Home({ homeData }) {
         {/* </div> */}
       </div>
       <div className="my-12 mx-4 md:mx-16">
-        <h2 className="text-center mb-8 mt-6 leading-tight">
+        <h2 className="text-center text-3xl mb-8 mt-6 leading-tight">
           Most popular tours
         </h2>
         <div className="flex md:flex-row flex-col">
