@@ -23,6 +23,7 @@ import Slider from "../../components/slider";
 import TourImages from "../../components/tour-images";
 import { SliderContext } from "../../lib/contexts/slider-context";
 import { getFormOptions } from "../../components/forms/getFormOptions";
+import ImageScroller from "../../components/image-scroller";
 
 export const metadata: Metadata = {
   title: "Tours",
@@ -32,7 +33,13 @@ export default function Tours({ data }) {
     data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
+  const [scrollYPos, setScrollYPos] = useState<number>(0);
+
   const contactRef = useRef<HTMLDivElement | null>(null);
+  const imageScrollerRefs = useRef<
+    Array<{ imageScrollerRef: HTMLDivElement | null; id: string }>
+  >([]);
+
   const HEADER_OFFSET = 110;
   const anchorRefs = useRef<
     Array<{ anchorRef: HTMLDivElement | null; id: string }>
@@ -115,7 +122,23 @@ export default function Tours({ data }) {
   useEffect(() => {
     const DELAY: number = 300;
     setTimeout(selectTabAndScrollToAnchor, DELAY);
+
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    function onScroll(e) {
+      setScrollYPos((scrollYPos) => {
+        let ypos = scrollYPos + e.deltaY > 0 ? scrollYPos + e.deltaY : 0;
+        return ypos;
+      });
+    }
+
+    window.addEventListener("mousewheel", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   return (
     <>
       <Head>
@@ -129,8 +152,8 @@ export default function Tours({ data }) {
               <p></p>
 
             </div> */}
-            <Tabs item={item} />
-            <div className="tab-panels pt-28">
+            {/* <Tabs item={item} /> */}
+            <div className="relative pt-32 px-16">
               {item.activityItemHeading.map((activityItemHeading) => (
                 <div
                   key={activityItemHeading.id}
@@ -143,8 +166,33 @@ export default function Tours({ data }) {
                 >
                   {activityItemHeading.activityItems.map(
                     (activityItem, index) => (
-                      <div className="panel-outer" key={activityItem.id}>
-                        <div key={activityItem.id} className="panel-inner">
+                      <div className="flex mb-12" key={activityItem.id}>
+                        <div className="w-1/2">
+                          <div className="text-black"> {scrollYPos}</div>
+                          <SliderContext.Provider value={activityItem.images}>
+                            {/*  <Slider
+                              id={activityItem.id}
+                              containerClass="image-slider"
+                              panelClass="panel-images-slider"
+                              type="tours"
+                            > */}
+                            <ImageScroller
+                              // ref={(ref) => {
+                              //   console.log("imgRef", index);
+
+                              //   return (imageScrollerRefs.current[index] = {
+                              //     imageScrollerRef: ref,
+                              //     id: "tour" + index,
+                              //   });
+                              // }}
+                              scrollYPos={scrollYPos}
+                            >
+                              <TourImages />
+                            </ImageScroller>
+                            {/* </Slider>*/}
+                          </SliderContext.Provider>
+                        </div>
+                        {/*<div key={activityItem.id} className="panel-inner">
                           <div
                             className="tab-panel"
                             id={activityItem.anchor.toLowerCase()}
@@ -172,8 +220,8 @@ export default function Tours({ data }) {
                                 <FontAwesomeIcon icon={faClock} />
                               </span>
                               {activityItem.duration}
-                            </div>
-                            <Button
+                            </div> */}
+                        {/* <Button
                               className="enquire-button"
                               onClick={() => {
                                 const elementPosition =
@@ -194,19 +242,7 @@ export default function Tours({ data }) {
                               Enquire now
                             </Button>
                           </div>
-                        </div>
-                        <div className="panel-images">
-                          <SliderContext.Provider value={activityItem.images}>
-                            <Slider
-                              id={activityItem.id}
-                              containerClass="image-slider"
-                              panelClass="panel-images-slider"
-                              type="tours"
-                            >
-                              <TourImages />
-                            </Slider>
-                          </SliderContext.Provider>
-                        </div>
+                        </div> */}
                       </div>
                     )
                   )}
