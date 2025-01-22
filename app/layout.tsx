@@ -1,9 +1,11 @@
+"use client";
 import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css"; //importing font awesome css
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import StoreProvider from "./StoreProvider";
+import { useAppSelector } from "../lib/hooks";
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -12,6 +14,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const disablePageScroll = useAppSelector(
+  //   (state) => state.tours.disablePageScroll
+  // );
+
   return (
     <StoreProvider>
       <html lang="en">
@@ -47,7 +53,11 @@ export default function RootLayout({
             rel="stylesheet"
           ></link>
         </head>
-        <body>
+        <body
+        // style={{
+        //   overflow: disablePageScroll ? "hidden" : "auto",
+        // }}
+        >
           <Navbar />
           {children}
           <Footer />

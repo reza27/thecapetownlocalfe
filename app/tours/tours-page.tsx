@@ -24,26 +24,35 @@ import TourImages from "../../components/tour-images";
 import { SliderContext } from "../../lib/contexts/slider-context";
 import { getFormOptions } from "../../components/forms/getFormOptions";
 import ImageScroller from "../../components/image-scroller";
+import { useAppDispatch } from "../../lib/hooks";
+import { setDisablePageScroll } from "../../lib/features/tours/toursSlice";
 
 export const metadata: Metadata = {
   title: "Tours",
 };
 export default function Tours({ data }) {
+  const dispatch = useAppDispatch();
+
   let firstTab =
     data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
   const [scrollYPos, setScrollYPos] = useState<number>(0);
+  const [currentScrollIndex, setCurrentScrollIndex] = useState<number>(0);
+
+  const [imageScrollerHeight, setImageScrollerHeight] = useState<
+    number | undefined
+  >(0);
 
   const contactRef = useRef<HTMLDivElement | null>(null);
   const imageScrollerRefs = useRef<
     Array<{ imageScrollerRef: HTMLDivElement | null; id: string }>
   >([]);
-
-  const HEADER_OFFSET = 110;
   const anchorRefs = useRef<
     Array<{ anchorRef: HTMLDivElement | null; id: string }>
   >([]);
+
+  const HEADER_OFFSET = 110;
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -119,19 +128,69 @@ export default function Tours({ data }) {
     }
   };
 
+  const getActivityItems = () => {
+    return data.props.data.activities.flatMap((item) => {
+      return item.activityItemHeading.flatMap((activityItemHeading) => {
+        return activityItemHeading.activityItems.flatMap((activityItem) => {
+          return activityItem;
+        });
+      });
+    });
+  };
+
   useEffect(() => {
     const DELAY: number = 300;
     setTimeout(selectTabAndScrollToAnchor, DELAY);
+    //dispatch(setDisablePageScroll(true));
+
+    window.scrollTo(0, 0);
+    setCurrentScrollIndex(0);
+
+    document.body.style.overflow = "hidden";
 
     if (typeof window === "undefined") {
       return;
     }
 
+    console.log("getActivityItems", getActivityItems());
+    const containerH =
+      imageScrollerRefs.current[0].imageScrollerRef?.clientHeight!;
+
+    const contentHeight: number =
+      getActivityItems()[0].images.length * containerH;
+
+    const ypos = (scrollYPos, deltaY) => {
+      scrollYPos + deltaY > 0
+        ? scrollYPos + deltaY
+        : 0 || scrollYPos + deltaY < contentHeight - containerH
+        ? scrollYPos + deltaY
+        : contentHeight - imageScrollerHeight!;
+
+      if (
+        scrollYPos + deltaY > 0 &&
+        scrollYPos + deltaY < contentHeight - containerH
+      ) {
+        document.body.style.overflow = "hidden";
+
+        return scrollYPos + deltaY;
+      } else if (scrollYPos + deltaY >= contentHeight - containerH) {
+        //dispatch(setDisablePageScroll(false));
+        document.body.style.overflow = "auto";
+
+        return contentHeight - containerH;
+      } else {
+        return 0;
+      }
+    };
+
     function onScroll(e) {
-      setScrollYPos((scrollYPos) => {
-        let ypos = scrollYPos + e.deltaY > 0 ? scrollYPos + e.deltaY : 0;
-        return ypos;
-      });
+      console.log(window.scrollY);
+
+      if (window.scrollY === 0) {
+        setScrollYPos((scrollYPos) => {
+          return ypos(scrollYPos, Math.min(e.deltaY, 30));
+        });
+      }
     }
 
     window.addEventListener("mousewheel", onScroll);
@@ -167,8 +226,17 @@ export default function Tours({ data }) {
                   {activityItemHeading.activityItems.map(
                     (activityItem, index) => (
                       <div className="flex mb-12" key={activityItem.id}>
-                        <div className="w-1/2">
-                          <div className="text-black"> {scrollYPos}</div>
+                        <div
+                          className="w-1/2"
+                          id={activityItem.id}
+                          ref={(ref) => {
+                            imageScrollerRefs.current[index] = {
+                              imageScrollerRef: ref,
+                              id: "tour" + index,
+                            };
+                          }}
+                        >
+                          {/* <div className="text-black"> {scrollYPos}</div> */}
                           <SliderContext.Provider value={activityItem.images}>
                             {/*  <Slider
                               id={activityItem.id}
@@ -177,15 +245,8 @@ export default function Tours({ data }) {
                               type="tours"
                             > */}
                             <ImageScroller
-                              // ref={(ref) => {
-                              //   console.log("imgRef", index);
-
-                              //   return (imageScrollerRefs.current[index] = {
-                              //     imageScrollerRef: ref,
-                              //     id: "tour" + index,
-                              //   });
-                              // }}
                               scrollYPos={scrollYPos}
+                              canScroll={currentScrollIndex === index}
                             >
                               <TourImages />
                             </ImageScroller>

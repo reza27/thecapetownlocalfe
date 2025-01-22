@@ -5,8 +5,6 @@ import Image from "next/image";
 export default function TourImages() {
   const images = useSliderContext();
 
-  console.log("images", images);
-
   return (
     <div
       className="rounded-3xl "
