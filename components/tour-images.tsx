@@ -6,14 +6,14 @@ export default function TourImages() {
   const images = useSliderContext();
 
   return (
-    <div
-      className="rounded-3xl "
+    <ul
+      className="rounded-3xl items flex flex-col section"
       style={{
         height: "calc(100vh - 152px)",
       }}
     >
       {images.map((image, index) => (
-        <div key={image.id + "-" + index}>
+        <li key={image.id} className="item panel">
           <Image
             loader={ImageLoader}
             alt={image.altText}
@@ -29,11 +29,10 @@ export default function TourImages() {
               objectPosition: "center top",
               height: "calc(100vh - 152px)",
               width: "100%",
-              overflow: "hidden",
             }}
           />
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

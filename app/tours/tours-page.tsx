@@ -26,6 +26,10 @@ import { getFormOptions } from "../../components/forms/getFormOptions";
 import ImageScroller from "../../components/image-scroller";
 import { useAppDispatch } from "../../lib/hooks";
 import { setDisablePageScroll } from "../../lib/features/tours/toursSlice";
+import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all"; // <-- import GSAP
+import { useGSAP } from "@gsap/react"; // <-- import the hook from our React package
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export const metadata: Metadata = {
   title: "Tours",
@@ -37,8 +41,12 @@ export default function Tours({ data }) {
     data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
-  const [scrollYPos, setScrollYPos] = useState<number>(0);
-  const [currentScrollIndex, setCurrentScrollIndex] = useState<number>(0);
+  const [scrollYPos, setScrollYPos] = useState<Array<number>>([0, 0]);
+  const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
+
+  const currentScrollIndex = useRef<number>(0);
+  const canPageScroll = useRef<boolean>(false);
+  const pageWrapper = useRef<HTMLDivElement>(null);
 
   const [imageScrollerHeight, setImageScrollerHeight] = useState<
     number | undefined
@@ -54,80 +62,6 @@ export default function Tours({ data }) {
 
   const HEADER_OFFSET = 110;
 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
-  };
-
-  function Icon({ id, open }) {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className={`${
-          id === open ? "rotate-180" : ""
-        } h-5 w-5 transition-transform`}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-        />
-      </svg>
-    );
-  }
-
-  const Tabs = (aItem) => {
-    const item = aItem.item;
-    if (item.activityItemHeading?.length > 1) {
-      return (
-        <div className="tabs">
-          <ul className="ul-tabs">
-            {item.activityItemHeading.map((activityItemHeading, index) => (
-              <li
-                key={activityItemHeading.id}
-                className={
-                  tab == activityItemHeading.title.toLowerCase()
-                    ? "selected"
-                    : ""
-                }
-                onClick={() => setTab(activityItemHeading.title.toLowerCase())}
-              >
-                <h2>
-                  <span>{activityItemHeading.title}</span>
-                </h2>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-  };
-
-  const selectTabAndScrollToAnchor = () => {
-    const url = new URL(window.location.href);
-    const tab1 = url.searchParams.get("tab")?.toLowerCase();
-    const anchor = url.searchParams.get("anchor")?.toLowerCase();
-
-    if (tab1) {
-      setTab(tab1);
-      if (anchor) {
-        const element = anchorRefs.current.find((obj) => obj.id === anchor);
-        const elementPosition = element?.anchorRef?.getBoundingClientRect().top;
-        const offsetPosition = elementPosition
-          ? elementPosition + window.scrollY - HEADER_OFFSET
-          : 0;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-      }
-    }
-  };
-
   const getActivityItems = () => {
     return data.props.data.activities.flatMap((item) => {
       return item.activityItemHeading.flatMap((activityItemHeading) => {
@@ -138,215 +72,224 @@ export default function Tours({ data }) {
     });
   };
 
+  useGSAP(
+    () => {
+      console.clear();
+
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+      const container = document.querySelector(".container");
+      const sections = gsap.utils.toArray(".section");
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "none",
+        },
+        scrollTrigger: {
+          trigger: ".wrapper",
+          start: "38 150",
+          end: "+=6000",
+          pin: true,
+          scrub: true,
+          // markers: true,
+          pinSpacer: ".spacer",
+        },
+      });
+
+      sections.forEach((section: any, i) => {
+        const panels = gsap.utils.toArray(".panel", section);
+        tl.to(
+          section,
+          {
+            y: section.clientHeight - section.scrollHeight + 20,
+            duration: panels.length * 0.5,
+          },
+          "section-" + i
+        );
+        if (sections[i + 1]) {
+          tl.to(".content", {
+            yPercent: -100 * (i + 1),
+          });
+        }
+      });
+
+      // const buttons = gsap.utils.toArray(".section-btn");
+      // buttons.forEach((btn, i) => {
+      //   btn.addEventListener("click", () => {
+      //     gsap.to(window, {
+      //       scrollTo: {
+      //         y: tl.scrollTrigger.labelToScroll("section-" + i)
+      //       },
+      //       ease: "power1.inOut"
+      //     });
+      //   });
+      // });
+
+      // const overflowBtn = document.getElementById("btn-overflow");
+      // overflowBtn.addEventListener("click", () =>
+      //   container.classNameList.toggle("no-overflow")
+      // );
+    },
+    { scope: pageWrapper }
+  );
+
   useEffect(() => {
     const DELAY: number = 300;
-    setTimeout(selectTabAndScrollToAnchor, DELAY);
     //dispatch(setDisablePageScroll(true));
 
     window.scrollTo(0, 0);
-    setCurrentScrollIndex(0);
 
-    document.body.style.overflow = "hidden";
+    //currentScrollIndex.current = 0;
+
+    //document.body.style.overflow = "hidden";
 
     if (typeof window === "undefined") {
       return;
     }
-
-    console.log("getActivityItems", getActivityItems());
-    const containerH =
-      imageScrollerRefs.current[0].imageScrollerRef?.clientHeight!;
-
-    const contentHeight: number =
-      getActivityItems()[0].images.length * containerH;
-
-    const ypos = (scrollYPos, deltaY) => {
-      scrollYPos + deltaY > 0
-        ? scrollYPos + deltaY
-        : 0 || scrollYPos + deltaY < contentHeight - containerH
-        ? scrollYPos + deltaY
-        : contentHeight - imageScrollerHeight!;
-
-      if (
-        scrollYPos + deltaY > 0 &&
-        scrollYPos + deltaY < contentHeight - containerH
-      ) {
-        document.body.style.overflow = "hidden";
-
-        return scrollYPos + deltaY;
-      } else if (scrollYPos + deltaY >= contentHeight - containerH) {
-        //dispatch(setDisablePageScroll(false));
-        document.body.style.overflow = "auto";
-
-        return contentHeight - containerH;
-      } else {
-        return 0;
-      }
-    };
-
-    function onScroll(e) {
-      console.log(window.scrollY);
-
-      if (window.scrollY === 0) {
-        setScrollYPos((scrollYPos) => {
-          return ypos(scrollYPos, Math.min(e.deltaY, 30));
-        });
-      }
-    }
-
-    window.addEventListener("mousewheel", onScroll);
-
-    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Tours - The Cape Town Local</title>
-      </Head>
-      <div id="tours">
-        {data.props.data.activities.map((item) => (
-          <div key={item.id}>
-            {/* <div className="header">
-              <h1>Tours</h1>
-              <p></p>
+    <div className="page-wrapper pt-28 px-8" ref={pageWrapper}>
+      {/*      
+      <section className="section">
+        <div className="container ">
+          
+        </div>
+      </section>  */}
 
-            </div> */}
-            {/* <Tabs item={item} /> */}
-            <div className="relative pt-32 px-16">
-              {item.activityItemHeading.map((activityItemHeading) => (
-                <div
-                  key={activityItemHeading.id}
-                  className={
-                    (tab == activityItemHeading.title.toLowerCase()
-                      ? "selected"
-                      : "") + " panel w-full"
-                  }
-                  data-index={activityItemHeading.id}
-                >
-                  {activityItemHeading.activityItems.map(
-                    (activityItem, index) => (
-                      <div className="flex mb-12" key={activityItem.id}>
+      <div className="wrapper flex justify-center items-center">
+        <div className="container no-overflow">
+          <div className="content">
+            <div className="w-full flex ">
+              <section className="h-full">
+                {data.props.data.activities.map((item) => (
+                  <div className="relative">
+                    {item.activityItemHeading.map(
+                      (activityItemHeading, index) => (
                         <div
-                          className="w-1/2"
-                          id={activityItem.id}
-                          ref={(ref) => {
-                            imageScrollerRefs.current[index] = {
-                              imageScrollerRef: ref,
-                              id: "tour" + index,
-                            };
-                          }}
+                          key={activityItemHeading.id}
+                          data-index={activityItemHeading.id}
                         >
-                          {/* <div className="text-black"> {scrollYPos}</div> */}
-                          <SliderContext.Provider value={activityItem.images}>
-                            {/*  <Slider
-                              id={activityItem.id}
-                              containerClass="image-slider"
-                              panelClass="panel-images-slider"
-                              type="tours"
-                            > */}
-                            <ImageScroller
-                              scrollYPos={scrollYPos}
-                              canScroll={currentScrollIndex === index}
-                            >
-                              <TourImages />
-                            </ImageScroller>
-                            {/* </Slider>*/}
-                          </SliderContext.Provider>
+                          {activityItemHeading.activityItems.map(
+                            (activityItem, index) => (
+                              <div
+                                className="flex flex-col"
+                                key={activityItem.id}
+                              >
+                                <div
+                                  className="flex"
+                                  style={{
+                                    flexDirection:
+                                      index % 2 === 0 ? "row" : "row-reverse",
+                                  }}
+                                >
+                                  <div
+                                    className="w-1/2 overflow-hidden rounded-3xl"
+                                    id={activityItem.id}
+                                    ref={(ref) => {
+                                      imageScrollerRefs.current[index] = {
+                                        imageScrollerRef: ref,
+                                        id: "tour" + index,
+                                      };
+                                    }}
+                                  >
+                                    <SliderContext.Provider
+                                      value={activityItem.images}
+                                    >
+                                      <TourImages />
+                                    </SliderContext.Provider>
+                                  </div>
+                                  <div className="w-1/2 text-black p-10">
+                                    <h2>{activityItem.title}</h2>
+                                    <div className="doc">
+                                      <DocumentRenderer
+                                        document={activityItem.content.document}
+                                      />
+                                    </div>
+                                    <div className="price">
+                                      <span className="price-black">
+                                        <FontAwesomeIcon icon={faTag} />
+                                      </span>
+                                      {activityItem.price}
+                                    </div>
+                                    <div>{activityItem.duration}</div>
+                                  </div>
+                                </div>
+                                <div className="spacer h-20"></div>
+                              </div>
+                            )
+                          )}
                         </div>
-                        {/*<div key={activityItem.id} className="panel-inner">
-                          <div
-                            className="tab-panel"
-                            id={activityItem.anchor.toLowerCase()}
-                            ref={(ref) => {
-                              anchorRefs.current[index] = {
-                                anchorRef: ref,
-                                id: activityItem.anchor.toLowerCase(),
-                              };
-                            }}
-                          >
-                            <h2>{activityItem.title}</h2>
-                            <div className="doc">
-                              <DocumentRenderer
-                                document={activityItem.content.document}
-                              />
-                            </div>
-                            <div className="price">
-                              <span className="price-black">
-                                <FontAwesomeIcon icon={faTag} />{" "}
-                              </span>
-                              {activityItem.price}
-                            </div>
-                            <div className="duration">
-                              <span>
-                                <FontAwesomeIcon icon={faClock} />
-                              </span>
-                              {activityItem.duration}
-                            </div> */}
-                        {/* <Button
-                              className="enquire-button"
-                              onClick={() => {
-                                const elementPosition =
-                                  contactRef.current?.getBoundingClientRect()
-                                    .top;
-                                const offsetPosition = elementPosition
-                                  ? elementPosition +
-                                    window.scrollY -
-                                    HEADER_OFFSET
-                                  : 0;
-
-                                window.scrollTo({
-                                  top: offsetPosition,
-                                  behavior: "smooth",
-                                });
-                              }}
-                            >
-                              Enquire now
-                            </Button>
-                          </div>
-                        </div> */}
-                      </div>
-                    )
-                  )}
-                </div>
-              ))}
-
-              <div
-                ref={contactRef}
-                id="tour-contact-form"
-                className="tour-contact-form"
-              >
-                <ContactForm selectOptions={getFormOptions(item)} />
-              </div>
-              {item.faq.length > 0 ? (
-                <div className="faqs">
-                  <h2>FAQs</h2>
-                  <div className="faqs-accordion">
-                    {item.faq.map((faq, i) => (
-                      <Accordion
-                        open={open === i + 1}
-                        key={faq.id}
-                        icon={<Icon id={1} open={open} />}
-                      >
-                        <AccordionHeader
-                          key={faq.question}
-                          onClick={() => handleOpen(i + 1)}
+                      )
+                    )}
+                    <div className="w-full flex mt-20">
+                      <section className="section">
+                        <div
+                          ref={contactRef}
+                          id="tour-contact-form"
+                          className="tour-contact-form"
                         >
-                          {faq.question}
-                        </AccordionHeader>
-                        <AccordionBody key={faq.answer}>
-                          <DocumentRenderer document={faq.answer.document} />
-                        </AccordionBody>
-                      </Accordion>
-                    ))}
+                          <ContactForm selectOptions={getFormOptions(item)} />
+                        </div>
+                      </section>
+                    </div>
                   </div>
+                ))}
+                {/* <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 1
+                  </h3>
                 </div>
-              ) : (
-                <></>
-              )}
+                <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 2
+                  </h3>
+                </div>
+                <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 3
+                  </h3>
+                </div> */}
+                {/* </section>
+              <div className="text-black w-1/2">text</div>
+            </div>
+            <div className="w-full flex mt-[112px] h-[600px]">
+              <section className="section w-1/2 h-full">
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 1
+                  </h3>
+                </div>
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 2
+                  </h3>
+                </div>
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 3
+                  </h3>
+                </div>
+              </section>
+              <div className="text-black w-1/2">text</div>
+            </div>*/}
+              </section>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* <div className="buttons center">
+          <button className="section-btn">Section 1</button>
+          <button className="section-btn">Section 2</button>
+          <button className="section-btn">Section 3</button>
+          <button id="btn-overflow">Toggle Overflow</button>
+        </div> */}
       </div>
-    </>
+    </div>
   );
 }
