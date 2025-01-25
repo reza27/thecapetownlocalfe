@@ -176,6 +176,11 @@ peer:placeholder-shown ~ .peer-placeholder-shown {
 }
 //gsap test
 
+.doc p {
+  font-size: 16px;
+  color: #717171;
+}
+
 @import "components/nav";
 //@import "components/footer";
 @import "components/contact-form";

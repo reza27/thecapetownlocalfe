@@ -28,6 +28,9 @@ import { useAppDispatch } from "../../lib/hooks";
 import { setDisablePageScroll } from "../../lib/features/tours/toursSlice";
 import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all"; // <-- import GSAP
 import { useGSAP } from "@gsap/react"; // <-- import the hook from our React package
+import { TCPTLButton } from "../../components/tcptl-button";
+import parse from "html-react-parser";
+
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -192,19 +195,45 @@ export default function Tours({ data }) {
                                   }}
                                 >
                                   <div className="w-full md:w-1/2 text-black p-10">
-                                    <h2>{activityItem.title}</h2>
-                                    <div className="doc">
+                                    <h2 className="text-4xl xl:text-6xl">
+                                      {parse(activityItem.title)}
+                                    </h2>
+
+                                    <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-[420px]">
+                                      <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
+                                        <span className="text-4xl">
+                                          {activityItem.price}
+                                        </span>
+                                        <span className="text-md">
+                                          Tour Cost
+                                        </span>
+                                      </div>
+                                      <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
+                                        <span className="text-4xl text-blue">
+                                          {activityItem.duration}
+                                        </span>
+                                        <span className="text-md text-black">
+                                          Tour Time
+                                        </span>
+                                      </div>
+                                    </div>
+                                    <div className="doc mt-8">
                                       <DocumentRenderer
                                         document={activityItem.content.document}
                                       />
                                     </div>
-                                    <div className="price">
-                                      <span className="price-black">
-                                        <FontAwesomeIcon icon={faTag} />
-                                      </span>
-                                      {activityItem.price}
-                                    </div>
-                                    <div>{activityItem.duration}</div>
+                                    <TCPTLButton
+                                      fontSize={14}
+                                      xPadding={38}
+                                      yPadding={16}
+                                      description={{
+                                        isOutlined: false,
+                                      }}
+                                      className="z-10 text-2xl flex pt-7"
+                                      url="/tours"
+                                    >
+                                      BOOK TOUR
+                                    </TCPTLButton>
                                   </div>
                                   <div
                                     className="w-full md:w-1/2 overflow-hidden rounded-3xl"
