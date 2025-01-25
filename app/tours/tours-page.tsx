@@ -136,8 +136,6 @@ export default function Tours({ data }) {
     const DELAY: number = 300;
     //dispatch(setDisablePageScroll(true));
 
-    window.scrollTo(0, 0);
-
     //currentScrollIndex.current = 0;
 
     //document.body.style.overflow = "hidden";
@@ -145,6 +143,8 @@ export default function Tours({ data }) {
     if (typeof window === "undefined") {
       return;
     }
+
+    window.scrollTo(0, 0);
   }, []);
 
   return (
