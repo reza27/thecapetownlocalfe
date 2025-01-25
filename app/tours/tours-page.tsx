@@ -86,12 +86,12 @@ export default function Tours({ data }) {
         },
         scrollTrigger: {
           trigger: ".wrapper",
-          start: "38 150",
-          end: "+=6000",
+          start: "140 140",
+          end: "+=8000",
           pin: true,
           scrub: true,
-          // markers: true,
-          pinSpacer: ".spacer",
+          //markers: true,
+          // pinSpacer: ".spacer",
         },
       });
 
@@ -148,7 +148,7 @@ export default function Tours({ data }) {
   }, []);
 
   return (
-    <div className="page-wrapper pt-28 px-8" ref={pageWrapper}>
+    <div className="page-wrapper px-4 md:px-16" ref={pageWrapper}>
       {/*      
       <section className="section">
         <div className="container ">
@@ -159,7 +159,7 @@ export default function Tours({ data }) {
       <div className="wrapper flex justify-center items-center">
         <div className="container no-overflow">
           <div className="content">
-            <div className="w-full flex ">
+            <div className="w-full flex">
               <section className="h-full">
                 {data.props.data.activities.map((item) => (
                   <div className="relative">
@@ -176,29 +176,17 @@ export default function Tours({ data }) {
                                 key={activityItem.id}
                               >
                                 <div
-                                  className="flex"
+                                  className="flex flex-col md:flex-row"
                                   style={{
                                     flexDirection:
-                                      index % 2 === 0 ? "row" : "row-reverse",
+                                      window.innerWidth < 768
+                                        ? "column"
+                                        : index % 2 === 0
+                                        ? "row"
+                                        : "row-reverse",
                                   }}
                                 >
-                                  <div
-                                    className="w-1/2 overflow-hidden rounded-3xl"
-                                    id={activityItem.id}
-                                    ref={(ref) => {
-                                      imageScrollerRefs.current[index] = {
-                                        imageScrollerRef: ref,
-                                        id: "tour" + index,
-                                      };
-                                    }}
-                                  >
-                                    <SliderContext.Provider
-                                      value={activityItem.images}
-                                    >
-                                      <TourImages />
-                                    </SliderContext.Provider>
-                                  </div>
-                                  <div className="w-1/2 text-black p-10">
+                                  <div className="w-full md:w-1/2 text-black p-10">
                                     <h2>{activityItem.title}</h2>
                                     <div className="doc">
                                       <DocumentRenderer
@@ -213,15 +201,31 @@ export default function Tours({ data }) {
                                     </div>
                                     <div>{activityItem.duration}</div>
                                   </div>
+                                  <div
+                                    className="w-full md:w-1/2 overflow-hidden rounded-3xl"
+                                    id={activityItem.id}
+                                    ref={(ref) => {
+                                      imageScrollerRefs.current[index] = {
+                                        imageScrollerRef: ref,
+                                        id: "tour" + index,
+                                      };
+                                    }}
+                                  >
+                                    <SliderContext.Provider
+                                      value={activityItem.images}
+                                    >
+                                      <TourImages />
+                                    </SliderContext.Provider>
+                                  </div>
                                 </div>
-                                <div className="spacer h-20"></div>
+                                {/* <div className="spacer h-20"></div> */}
                               </div>
                             )
                           )}
                         </div>
                       )
                     )}
-                    <div className="w-full flex mt-20">
+                    <div className="w-full flex mt-10">
                       <section className="section">
                         <div
                           ref={contactRef}
