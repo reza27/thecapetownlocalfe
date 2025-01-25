@@ -71,6 +71,12 @@ export default function Tours({ data }) {
       });
     });
   };
+  const getWindowW = () => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    return window.innerWidth < 768;
+  };
 
   useGSAP(
     () => {
@@ -178,12 +184,11 @@ export default function Tours({ data }) {
                                 <div
                                   className="flex flex-col md:flex-row"
                                   style={{
-                                    flexDirection:
-                                      window.innerWidth < 768
-                                        ? "column"
-                                        : index % 2 === 0
-                                        ? "row"
-                                        : "row-reverse",
+                                    flexDirection: getWindowW()
+                                      ? "column"
+                                      : index % 2 === 0
+                                      ? "row"
+                                      : "row-reverse",
                                   }}
                                 >
                                   <div className="w-full md:w-1/2 text-black p-10">
