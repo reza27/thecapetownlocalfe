@@ -11,6 +11,7 @@ async function getHomeData() {
             homeTour {
               id
               title
+              shortTitle
               anchor
               tab
               images(take: 1) {
