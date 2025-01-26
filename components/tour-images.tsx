@@ -2,18 +2,18 @@ import { useSliderContext } from "../lib/contexts/slider-context";
 import ImageLoader from "./image-loader";
 import Image from "next/image";
 
-export default function TourImages() {
+export default function TourImages({ height }) {
   const images = useSliderContext();
 
   return (
     <ul
       className="rounded-3xl items flex flex-col section"
       style={{
-        height: "calc(100vh - 152px)",
+        height: height,
       }}
     >
       {images.map((image, index) => (
-        <li key={image.id} className="item panel">
+        <li key={image.id} className="panel">
           <Image
             loader={ImageLoader}
             alt={image.altText}
@@ -27,7 +27,7 @@ export default function TourImages() {
             style={{
               objectFit: "cover",
               objectPosition: "center top",
-              height: "calc(100vh - 152px)",
+              height: height,
               width: "100%",
             }}
           />

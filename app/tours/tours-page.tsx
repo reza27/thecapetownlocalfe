@@ -30,6 +30,7 @@ import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all"; // <-- import GS
 import { useGSAP } from "@gsap/react"; // <-- import the hook from our React package
 import { TCPTLButton } from "../../components/tcptl-button";
 import parse from "html-react-parser";
+import TourThumbnails from "../../components/tour-thumbnails";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -89,9 +90,14 @@ export default function Tours({ data }) {
 
       const container = document.querySelector(".container");
       const sections = gsap.utils.toArray(".section");
+      const spotlights = gsap.utils.toArray(".spotlight");
+
       const tl = gsap.timeline({
         defaults: {
           ease: "none",
+        },
+        onUpdate: () => {
+          console.log("update", tl.currentLabel());
         },
         scrollTrigger: {
           trigger: ".wrapper",
@@ -106,20 +112,83 @@ export default function Tours({ data }) {
 
       sections.forEach((section: any, i) => {
         const panels = gsap.utils.toArray(".panel", section);
+
         tl.to(
           section,
           {
-            y: section.clientHeight - section.scrollHeight + 20,
+            y: section.clientHeight - section.scrollHeight,
             duration: panels.length * 0.5,
           },
           "section-" + i
         );
+
         if (sections[i + 1]) {
+          const spotlight = document.querySelector("#spotlight" + i);
+          tl.to(
+            spotlight,
+            {
+              y: 350 - 350 / panels.length,
+              duration: panels.length * 0.5,
+            },
+            "section-" + i
+          );
+
           tl.to(".content", {
             yPercent: -100 * (i + 1),
           });
+
+          // tl.to(
+          //   ".spotlight",
+          //   {
+          //     y: 350,
+          //     duration: 1,
+          //   },
+          //   "section-" + i
+          // );
+
+          // spotlights.forEach((spotlight: any, i) => {
+          //   tl.to(
+          //     spotlight,
+          //     {
+          //       yPercent: 350 - spotlight.clientHeight,
+          //       duration: 1,
+          //     },
+          //     "section-" + i
+          //   );
+          // });
         }
       });
+
+      // spotlights.forEach((spotlight: any, i) => {
+      //   if (sections[i + 1]) {
+      //     tl.to(spotlight, {
+      //       yPercent: 100 * (i + 1),
+      //       duration: 1,
+      //       scrollTrigger: {
+      //         trigger: ".section",
+      //         start: "top top",
+      //         end: "+=8000",
+      //         scrub: true,
+      //       },
+      //     });
+      //   }
+      // });
+
+      // tests.forEach((test: any, i) => {
+      //   const spotlights = gsap.utils.toArray(".spotlight", test);
+
+      //   spotlights.forEach((spotlight: any, i) => {
+      //     tl.to(
+      //       spotlight,
+      //       {
+      //         yPercent: 10,
+      //         duration: 1,
+      //       },
+
+      //       "section-" + i
+      //     );
+      //   });
+      // });
 
       // const buttons = gsap.utils.toArray(".section-btn");
       // buttons.forEach((btn, i) => {
@@ -181,7 +250,7 @@ export default function Tours({ data }) {
                           {activityItemHeading.activityItems.map(
                             (activityItem, index) => (
                               <div
-                                className="flex flex-col"
+                                className="flex flex-col "
                                 key={activityItem.id}
                               >
                                 <div
@@ -194,49 +263,74 @@ export default function Tours({ data }) {
                                       : "row-reverse",
                                   }}
                                 >
-                                  <div className="w-full md:w-1/2 text-black p-10">
-                                    <h2 className="text-4xl xl:text-6xl">
-                                      {parse(activityItem.title)}
-                                    </h2>
-
-                                    <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-[420px]">
-                                      <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
-                                        <span className="text-4xl">
-                                          {activityItem.price}
-                                        </span>
-                                        <span className="text-md">
-                                          Tour Cost
-                                        </span>
-                                      </div>
-                                      <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
-                                        <span className="text-4xl text-blue">
-                                          {activityItem.duration}
-                                        </span>
-                                        <span className="text-md text-black">
-                                          Tour Time
-                                        </span>
-                                      </div>
-                                    </div>
-                                    <div className="doc mt-8">
-                                      <DocumentRenderer
-                                        document={activityItem.content.document}
-                                      />
-                                    </div>
-                                    <TCPTLButton
-                                      fontSize={14}
-                                      xPadding={38}
-                                      yPadding={16}
-                                      description={{
-                                        isOutlined: false,
-                                      }}
-                                      className="z-10 text-2xl flex pt-7"
-                                      url="/tours"
-                                    >
-                                      BOOK TOUR
-                                    </TCPTLButton>
-                                  </div>
                                   <div
-                                    className="w-full md:w-1/2 overflow-hidden rounded-3xl"
+                                    className="w-full md:w-1/2 text-black pt-10 flex"
+                                    style={{
+                                      flexDirection: getWindowW()
+                                        ? "column"
+                                        : index % 2 === 0
+                                        ? "row"
+                                        : "row-reverse",
+                                    }}
+                                  >
+                                    <div className="flex flex-col">
+                                      <h2 className="text-4xl xl:text-6xl">
+                                        {parse(activityItem.title)}
+                                      </h2>
+
+                                      <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-[420px]">
+                                        <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
+                                          <span className="text-4xl">
+                                            {activityItem.price}
+                                          </span>
+                                          <span className="text-md">
+                                            Tour Cost
+                                          </span>
+                                        </div>
+                                        <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
+                                          <span className="text-4xl text-blue">
+                                            {activityItem.duration}
+                                          </span>
+                                          <span className="text-md text-black">
+                                            Tour Time
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <div className="doc mt-8">
+                                        <DocumentRenderer
+                                          document={
+                                            activityItem.content.document
+                                          }
+                                        />
+                                      </div>
+                                      <TCPTLButton
+                                        fontSize={14}
+                                        xPadding={38}
+                                        yPadding={16}
+                                        description={{
+                                          isOutlined: false,
+                                        }}
+                                        className="z-10 text-2xl flex pt-7"
+                                        url="/tours"
+                                      >
+                                        BOOK TOUR
+                                      </TCPTLButton>
+                                    </div>
+                                    <div className="flex px-6 justify-center items-center test">
+                                      <SliderContext.Provider
+                                        value={activityItem.images}
+                                      >
+                                        <TourThumbnails
+                                          width={95}
+                                          height={350}
+                                          index={index}
+                                        />
+                                      </SliderContext.Provider>
+                                    </div>
+                                  </div>
+
+                                  <div
+                                    className="w-full md: md:w-1/2 overflow-hidden rounded-3xl"
                                     id={activityItem.id}
                                     ref={(ref) => {
                                       imageScrollerRefs.current[index] = {
@@ -248,7 +342,7 @@ export default function Tours({ data }) {
                                     <SliderContext.Provider
                                       value={activityItem.images}
                                     >
-                                      <TourImages />
+                                      <TourImages height="calc(100vh - 152px)" />
                                     </SliderContext.Provider>
                                   </div>
                                 </div>
