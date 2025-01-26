@@ -185,7 +185,7 @@ export default function Tours({ data }) {
                                       ? "column"
                                       : index % 2 === 0
                                       ? "row-reverse"
-                                      : "row-reverse",
+                                      : "row",
                                   }}
                                 >
                                   <div
@@ -195,7 +195,7 @@ export default function Tours({ data }) {
                                         ? "column"
                                         : index % 2 === 0
                                         ? "row-reverse"
-                                        : "row-reverse",
+                                        : "row",
                                     }}
                                   >
                                     <div className="flex flex-col">
