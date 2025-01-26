@@ -85,8 +85,6 @@ export default function Tours({ data }) {
 
   useGSAP(
     () => {
-      console.clear();
-
       gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
       const container = document.querySelector(".container");
@@ -106,6 +104,21 @@ export default function Tours({ data }) {
           scrub: true,
           //markers: true,
         },
+      });
+
+      const buttons = gsap.utils.toArray(".book-btn");
+      buttons.forEach((btn: any, i) => {
+        btn.addEventListener("click", (e: Event) => {
+          e.preventDefault();
+          gsap.to(window, {
+            duration: 2,
+
+            scrollTo: {
+              y: tl.scrollTrigger?.labelToScroll("section-2"),
+            },
+            ease: "power1.inOut",
+          });
+        });
       });
 
       sections.forEach((section: any, i) => {
@@ -228,6 +241,7 @@ export default function Tours({ data }) {
                                           }
                                         />
                                       </div>
+
                                       <TCPTLButton
                                         fontSize={14}
                                         xPadding={38}
@@ -235,8 +249,8 @@ export default function Tours({ data }) {
                                         description={{
                                           isOutlined: false,
                                         }}
-                                        className="z-10 text-2xl flex pt-7"
-                                        url="/tours"
+                                        className="z-10 text-2xl flex pt-7 book-btn"
+                                        url=""
                                       >
                                         BOOK TOUR
                                       </TCPTLButton>

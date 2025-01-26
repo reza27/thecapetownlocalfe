@@ -16,7 +16,7 @@ export default function TourThumbnails({ width, height, index }) {
         }}
       ></div>
       <ul
-        className="rounded-xl flex flex-col overflow-hidden"
+        className="rounded-xl flex flex-col overflow-hidden relative z-10"
         style={{
           width: width + "px",
           height: height + "px",

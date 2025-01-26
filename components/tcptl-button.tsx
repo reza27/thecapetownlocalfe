@@ -8,9 +8,10 @@ export const TCPTLButton = ({
   className,
   url,
   children,
+  onClick = null,
 }) => {
   return (
-    <Link className={className} href={url}>
+    <Link className={className} href={url} onClick={onClick}>
       {description.isOutlined ? (
         <div
           className="py-3 px-8 border text-white border-white rounded-3xl text-xs font-medium cursor-pointer"
