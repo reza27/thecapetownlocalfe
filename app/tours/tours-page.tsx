@@ -65,6 +65,7 @@ export default function Tours({ data }) {
   >([]);
 
   const HEADER_OFFSET = 110;
+  const THUMB_SECTION_HEIGHT = 350;
 
   const getActivityItems = () => {
     return data.props.data.activities.flatMap((item) => {
@@ -96,9 +97,7 @@ export default function Tours({ data }) {
         defaults: {
           ease: "none",
         },
-        onUpdate: () => {
-          console.log("update", tl.currentLabel());
-        },
+
         scrollTrigger: {
           trigger: ".wrapper",
           start: "140 140",
@@ -106,7 +105,6 @@ export default function Tours({ data }) {
           pin: true,
           scrub: true,
           //markers: true,
-          // pinSpacer: ".spacer",
         },
       });
 
@@ -127,7 +125,7 @@ export default function Tours({ data }) {
           tl.to(
             spotlight,
             {
-              y: 350 - 350 / panels.length,
+              y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
               duration: panels.length * 0.5,
             },
             "section-" + i
@@ -136,87 +134,14 @@ export default function Tours({ data }) {
           tl.to(".content", {
             yPercent: -100 * (i + 1),
           });
-
-          // tl.to(
-          //   ".spotlight",
-          //   {
-          //     y: 350,
-          //     duration: 1,
-          //   },
-          //   "section-" + i
-          // );
-
-          // spotlights.forEach((spotlight: any, i) => {
-          //   tl.to(
-          //     spotlight,
-          //     {
-          //       yPercent: 350 - spotlight.clientHeight,
-          //       duration: 1,
-          //     },
-          //     "section-" + i
-          //   );
-          // });
         }
       });
-
-      // spotlights.forEach((spotlight: any, i) => {
-      //   if (sections[i + 1]) {
-      //     tl.to(spotlight, {
-      //       yPercent: 100 * (i + 1),
-      //       duration: 1,
-      //       scrollTrigger: {
-      //         trigger: ".section",
-      //         start: "top top",
-      //         end: "+=8000",
-      //         scrub: true,
-      //       },
-      //     });
-      //   }
-      // });
-
-      // tests.forEach((test: any, i) => {
-      //   const spotlights = gsap.utils.toArray(".spotlight", test);
-
-      //   spotlights.forEach((spotlight: any, i) => {
-      //     tl.to(
-      //       spotlight,
-      //       {
-      //         yPercent: 10,
-      //         duration: 1,
-      //       },
-
-      //       "section-" + i
-      //     );
-      //   });
-      // });
-
-      // const buttons = gsap.utils.toArray(".section-btn");
-      // buttons.forEach((btn, i) => {
-      //   btn.addEventListener("click", () => {
-      //     gsap.to(window, {
-      //       scrollTo: {
-      //         y: tl.scrollTrigger.labelToScroll("section-" + i)
-      //       },
-      //       ease: "power1.inOut"
-      //     });
-      //   });
-      // });
-
-      // const overflowBtn = document.getElementById("btn-overflow");
-      // overflowBtn.addEventListener("click", () =>
-      //   container.classNameList.toggle("no-overflow")
-      // );
     },
     { scope: pageWrapper }
   );
 
   useEffect(() => {
     const DELAY: number = 300;
-    //dispatch(setDisablePageScroll(true));
-
-    //currentScrollIndex.current = 0;
-
-    //document.body.style.overflow = "hidden";
 
     if (typeof window === "undefined") {
       return;
@@ -226,7 +151,7 @@ export default function Tours({ data }) {
   }, []);
 
   return (
-    <div className="page-wrapper px-4 md:px-16" ref={pageWrapper}>
+    <div className="page-wrapper" ref={pageWrapper}>
       {/*      
       <section className="section">
         <div className="container ">
@@ -254,12 +179,12 @@ export default function Tours({ data }) {
                                 key={activityItem.id}
                               >
                                 <div
-                                  className="flex flex-col md:flex-row"
+                                  className="flex flex-col md:flex-row pb-12"
                                   style={{
                                     flexDirection: getWindowW()
                                       ? "column"
                                       : index % 2 === 0
-                                      ? "row"
+                                      ? "row-reverse"
                                       : "row-reverse",
                                   }}
                                 >
@@ -269,12 +194,12 @@ export default function Tours({ data }) {
                                       flexDirection: getWindowW()
                                         ? "column"
                                         : index % 2 === 0
-                                        ? "row"
+                                        ? "row-reverse"
                                         : "row-reverse",
                                     }}
                                   >
                                     <div className="flex flex-col">
-                                      <h2 className="text-4xl xl:text-6xl">
+                                      <h2 className="text-4xl xl:text-6xl tracking-tighter">
                                         {parse(activityItem.title)}
                                       </h2>
 
@@ -342,7 +267,7 @@ export default function Tours({ data }) {
                                     <SliderContext.Provider
                                       value={activityItem.images}
                                     >
-                                      <TourImages height="calc(100vh - 152px)" />
+                                      <TourImages height="calc(100vh - 200px)" />
                                     </SliderContext.Provider>
                                   </div>
                                 </div>

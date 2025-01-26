@@ -53,13 +53,11 @@ export default function RootLayout({
             rel="stylesheet"
           ></link>
         </head>
-        <body
-        // style={{
-        //   overflow: disablePageScroll ? "hidden" : "auto",
-        // }}
-        >
+        <body>
           <Navbar />
-          {children}
+          <main className="flex justify-center px-4 md:px-16">
+            <div className="max-w-[1600px] w-full">{children}</div>
+          </main>
           <Footer />
           <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_ANALYTICS}`} />
         </body>

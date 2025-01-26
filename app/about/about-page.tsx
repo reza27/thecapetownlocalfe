@@ -102,10 +102,7 @@ export default function About({ data }) {
       <Head>
         <title>About - The Cape Town Local</title>
       </Head>
-      <div
-        id="about"
-        className="px-6 md:px-16 bg-white flex mt-28 md:mt-32 flex-col"
-      >
+      <div id="about" className="bg-white flex mt-28 md:mt-32 flex-col">
         <h1 className="text-center py-9">
           <span className="text-yellow">'Local is lekker'</span>. That statement{" "}
           <br /> is perfectly fitting to Cape Town.
