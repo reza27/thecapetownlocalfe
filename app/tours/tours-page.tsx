@@ -112,19 +112,19 @@ export default function Tours({ data }) {
           },
         });
 
-        // buttons.forEach((btn: any, i) => {
-        //   btn.addEventListener("click", (e: Event) => {
-        //     e.preventDefault();
-        //     gsap.to(window, {
-        //       duration: 2,
+        buttons.forEach((btn: any, i) => {
+          btn.addEventListener("click", (e: Event) => {
+            e.preventDefault();
+            gsap.to(window, {
+              duration: 2,
 
-        //       scrollTo: {
-        //         y: tl.scrollTrigger?.labelToScroll("section-2"),
-        //       },
-        //       ease: "power1.inOut",
-        //     });
-        //   });
-        // });
+              scrollTo: {
+                y: tl.scrollTrigger?.labelToScroll("section-2"),
+              },
+              ease: "power1.inOut",
+            });
+          });
+        });
         console.log("sections", sections);
         sections.forEach((section: any, i) => {
           const panels = gsap.utils.toArray(".panel", section);
@@ -187,20 +187,43 @@ export default function Tours({ data }) {
         }
       );
 
-      // const buttons = gsap.utils.toArray(".book-btn");
-      // buttons.forEach((btn: any, i) => {
-      //   btn.addEventListener("click", (e: Event) => {
-      //     e.preventDefault();
-      //     gsap.to(window, {
-      //       duration: 2,
+      const scrollToForm = (e) => {
+        e.preventDefault();
+        if (isMobile) {
+          gsap.to(window, {
+            duration: 2,
 
-      //       scrollTo: {
-      //         y: tl.scrollTrigger?.labelToScroll("section-2"),
-      //       },
-      //       ease: "power1.inOut",
-      //     });
-      //   });
-      // });
+            scrollTo: {
+              y: "#tour-contact-form",
+            },
+            ease: "power1.inOut",
+          });
+        } else {
+          gsap.to(window, {
+            duration: 2,
+
+            scrollTo: {
+              y: tl.scrollTrigger?.labelToScroll("section-2"),
+            },
+            ease: "power1.inOut",
+          });
+        }
+      };
+
+      const buttons = gsap.utils.toArray(".book-btn");
+      buttons.forEach((btn: any, i) => {
+        btn.addEventListener("click", scrollToForm); // (e: Event) => {
+        // e.preventDefault();
+        // gsap.to(window, {
+        //   duration: 2,
+
+        //   scrollTo: {
+        //     y: tl.scrollTrigger?.labelToScroll("section-2"),
+        //   },
+        //   ease: "power1.inOut",
+        // });
+        // });
+      });
 
       // sections.forEach((section: any, i) => {
       //   const panels = gsap.utils.toArray(".panel", section);
@@ -230,6 +253,11 @@ export default function Tours({ data }) {
       //     });
       //   }
       // });
+      return () => {
+        buttons.forEach((btn: any, i) => {
+          btn.addEventListener("click", scrollToForm); // (e: Event) => {
+        });
+      };
     },
     { dependencies: [isMobile], revertOnUpdate: true, scope: pageWrapper }
   );
