@@ -24,6 +24,7 @@ export async function getToursData() {
             activityItems {
               id
               title
+              shortTitle
               anchor
               tab
               content {

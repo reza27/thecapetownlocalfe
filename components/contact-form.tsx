@@ -53,7 +53,7 @@ export default function ContactForm(props) {
   const displayOptions = (selectOptions: Array<IActivityItem>) => {
     let options = selectOptions.slice().map((item, i) => {
       return (
-        <Option key={item.id} value={item.title}>
+        <Option key={item.id} value={item.shortTitle}>
           {item.title}
         </Option>
       );

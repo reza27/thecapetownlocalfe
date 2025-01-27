@@ -47,6 +47,7 @@ export default function Tours({ data }) {
   const [open, setOpen] = useState(1);
   const [scrollYPos, setScrollYPos] = useState<Array<number>>([0, 0]);
   const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const currentScrollIndex = useRef<number>(0);
   const canPageScroll = useRef<boolean>(false);
@@ -87,68 +88,144 @@ export default function Tours({ data }) {
     () => {
       gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-      const container = document.querySelector(".container");
-      const sections = gsap.utils.toArray(".section");
-      const spotlights = gsap.utils.toArray(".spotlight");
+      let tl;
 
-      const tl = gsap.timeline({
-        defaults: {
-          ease: "none",
-        },
+      const initTimeline = () => {
+        const buttons: Array<any> = gsap.utils.toArray(".book-btn");
 
-        scrollTrigger: {
-          trigger: ".wrapper",
-          start: "140 140",
-          end: "+=8000",
-          pin: true,
-          scrub: true,
-          //markers: true,
-        },
-      });
+        const container = document.querySelector(".container");
+        const sections = gsap.utils.toArray(".section");
+        tl = gsap.timeline({
+          defaults: {
+            ease: "none",
+          },
 
-      const buttons = gsap.utils.toArray(".book-btn");
-      buttons.forEach((btn: any, i) => {
-        btn.addEventListener("click", (e: Event) => {
-          e.preventDefault();
-          gsap.to(window, {
-            duration: 2,
+          scrollTrigger: {
+            trigger: ".wrapper",
+            start: "140 140",
+            end: "+=8000",
+            pin: true,
+            scrub: true,
+            //markers: true,
+          },
+        });
 
-            scrollTo: {
-              y: tl.scrollTrigger?.labelToScroll("section-2"),
-            },
-            ease: "power1.inOut",
+        buttons.forEach((btn: any, i) => {
+          btn.addEventListener("click", (e: Event) => {
+            e.preventDefault();
+            gsap.to(window, {
+              duration: 2,
+
+              scrollTo: {
+                y: tl.scrollTrigger?.labelToScroll("section-2"),
+              },
+              ease: "power1.inOut",
+            });
           });
         });
-      });
 
-      sections.forEach((section: any, i) => {
-        const panels = gsap.utils.toArray(".panel", section);
+        sections.forEach((section: any, i) => {
+          const panels = gsap.utils.toArray(".panel", section);
 
-        tl.to(
-          section,
-          {
-            y: section.clientHeight - section.scrollHeight,
-            duration: panels.length * 0.5,
-          },
-          "section-" + i
-        );
-
-        if (sections[i + 1]) {
-          const spotlight = document.querySelector("#spotlight" + i);
           tl.to(
-            spotlight,
+            section,
             {
-              y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
+              y: section.clientHeight - section.scrollHeight,
               duration: panels.length * 0.5,
             },
             "section-" + i
           );
 
-          tl.to(".content", {
-            yPercent: -100 * (i + 1),
-          });
+          if (sections[i + 1]) {
+            const spotlight = document.querySelector("#spotlight" + i);
+            tl.to(
+              spotlight,
+              {
+                y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
+                duration: panels.length * 0.5,
+              },
+              "section-" + i
+            );
+
+            tl.to(".content", {
+              yPercent: -100 * (i + 1),
+            });
+          }
+        });
+      };
+      //initTimeline();
+
+      let mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isMobile: "(max-width:1024px)",
+          isDesktop: "(min-width:1025px)",
+        },
+        (context) => {
+          let { isMobile, isDesktop } = context.conditions;
+          if (isMobile) {
+            //tl.kill();
+            if (tl) {
+              tl.revert();
+              console.log("mobile");
+            }
+            setIsMobile(true);
+          }
+
+          if (isDesktop) {
+            initTimeline();
+            // tl.progress(0).clear();
+            //initTimeline();
+            console.log("desktop", tl);
+            setIsMobile(false);
+          }
         }
-      });
+      );
+
+      // const buttons = gsap.utils.toArray(".book-btn");
+      // buttons.forEach((btn: any, i) => {
+      //   btn.addEventListener("click", (e: Event) => {
+      //     e.preventDefault();
+      //     gsap.to(window, {
+      //       duration: 2,
+
+      //       scrollTo: {
+      //         y: tl.scrollTrigger?.labelToScroll("section-2"),
+      //       },
+      //       ease: "power1.inOut",
+      //     });
+      //   });
+      // });
+
+      // sections.forEach((section: any, i) => {
+      //   const panels = gsap.utils.toArray(".panel", section);
+
+      //   tl.to(
+      //     section,
+      //     {
+      //       y: section.clientHeight - section.scrollHeight,
+      //       duration: panels.length * 0.5,
+      //     },
+      //     "section-" + i
+      //   );
+
+      //   if (sections[i + 1]) {
+      //     const spotlight = document.querySelector("#spotlight" + i);
+      //     tl.to(
+      //       spotlight,
+      //       {
+      //         y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
+      //         duration: panels.length * 0.5,
+      //       },
+      //       "section-" + i
+      //     );
+
+      //     tl.to(".content", {
+      //       yPercent: -100 * (i + 1),
+      //     });
+      //   }
+      // });
     },
     { scope: pageWrapper }
   );
@@ -188,13 +265,13 @@ export default function Tours({ data }) {
                           {activityItemHeading.activityItems.map(
                             (activityItem, index) => (
                               <div
-                                className="flex flex-col "
+                                className="flex flex-col"
                                 key={activityItem.id}
                               >
                                 <div
-                                  className="flex flex-col md:flex-row pb-12"
+                                  className="flex flex-col xl:flex-row pb-12"
                                   style={{
-                                    flexDirection: getWindowW()
+                                    flexDirection: isMobile
                                       ? "column"
                                       : index % 2 === 0
                                       ? "row-reverse"
@@ -202,9 +279,9 @@ export default function Tours({ data }) {
                                   }}
                                 >
                                   <div
-                                    className="w-full md:w-1/2 text-black pt-10 flex"
+                                    className="w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0"
                                     style={{
-                                      flexDirection: getWindowW()
+                                      flexDirection: isMobile
                                         ? "column"
                                         : index % 2 === 0
                                         ? "row-reverse"
@@ -249,13 +326,13 @@ export default function Tours({ data }) {
                                         description={{
                                           isOutlined: false,
                                         }}
-                                        className="z-10 text-2xl flex pt-7 book-btn"
+                                        className="z-10 text-2xl flex pt-7 book-btn mb-7 xl:mb-0"
                                         url=""
                                       >
                                         BOOK TOUR
                                       </TCPTLButton>
                                     </div>
-                                    <div className="flex px-6 justify-center items-center test">
+                                    <div className="hidden px-6 justify-center items-center 2xl:flex">
                                       <SliderContext.Provider
                                         value={activityItem.images}
                                       >
@@ -269,7 +346,7 @@ export default function Tours({ data }) {
                                   </div>
 
                                   <div
-                                    className="w-full md: md:w-1/2 overflow-hidden rounded-3xl"
+                                    className="w-full xl:w-1/2 overflow-hidden rounded-3xl"
                                     id={activityItem.id}
                                     ref={(ref) => {
                                       imageScrollerRefs.current[index] = {
@@ -281,7 +358,13 @@ export default function Tours({ data }) {
                                     <SliderContext.Provider
                                       value={activityItem.images}
                                     >
-                                      <TourImages height="calc(100vh - 200px)" />
+                                      <TourImages
+                                        height={
+                                          isMobile
+                                            ? "auto"
+                                            : "calc(100vh - 200px)"
+                                        }
+                                      />
                                     </SliderContext.Provider>
                                   </div>
                                 </div>
@@ -292,7 +375,7 @@ export default function Tours({ data }) {
                         </div>
                       )
                     )}
-                    <div className="w-full flex mt-10">
+                    <div className="w-full flex mt-10 mb-10 xl:mb-0">
                       <section className="section">
                         <div
                           ref={contactRef}

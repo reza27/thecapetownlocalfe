@@ -124,7 +124,10 @@ peer:placeholder-shown ~ .peer-placeholder-shown {
 
 .wrapper {
   width: 100%;
-  height: 100vh;
+  //height: 100vh;
+  @media screen and (min-width: 1024px) {
+    height: 100vh;
+  }
   //flex-direction: column;
 }
 
@@ -142,7 +145,11 @@ peer:placeholder-shown ~ .peer-placeholder-shown {
 .content .section {
   width: 100%;
   //height: 700px;
-  height: calc(100vh - 152px);
+
+  //height: calc(100vh - 200px);
+  @media screen and (min-width: 1024px) {
+    height: calc(100vh - 200px);
+  }
 }
 
 .content {

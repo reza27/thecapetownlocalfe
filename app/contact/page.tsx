@@ -17,6 +17,7 @@ export async function getContactData() {
             activityItems {
               id
               title
+              shortTitle
             }
           }
         }
