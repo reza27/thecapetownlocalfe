@@ -49,8 +49,6 @@ export default function Tours({ data }) {
   const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(false);
 
-  const currentScrollIndex = useRef<number>(0);
-  const canPageScroll = useRef<boolean>(false);
   const pageWrapper = useRef<HTMLDivElement>(null);
 
   const [imageScrollerHeight, setImageScrollerHeight] = useState<
@@ -60,6 +58,9 @@ export default function Tours({ data }) {
   const contactRef = useRef<HTMLDivElement | null>(null);
   const imageScrollerRefs = useRef<
     Array<{ imageScrollerRef: HTMLDivElement | null; id: string }>
+  >([]);
+  const sectionRefs = useRef<
+    Array<{ sectionRef: HTMLDivElement | null; id: string }>
   >([]);
   const anchorRefs = useRef<
     Array<{ anchorRef: HTMLDivElement | null; id: string }>
@@ -106,29 +107,35 @@ export default function Tours({ data }) {
             end: "+=8000",
             pin: true,
             scrub: true,
+            invalidateOnRefresh: true,
             //markers: true,
           },
         });
 
-        buttons.forEach((btn: any, i) => {
-          btn.addEventListener("click", (e: Event) => {
-            e.preventDefault();
-            gsap.to(window, {
-              duration: 2,
+        // buttons.forEach((btn: any, i) => {
+        //   btn.addEventListener("click", (e: Event) => {
+        //     e.preventDefault();
+        //     gsap.to(window, {
+        //       duration: 2,
 
-              scrollTo: {
-                y: tl.scrollTrigger?.labelToScroll("section-2"),
-              },
-              ease: "power1.inOut",
-            });
-          });
-        });
-
+        //       scrollTo: {
+        //         y: tl.scrollTrigger?.labelToScroll("section-2"),
+        //       },
+        //       ease: "power1.inOut",
+        //     });
+        //   });
+        // });
+        console.log("sections", sections);
         sections.forEach((section: any, i) => {
           const panels = gsap.utils.toArray(".panel", section);
+          console.log("section client height", section.clientHeight);
+          console.log("section scroll height", section.scrollHeight);
+
+          console.log("panel", panels);
 
           tl.to(
             section,
+
             {
               y: section.clientHeight - section.scrollHeight,
               duration: panels.length * 0.5,
@@ -153,6 +160,7 @@ export default function Tours({ data }) {
           }
         });
       };
+
       //initTimeline();
 
       let mm = gsap.matchMedia();
@@ -165,20 +173,16 @@ export default function Tours({ data }) {
         (context) => {
           let { isMobile, isDesktop } = context.conditions;
           if (isMobile) {
-            //tl.kill();
-            if (tl) {
-              tl.revert();
-              console.log("mobile");
-            }
             setIsMobile(true);
           }
 
           if (isDesktop) {
-            initTimeline();
-            // tl.progress(0).clear();
-            //initTimeline();
-            console.log("desktop", tl);
             setIsMobile(false);
+
+            initTimeline();
+
+            // }, 1000);
+            console.log("desktop", tl);
           }
         }
       );
@@ -227,8 +231,14 @@ export default function Tours({ data }) {
       //   }
       // });
     },
-    { scope: pageWrapper }
+    { dependencies: [isMobile], revertOnUpdate: true, scope: pageWrapper }
   );
+
+  // const activityStyleOuterCss = (index) => {
+
+  // isMobile ? "w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0 flex-col"  : index % 2 === 0 ? "w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0" :
+
+  // }
 
   useEffect(() => {
     const DELAY: number = 300;
@@ -269,7 +279,7 @@ export default function Tours({ data }) {
                                 key={activityItem.id}
                               >
                                 <div
-                                  className="flex flex-col xl:flex-row pb-12"
+                                  className="flex flex-col xl:flex-row pb-12 column"
                                   style={{
                                     flexDirection: isMobile
                                       ? "column"
@@ -279,7 +289,7 @@ export default function Tours({ data }) {
                                   }}
                                 >
                                   <div
-                                    className="w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0"
+                                    className="w-full xl:w-1/2 text-black pt-10 flex px-0 xl:px-6 2xl:px-0 flex-col"
                                     style={{
                                       flexDirection: isMobile
                                         ? "column"
@@ -293,7 +303,7 @@ export default function Tours({ data }) {
                                         {parse(activityItem.title)}
                                       </h2>
 
-                                      <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-[420px]">
+                                      <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full xl:w-[420px]">
                                         <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
                                           <span className="text-4xl">
                                             {activityItem.price}
@@ -364,6 +374,12 @@ export default function Tours({ data }) {
                                             ? "auto"
                                             : "calc(100vh - 200px)"
                                         }
+                                        ref={(ref) => {
+                                          sectionRefs.current[index] = {
+                                            sectionRef: ref,
+                                            id: "sectionRef-" + index,
+                                          };
+                                        }}
                                       />
                                     </SliderContext.Provider>
                                   </div>

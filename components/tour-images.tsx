@@ -2,7 +2,7 @@ import { useSliderContext } from "../lib/contexts/slider-context";
 import ImageLoader from "./image-loader";
 import Image from "next/image";
 
-export default function TourImages({ height }) {
+export default function TourImages({ height, ref }) {
   const images = useSliderContext();
 
   return (
@@ -11,6 +11,7 @@ export default function TourImages({ height }) {
       style={{
         height: height,
       }}
+      ref={ref}
     >
       {images.map((image, index) => (
         <li key={image.id} className="panel">
