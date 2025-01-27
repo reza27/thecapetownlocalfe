@@ -305,7 +305,7 @@ export default function Tours({ data }) {
 
                                       <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full xl:w-[420px]">
                                         <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
-                                          <span className="text-4xl">
+                                          <span className="text-3xl xl:text-4xl">
                                             {activityItem.price}
                                           </span>
                                           <span className="text-md">
@@ -313,7 +313,7 @@ export default function Tours({ data }) {
                                           </span>
                                         </div>
                                         <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
-                                          <span className="text-4xl text-blue">
+                                          <span className="text-3xl xl:text-4xl text-blue">
                                             {activityItem.duration}
                                           </span>
                                           <span className="text-md text-black">
