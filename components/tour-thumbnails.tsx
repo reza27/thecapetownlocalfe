@@ -6,7 +6,7 @@ export default function TourThumbnails({ width, height, index }) {
   const images = useSliderContext();
 
   return (
-    <div className="relative">
+    <div id={"spotlight-container" + index} className="relative">
       <div
         id={"spotlight" + index}
         className="opacity-60 bg-white z-50 absolute top-0 left-0 spotlight"

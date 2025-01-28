@@ -103,7 +103,7 @@ export default function About({ data }) {
         <title>About - The Cape Town Local</title>
       </Head>
       <div id="about" className="bg-white flex mt-28 md:mt-32 flex-col">
-        <h1 className="text-center py-9">
+        <h1 className="text-center py-9 tracking-tighter">
           <span className="text-yellow">'Local is lekker'</span>. That statement{" "}
           <br /> is perfectly fitting to Cape Town.
         </h1>
@@ -123,7 +123,7 @@ export default function About({ data }) {
           <p className="text-xs text-yellow pt-24 text-center font-semibold">
             MEET THE TEAM
           </p>
-          <h1 className="text-center">Meet the team</h1>
+          <h1 className="text-center tracking-tighter">Meet the team</h1>
           {/* <div className="guides-description">
             {data.props.data.about ? (
               <DocumentRenderer

@@ -111,10 +111,10 @@ export default function ContactForm(props) {
       <div className="flex flex-col items-center justify-center w-full lg:w-2/5 lg:pr-10">
         <div className="flex justify-start flex-col">
           <p className="text-yellow text-xs font-medium pb-2">CONTACT US</p>
-          <h2 className="text-white text-5xl md:text-6xl">
+          <h2 className="text-white text-5xl md:text-6xl tracking-tighter">
             Get in touch <br /> with our team.
           </h2>
-          <p className="text-white text-xs pt-4 max-w-96">
+          <p className="text-white text-xs pt-4 max-w-96 leading-5">
             Submit to enquire about a tour, transport or anything you&apos;d
             like to know. Looking forward to be your guide.
           </p>

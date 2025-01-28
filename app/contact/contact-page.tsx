@@ -16,9 +16,9 @@ export default function Contact({ data }) {
       <Head>
         <title>Contact - The Cape Town Local</title>
       </Head>
-      <div className="px-4 md:px-16 w-full">
+      <div className="w-full">
         <div className="mt-32 mb-12 flex flex-col w-full">
-          <h1 className="text-center py-9">
+          <h1 className="text-center py-9 tracking-tighter">
             Ready to <span className="text-yellow">make a booking</span> with
             us?
           </h1>

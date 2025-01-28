@@ -55,14 +55,17 @@ export default function ColumnSlider({ screenWidth, children }) {
   };
 
   return (
-    <div className="overflow-hidden relative tr flex flex-col">
-      <div
-        className="flex w-full transition duration-250 ease-out"
-        style={childrenStyle}
-      >
-        {children}
+    <div className=" relative tr flex flex-col pb-14">
+      <div className="overflow-hidden rounded-3xl flex">
+        <div
+          className="flex w-full transition duration-250 ease-out"
+          style={childrenStyle}
+        >
+          {children}
+        </div>
       </div>
-      <div className="flex justify-center items-center my-3 sm:mt-6">
+
+      <div className="flex justify-center items-center my-3 sm:mt-6 absolute inset-x-0 bottom-0 m-auto">
         {getNav()}
       </div>
     </div>

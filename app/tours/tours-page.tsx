@@ -31,6 +31,8 @@ import { useGSAP } from "@gsap/react"; // <-- import the hook from our React pac
 import { TCPTLButton } from "../../components/tcptl-button";
 import parse from "html-react-parser";
 import TourThumbnails from "../../components/tour-thumbnails";
+import ColumnSlider from "../../components/column-slider";
+import { snap } from "gsap";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -48,6 +50,7 @@ export default function Tours({ data }) {
   const [scrollYPos, setScrollYPos] = useState<Array<number>>([0, 0]);
   const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [screenWidth, setScreenWidth] = useState<number>(400);
 
   const pageWrapper = useRef<HTMLDivElement>(null);
 
@@ -96,6 +99,7 @@ export default function Tours({ data }) {
 
         const container = document.querySelector(".container");
         const sections = gsap.utils.toArray(".section");
+
         tl = gsap.timeline({
           defaults: {
             ease: "none",
@@ -108,6 +112,16 @@ export default function Tours({ data }) {
             pin: true,
             scrub: true,
             invalidateOnRefresh: true,
+            onUpdate: () => {
+              console.log("scrub complete", tl.currentLabel());
+            },
+
+            // snap: {
+            //   snapTo: 1 / (sections.length - 1),
+            //   duration: 2,
+            //   delay: 0.1,
+            //   ease: "power1.inOut",
+            // },
             //markers: true,
           },
         });
@@ -132,6 +146,7 @@ export default function Tours({ data }) {
           console.log("section scroll height", section.scrollHeight);
 
           console.log("panel", panels);
+          // panels.forEach((panel) => tl.addLabel("panel" + 1));
 
           tl.to(
             section,
@@ -145,11 +160,22 @@ export default function Tours({ data }) {
 
           if (sections[i + 1]) {
             const spotlight = document.querySelector("#spotlight" + i);
+            const spotlightC = document.querySelector(
+              "#spotlight-container" + i
+            );
+
             tl.to(
               spotlight,
               {
                 y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
                 duration: panels.length * 0.5,
+                // onUpdate: (obj) => {
+                //   console.log("complete!");
+                //   console.log(
+                //     spotlight?.getBoundingClientRect().y! -
+                //       spotlightC?.getBoundingClientRect().y!
+                //   );
+                // },
               },
               "section-" + i
             );
@@ -276,6 +302,16 @@ export default function Tours({ data }) {
     }
 
     window.scrollTo(0, 0);
+
+    setScreenWidth(window.innerWidth);
+
+    function autoResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", autoResize);
+
+    return () => window.removeEventListener("resize", autoResize);
   }, []);
 
   return (
@@ -317,7 +353,7 @@ export default function Tours({ data }) {
                                   }}
                                 >
                                   <div
-                                    className="w-full xl:w-1/2 text-black pt-10 flex px-0 xl:px-6 2xl:px-0 flex-col"
+                                    className="w-full xl:w-1/2 text-black pt-10 flex px-0 lg:px-6 2xl:px-0 flex-col"
                                     style={{
                                       flexDirection: isMobile
                                         ? "column"
@@ -331,20 +367,20 @@ export default function Tours({ data }) {
                                         {parse(activityItem.title)}
                                       </h2>
 
-                                      <div className="rounded-3xl h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full xl:w-[420px]">
+                                      <div className="rounded-3xl h-20 xl:h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[420px] max-w-[260px] xl:max-w-[420px]">
                                         <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
-                                          <span className="text-3xl xl:text-4xl">
+                                          <span className="text-2xl xl:text-4xl w-1/2 text-center tracking-tighter">
                                             {activityItem.price}
                                           </span>
-                                          <span className="text-md">
+                                          <span className="text-sm xl:text-md tracking-tighter">
                                             Tour Cost
                                           </span>
                                         </div>
                                         <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
-                                          <span className="text-3xl xl:text-4xl text-blue">
+                                          <span className="text-2xl xl:text-4xl text-blue text-center tracking-tighter">
                                             {activityItem.duration}
                                           </span>
-                                          <span className="text-md text-black">
+                                          <span className="text-sm xl:text-md text-black tracking-tighter">
                                             Tour Time
                                           </span>
                                         </div>
@@ -396,19 +432,41 @@ export default function Tours({ data }) {
                                     <SliderContext.Provider
                                       value={activityItem.images}
                                     >
-                                      <TourImages
-                                        height={
-                                          isMobile
-                                            ? "auto"
-                                            : "calc(100vh - 200px)"
-                                        }
-                                        ref={(ref) => {
-                                          sectionRefs.current[index] = {
-                                            sectionRef: ref,
-                                            id: "sectionRef-" + index,
-                                          };
-                                        }}
-                                      />
+                                      {isMobile ? (
+                                        <ColumnSlider screenWidth={screenWidth}>
+                                          <TourImages
+                                            isMobile={isMobile}
+                                            screenWidth={screenWidth}
+                                            height={
+                                              isMobile
+                                                ? "320px"
+                                                : "calc(100vh - 200px)"
+                                            }
+                                            ref={(ref) => {
+                                              sectionRefs.current[index] = {
+                                                sectionRef: ref,
+                                                id: "sectionRef-" + index,
+                                              };
+                                            }}
+                                          />
+                                        </ColumnSlider>
+                                      ) : (
+                                        <TourImages
+                                          isMobile={isMobile}
+                                          screenWidth={screenWidth}
+                                          height={
+                                            isMobile
+                                              ? "320px"
+                                              : "calc(100vh - 200px)"
+                                          }
+                                          ref={(ref) => {
+                                            sectionRefs.current[index] = {
+                                              sectionRef: ref,
+                                              id: "sectionRef-" + index,
+                                            };
+                                          }}
+                                        />
+                                      )}
                                     </SliderContext.Provider>
                                   </div>
                                 </div>

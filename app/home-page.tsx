@@ -97,9 +97,9 @@ export default function Home({ homeData }) {
       <Head>
         <title>Home - The Cape Town Local</title>
       </Head>
-      <div className="w-full relative px-4 md:px-16 bg-white flex pt-28 md:pt-32">
+      <div className="w-full relative bg-white flex pt-28 md:pt-32">
         <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300">
+          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
@@ -244,8 +244,8 @@ export default function Home({ homeData }) {
             ) : null} */}
         {/* </div> */}
       </div>
-      <div className="my-12 mx-4 md:mx-16">
-        <h2 className="text-center text-3xl mb-8 mt-6 leading-tight">
+      <div className="my-12">
+        <h2 className="text-center text-3xl mb-8 mt-6 leading-tight tracking-tighter">
           Most popular tours
         </h2>
         <div className="flex md:flex-row flex-col">
@@ -293,11 +293,11 @@ export default function Home({ homeData }) {
           )}
         </div>
       </div>
-      <div className="flex bg-light-grey my-12 mx-4 md:mx-16 rounded-3xl p-8 md:p-12 flex-col">
+      <div className="flex bg-light-grey my-12 rounded-3xl p-8 md:p-12 flex-col">
         <p className="text-yellow text-xs text-center w-full font-medium">
           CLIENT REVIEWS
         </p>
-        <h3 className="w-full text-3xl sm:text-4xl text-center pt-3 pb-6">
+        <h3 className="w-full text-3xl sm:text-4xl text-center pt-3 pb-6 tracking-tighter">
           Don't take our word for it, take theirs!
         </h3>
         <SliderContext.Provider value={defaultReviews || []}>
@@ -306,7 +306,7 @@ export default function Home({ homeData }) {
           </ColumnSlider>
         </SliderContext.Provider>
       </div>
-      <div className="my-12 mx-4 md:mx-16 flex">
+      <div className="my-12 flex">
         <ContactForm
           selectOptions={getFormOptions(homeData.props.data.activities)}
         />

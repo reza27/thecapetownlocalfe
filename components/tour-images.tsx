@@ -2,14 +2,16 @@ import { useSliderContext } from "../lib/contexts/slider-context";
 import ImageLoader from "./image-loader";
 import Image from "next/image";
 
-export default function TourImages({ height, ref }) {
+export default function TourImages({ height, ref, isMobile, screenWidth }) {
   const images = useSliderContext();
 
   return (
     <ul
-      className="rounded-3xl items flex flex-col section"
+      className="rounded-3xl items flex section relative grow shrink-0"
       style={{
         height: height,
+        flexBasis: isMobile ? images.length * 100 + "%" : "auto",
+        flexDirection: isMobile ? "row" : "column",
       }}
       ref={ref}
     >
@@ -27,7 +29,7 @@ export default function TourImages({ height, ref }) {
             className="transition-all duration-150"
             style={{
               objectFit: "cover",
-              objectPosition: "center top",
+              objectPosition: isMobile ? "center top" : "center top",
               height: height,
               width: "100%",
             }}
