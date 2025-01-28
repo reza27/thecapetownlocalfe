@@ -18,6 +18,7 @@ module.exports = withMT({
       "cpt-black": "#081B18",
       "light-grey": "#F1F1F1",
       "dark-grey": "#333333",
+      "powder-blue": "#B7D9FF",
     },
   },
   plugins: [require("@tailwindcss/typography")],

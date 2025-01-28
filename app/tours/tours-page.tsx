@@ -367,20 +367,20 @@ export default function Tours({ data }) {
                                         {parse(activityItem.title)}
                                       </h2>
 
-                                      <div className="rounded-3xl h-20 xl:h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[420px] max-w-[260px] xl:max-w-[420px]">
-                                        <div className="bg-blue text-white w-1/2 h-full flex flex-col justify-center items-center">
-                                          <span className="text-2xl xl:text-4xl w-1/2 text-center tracking-tighter">
+                                      <div className="rounded-3xl h-20 xl:h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[340px] max-w-[260px] xl:max-w-[420px]">
+                                        <div className="bg-blue text-powder-blue w-1/2 h-full flex flex-col justify-center items-start pl-5">
+                                          <span className="text-2xl xl:text-4xl text-left font-semibold tracking-tighter ">
                                             {activityItem.price}
                                           </span>
-                                          <span className="text-sm xl:text-md tracking-tighter">
+                                          <span className="text-xs xl:text-sm tracking-tighter">
                                             Tour Cost
                                           </span>
                                         </div>
-                                        <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-center">
-                                          <span className="text-2xl xl:text-4xl text-blue text-center tracking-tighter">
+                                        <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-start pl-5">
+                                          <span className="text-2xl xl:text-4xl text-blue text-left tracking-tight font-semibold">
                                             {activityItem.duration}
                                           </span>
-                                          <span className="text-sm xl:text-md text-black tracking-tighter">
+                                          <span className="text-xs xl:text-sm text-black tracking-tight">
                                             Tour Time
                                           </span>
                                         </div>
