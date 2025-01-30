@@ -33,6 +33,7 @@ import parse from "html-react-parser";
 import TourThumbnails from "../../components/tour-thumbnails";
 import ColumnSlider from "../../components/column-slider";
 import { snap } from "gsap";
+import SliderV2 from "../../components/sliderv2";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -433,7 +434,7 @@ export default function Tours({ data }) {
                                       value={activityItem.images}
                                     >
                                       {isMobile ? (
-                                        <ColumnSlider screenWidth={screenWidth}>
+                                        <SliderV2 screenWidth={screenWidth}>
                                           <TourImages
                                             isMobile={isMobile}
                                             screenWidth={screenWidth}
@@ -449,7 +450,7 @@ export default function Tours({ data }) {
                                               };
                                             }}
                                           />
-                                        </ColumnSlider>
+                                        </SliderV2>
                                       ) : (
                                         <TourImages
                                           isMobile={isMobile}
