@@ -120,7 +120,7 @@ export default function About({ data }) {
         </div>
 
         <div className="">
-          <p className="text-xs text-yellow pt-24 text-center font-semibold">
+          <p className="text-xs text-yellow pt-12 lg:pt-24 text-center font-semibold">
             MEET THE TEAM
           </p>
           <h1 className="text-center tracking-tighter">Meet the team</h1>
