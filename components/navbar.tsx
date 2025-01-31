@@ -43,7 +43,7 @@ export default function Navbar() {
       <div className="flex w-full">
         <Link className="cursor-pointer" href="/">
           <img
-            className="w-44 md:w-56 h-auto relative z-50"
+            className="w-44 md:w-56 h-auto relative z-10"
             src="/thecptlocal3.png"
           />
         </Link>
@@ -74,18 +74,27 @@ export default function Navbar() {
               id="check"
               onClick={() => setOpenMenu(!openMenu)}
             />
-            <span className="rounded-lg h-0.5 m-1 bg-red-700"></span>
-            <span className="rounded-lg h-0.5 m-1 bg-gray-700"></span>
-            <span className="rounded-lg h-0.5 m-1 bg-gray-700"></span>
+            <span
+              className="rounded-lg h-0.5 m-1"
+              style={{ background: openMenu ? "#B7D9FF" : "#616161" }}
+            ></span>
+            <span
+              className="rounded-lg h-0.5 m-1"
+              style={{ background: openMenu ? "#B7D9FF" : "#616161" }}
+            ></span>
+            <span
+              className="rounded-lg h-0.5 m-1"
+              style={{ background: openMenu ? "#B7D9FF" : "#616161" }}
+            ></span>
           </label>
         </div>
       </div>
       <div
         ref={mobiLinks}
-        className="md:hidden w-full fixed left-0 right-0 h-screen bg-white flex justify-center transition-all duration-300"
-        style={{ top: openMenu ? "0" : "-100vh" }}
+        className="md:hidden w-full fixed left-0 top-0 right-0 h-screen bg-blue flex justify-center transition-all duration-500 z-20"
+        style={{ left: openMenu ? "0" : "-100vw" }}
       >
-        <ul className="relative top-32 text-center text-5xl font-semibold text-dark-grey">
+        <ul className="relative top-32 text-center text-4xl font-medium text-white tracking-tight">
           {links.map((val: ILink) => (
             <li key={val.mobiKey} className="py-2">
               <Link

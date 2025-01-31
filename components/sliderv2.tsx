@@ -88,7 +88,7 @@ export default function SliderV2({ children }) {
     <div className="relative">
       <div
         ref={leftButton}
-        className="absolute inset-y-0 left-2 m-auto z-50 w-10 h-10 flex justify-center items-center cursor-pointer transition-all duration-1000"
+        className="absolute inset-y-0 left-2 m-auto z-10 w-10 h-10 flex justify-center items-center cursor-pointer transition-all duration-1000"
         onClick={() => {
           if (currentIndex > 0) {
             // dispatch({ actionType: "decrement" });
@@ -96,12 +96,12 @@ export default function SliderV2({ children }) {
           }
         }}
       >
-        <div className="bg-white opacity-25 rounded-full w-full h-full absolute active:opacity-40"></div>
+        <div className="bg-white opacity-30 rounded-full w-full h-full absolute active:opacity-45"></div>
         <FontAwesomeIcon icon={faChevronLeft} className="text-white" />
       </div>
       <div
         ref={rightButton}
-        className="absolute inset-y-0 right-2 m-auto z-50 w-10 h-10 flex justify-center items-center cursor-pointer transition-all duration-1000"
+        className="absolute inset-y-0 right-2 m-auto z-10 w-10 h-10 flex justify-center items-center cursor-pointer transition-all duration-1000"
         onClick={() => {
           if (currentIndex < sliderObjects.length - 1) {
             // dispatch({ actionType: "increment" });
@@ -109,7 +109,7 @@ export default function SliderV2({ children }) {
           }
         }}
       >
-        <div className="bg-white opacity-25 rounded-full w-full h-full absolute active:opacity-40"></div>
+        <div className="bg-white opacity-30 rounded-full w-full h-full absolute active:opacity-45"></div>
         <FontAwesomeIcon icon={faChevronRight} className="text-white" />
       </div>
 

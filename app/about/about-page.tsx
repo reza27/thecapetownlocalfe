@@ -168,13 +168,13 @@ export default function About({ data }) {
                       }}
                     >
                       <div className="flex flex-col text-left w-full">
-                        <div className="text-blue font-semibold text-left text-2xl">
+                        <div className="text-blue font-semibold text-left text-2xl tracking-tight">
                           {guide.name}
                         </div>
-                        <div className="text-black pt-1 text-left font-semibold text-lg">
+                        <div className="text-black lg:pt-1 text-left font-semibold text-lg tracking-tight">
                           {guide.title}
                         </div>
-                        <div className="text-dark-grey text-sm pt-4 text-left max-w-[600px]">
+                        <div className="text-dark-grey text-sm pt-3 text-left max-w-[600px]">
                           {guide.description}
                         </div>
                       </div>
