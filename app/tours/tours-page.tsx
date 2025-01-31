@@ -127,19 +127,19 @@ export default function Tours({ data }) {
           },
         });
 
-        buttons.forEach((btn: any, i) => {
-          btn.addEventListener("click", (e: Event) => {
-            e.preventDefault();
-            gsap.to(window, {
-              duration: 2,
+        // buttons.forEach((btn: any, i) => {
+        //   btn.addEventListener("click", (e: Event) => {
+        //     e.preventDefault();
+        //     gsap.to(window, {
+        //       duration: 2,
 
-              scrollTo: {
-                y: tl.scrollTrigger?.labelToScroll("section-2"),
-              },
-              ease: "power1.inOut",
-            });
-          });
-        });
+        //       scrollTo: {
+        //         y: tl.scrollTrigger?.labelToScroll("section-2"),
+        //       },
+        //       ease: "power1.inOut",
+        //     });
+        //   });
+        // });
         console.log("sections", sections);
         sections.forEach((section: any, i) => {
           const panels = gsap.utils.toArray(".panel", section);
@@ -222,6 +222,7 @@ export default function Tours({ data }) {
 
             scrollTo: {
               y: "#tour-contact-form",
+              offsetY: 100,
             },
             ease: "power1.inOut",
           });
