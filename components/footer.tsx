@@ -19,9 +19,6 @@ export default function Footer() {
               <Link className="py-0.5 hover:text-yellow" href="/tours">
                 Tours
               </Link>
-              <Link className="py-0.5 hover:text-yellow" href="/services">
-                Services
-              </Link>
               <Link className="py-0.5 hover:text-yellow" href="/about">
                 About
               </Link>

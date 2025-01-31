@@ -345,7 +345,7 @@ export default function Tours({ data }) {
                                 key={activityItem.id}
                               >
                                 <div
-                                  className="flex flex-col xl:flex-row pb-12 column"
+                                  className="flex flex-col xl:flex-row lg:pb-12 column"
                                   style={{
                                     flexDirection: isMobile
                                       ? "column"
