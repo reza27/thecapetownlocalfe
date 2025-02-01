@@ -1,11 +1,12 @@
 "use client";
 import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css"; //importing font awesome css
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, sendGAEvent } from "@next/third-parties/google";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import StoreProvider from "./StoreProvider";
-import { useAppSelector } from "../lib/hooks";
+import ImageLoader from "../components/image-loader";
+import Image from "next/image";
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -55,8 +56,35 @@ export default function RootLayout({
         </head>
         <body>
           <Navbar />
-          <main className="flex justify-center px-4 md:px-16">
-            <div className="max-w-[1600px] w-full">{children}</div>
+          <main className="flex justify-center px-4 lg:px-16">
+            <div className="max-w-[1700px] w-full">{children}</div>
+            <div className="lg:hidden fixed z-20 bottom-6 right-6">
+              <a
+                id="whatsapp"
+                className="flex items-center"
+                href="https://wa.me/27789803335"
+                target="_blank"
+                onClick={() => {
+                  sendGAEvent("event", "whatsapp", {
+                    action: "WhatsApp opened",
+                  });
+                }}
+              >
+                <Image
+                  loader={ImageLoader}
+                  src="/WhatsApp.svg"
+                  width={40}
+                  height={40}
+                  style={{
+                    objectFit: "contain",
+                    objectPosition: "center bottom",
+                    height: "60px",
+                    width: "60px",
+                  }}
+                  alt="whatsapp"
+                />
+              </a>
+            </div>
           </main>
           <Footer />
           <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_ANALYTICS}`} />

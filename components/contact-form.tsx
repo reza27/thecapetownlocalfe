@@ -1,6 +1,5 @@
 "use client";
 
-import { sendGAEvent } from "@next/third-parties/google";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { postBookingRequest } from "../lib/features/contact/contactSlice";
 
