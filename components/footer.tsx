@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black relative min-h-80 pt-10 pb-28 lg:pb-0 px-16 font-sans flex justify-center">
+    <footer className="bg-black relative min-h-80 pt-14 pb-28 lg:pb-0 px-16 font-sans flex justify-center">
       <div className="flex flex-col lg:flex-row w-full max-w-[1700px]">
         <div className="flex flex-col justify-center items-center lg:items-start lg:justify-start">
           <img className="w-60 h-auto grayscale" src="/thecptlocal2.png" />

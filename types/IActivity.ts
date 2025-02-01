@@ -10,6 +10,7 @@ interface ActivityItemImages {
 export interface IActivityItem {
   id: string;
   title: string;
+  shortTitle: string;
   anchor: string;
   tab: string;
   price: string;

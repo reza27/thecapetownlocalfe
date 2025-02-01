@@ -53,7 +53,7 @@ export default function ContactForm(props) {
     let options = selectOptions.slice().map((item, i) => {
       return (
         <Option key={item.id} value={item.shortTitle}>
-          {item.title}
+          {item.shortTitle}
         </Option>
       );
     });
