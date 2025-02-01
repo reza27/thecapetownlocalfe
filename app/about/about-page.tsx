@@ -25,7 +25,7 @@ const getRotation = (min: number, max: number) => {
 
 export default function About({ data }) {
   const defaultGuideIndex = 0;
-  const breakPointLg = 960;
+  const breakPointLg = 959;
   const breakPointXl = 1280;
   const [guideHoverIndex, setGuideHoverIndex] = useState<number | null>(
     defaultGuideIndex
@@ -134,6 +134,7 @@ export default function About({ data }) {
             )}
           </div> */}
           <div className="flex flex-wrap relative mt-12">
+            <div className="absolute h-1/5 w-full bg-linear-to-r from-cyan-500 to-blue-500"></div>
             {data.props.data.about
               ? data.props.data.about?.guides?.map((guide, index) => (
                   <div
