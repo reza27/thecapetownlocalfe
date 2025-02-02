@@ -203,10 +203,12 @@ export default function Tours({ data }) {
           let { isMobile, isDesktop } = context.conditions;
           if (isMobile) {
             setIsMobile(true);
+            gsap.set(".wrapper", { marginBottom: "0px" });
           }
 
           if (isDesktop) {
             setIsMobile(false);
+            gsap.set(".wrapper", { marginBottom: "-156px" });
 
             initTimeline();
 
