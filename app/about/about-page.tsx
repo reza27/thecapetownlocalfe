@@ -47,9 +47,9 @@ export default function About({ data }) {
 
   const getGuideImageHeight = (): string => {
     if (screenWidth < breakPointXl && screenWidth > breakPointLg) {
-      return "300px";
+      return "280px";
     }
-    return "450px";
+    return "380px";
   };
 
   const [screenWidth, setScreenWidth] = useState<number>(400);

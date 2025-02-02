@@ -101,6 +101,8 @@ export default function Tours({ data }) {
         const container = document.querySelector(".container");
         const sections = gsap.utils.toArray(".section");
 
+        gsap.set(".wrapper", { marginBottom: "-156px" });
+
         tl = gsap.timeline({
           defaults: {
             ease: "none",
@@ -109,7 +111,7 @@ export default function Tours({ data }) {
           scrollTrigger: {
             trigger: ".wrapper",
             start: "140 140",
-            end: "+=8000",
+            end: "+=6000",
             pin: true,
             scrub: true,
             invalidateOnRefresh: true,

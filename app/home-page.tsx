@@ -115,7 +115,7 @@ export default function Home({ homeData }) {
             className="absolute bottom-12 left-6 md:left-12 z-10"
             url="/tours"
           >
-            VIEW TOUR
+            VIEW TOURS
           </TCPTLButton>
           <Image
             loader={ImageLoader}
