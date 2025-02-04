@@ -8,7 +8,7 @@ export const TCPTLButton = ({
   className,
   url,
   children,
-  onClick = null,
+  onClick = () => {},
 }) => {
   return (
     <Link className={className} href={url} onClick={onClick}>

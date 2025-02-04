@@ -28,6 +28,7 @@ import { getFormOptions } from "../components/forms/getFormOptions";
 import ReviewsV2 from "../components/reviews-v2";
 import ColumnSlider from "../components/column-slider";
 import outlined from "@material-tailwind/react/theme/components/timeline/timelineIconColors/outlined";
+import { FancyButton } from "../components/fancy-button";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -108,7 +109,7 @@ export default function Home({ homeData }) {
           <div className="absolute bottom-28 left-6 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
             We live your experience.
           </div>
-          <TCPTLButton
+          {/* <TCPTLButton
             description={{
               isOutlined: true,
             }}
@@ -116,7 +117,14 @@ export default function Home({ homeData }) {
             url="/tours"
           >
             VIEW TOURS
-          </TCPTLButton>
+          </TCPTLButton> */}
+          <FancyButton
+            isOutlined={true}
+            href={"/tours"}
+            className="absolute bottom-12 left-6 md:left-12 z-10"
+          >
+            VIEW TOURS
+          </FancyButton>
           <Image
             loader={ImageLoader}
             src="/home_header_img.png"
@@ -278,7 +286,7 @@ export default function Home({ homeData }) {
                     className="tour-button"
                     description={{ isOutlined: false }}
                     url={
-                      "/tours?anchor=" +
+                      "/tours?section=" +
                       homeTour.homeTour.anchor +
                       "&tab=" +
                       homeTour.homeTour.tab

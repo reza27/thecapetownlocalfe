@@ -34,6 +34,7 @@ import TourThumbnails from "../../components/tour-thumbnails";
 import ColumnSlider from "../../components/column-slider";
 import { snap } from "gsap";
 import SliderV2 from "../../components/sliderv2";
+import { IActivityItem } from "../../types/IActivity";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -190,8 +191,6 @@ export default function Tours({ data }) {
         });
       };
 
-      //initTimeline();
-
       let mm = gsap.matchMedia();
 
       mm.add(
@@ -257,34 +256,22 @@ export default function Tours({ data }) {
         // });
       });
 
-      // sections.forEach((section: any, i) => {
-      //   const panels = gsap.utils.toArray(".panel", section);
+      let params = new URLSearchParams(document.location.search);
+      let section = params.get("section"); // is the string "Jonathan"
 
-      //   tl.to(
-      //     section,
-      //     {
-      //       y: section.clientHeight - section.scrollHeight,
-      //       duration: panels.length * 0.5,
-      //     },
-      //     "section-" + i
-      //   );
+      if (section) {
+        gsap.to(window, {
+          duration: 2,
 
-      //   if (sections[i + 1]) {
-      //     const spotlight = document.querySelector("#spotlight" + i);
-      //     tl.to(
-      //       spotlight,
-      //       {
-      //         y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
-      //         duration: panels.length * 0.5,
-      //       },
-      //       "section-" + i
-      //     );
+          scrollTo: {
+            y: tl.scrollTrigger?.labelToScroll("section-" + section),
+          },
 
-      //     tl.to(".content", {
-      //       yPercent: -100 * (i + 1),
-      //     });
-      //   }
-      // });
+          delay: 2,
+          ease: "power1",
+        });
+      }
+
       return () => {
         buttons.forEach((btn: any, i) => {
           btn.addEventListener("click", scrollToForm); // (e: Event) => {
@@ -293,12 +280,6 @@ export default function Tours({ data }) {
     },
     { dependencies: [isMobile], revertOnUpdate: true, scope: pageWrapper }
   );
-
-  // const activityStyleOuterCss = (index) => {
-
-  // isMobile ? "w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0 flex-col"  : index % 2 === 0 ? "w-full xl:w-1/2 text-black pt-10 flex px-6 2xl:px-0" :
-
-  // }
 
   useEffect(() => {
     const DELAY: number = 300;
@@ -343,9 +324,10 @@ export default function Tours({ data }) {
                           data-index={activityItemHeading.id}
                         >
                           {activityItemHeading.activityItems.map(
-                            (activityItem, index) => (
+                            (activityItem: IActivityItem, index) => (
                               <div
                                 className="flex flex-col"
+                                id={activityItem.anchor}
                                 key={activityItem.id}
                               >
                                 <div
@@ -372,22 +354,21 @@ export default function Tours({ data }) {
                                       <h2 className="text-4xl xl:text-6xl tracking-tighter">
                                         {parse(activityItem.title)}
                                       </h2>
-
-                                      <div className="rounded-3xl h-20 xl:h-24 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[340px] max-w-[260px] xl:max-w-[420px]">
+                                      <div className="rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[320px] max-w-[260px] xl:max-w-[3800px]">
                                         <div className="bg-blue text-powder-blue w-1/2 h-full flex flex-col justify-center items-start pl-5">
-                                          <span className="text-2xl xl:text-4xl text-left font-semibold tracking-tighter ">
+                                          <span className="text-2xl xl:text-3xl text-left font-semibold tracking-tighter ">
                                             {activityItem.price}
                                           </span>
-                                          <span className="text-xs xl:text-sm tracking-tighter">
-                                            Tour Cost
+                                          <span className="text-xs tracking-tighter">
+                                            Price
                                           </span>
                                         </div>
                                         <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-start pl-5">
-                                          <span className="text-2xl xl:text-4xl text-blue text-left tracking-tight font-semibold">
+                                          <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
                                             {activityItem.duration}
                                           </span>
-                                          <span className="text-xs xl:text-sm text-black tracking-tight">
-                                            Tour Time
+                                          <span className="text-xs text-black tracking-tight">
+                                            Duration
                                           </span>
                                         </div>
                                       </div>

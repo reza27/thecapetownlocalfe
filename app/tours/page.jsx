@@ -21,7 +21,8 @@ export async function getToursData() {
             id
             title
             activityItemsCount
-            activityItems {
+
+            activityItems(orderBy: { anchor: asc }) {
               id
               title
               shortTitle
