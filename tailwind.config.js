@@ -15,6 +15,7 @@ module.exports = withMT({
       transparent: "transparent",
       yellow: "#FCB400",
       blue: "#095AB8",
+      "hover-blue": "#074d9f",
       "cpt-black": "#081B18",
       "light-grey": "#F1F1F1",
       "dark-grey": "#333333",

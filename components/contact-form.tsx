@@ -26,6 +26,7 @@ import { TCPTLButton } from "./tcptl-button";
 import TCPTLDatePicker from "./forms/tcptl-date-picker";
 import { SelectTheme } from "../themes/select-theme";
 import { InputTheme } from "../themes/input-theme";
+import { FancyButton } from "./fancy-button";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -404,9 +405,7 @@ export default function ContactForm(props) {
               </div>
               <div className="flex mt-7">
                 {messageSubmitted ? (
-                  <p className="text-white text-sm text-yellow">
-                    Enquiry submitted.
-                  </p>
+                  <p className="text-sm text-yellow">Enquiry submitted.</p>
                 ) : (
                   // <Button
                   //   type="submit"
@@ -419,7 +418,7 @@ export default function ContactForm(props) {
                   // </Button>
                   <button
                     type="submit"
-                    className="py-3 px-8 border text-white border-white rounded-3xl text-xs font-medium cursor-pointer"
+                    className="py-3 px-8 border text-white border-white rounded-3xl text-xs font-medium cursor-pointer hover:bg-white hover:text-blue ease-out duration-300 transition-all"
                   >
                     SUBMIT
                   </button>

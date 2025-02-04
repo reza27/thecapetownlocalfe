@@ -282,7 +282,7 @@ export default function Home({ homeData }) {
                       homeTour.homeTour.tab
                     }
                   > */}
-                  <TCPTLButton
+                  {/* <TCPTLButton
                     className="tour-button"
                     description={{ isOutlined: false }}
                     url={
@@ -293,7 +293,19 @@ export default function Home({ homeData }) {
                     }
                   >
                     Discover {homeTour.homeTour.shortTitle}
-                  </TCPTLButton>
+                  </TCPTLButton> */}
+                  <FancyButton
+                    isOutlined={false}
+                    href={
+                      "/tours?section=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                    className="z-10"
+                  >
+                    Discover {homeTour.homeTour.shortTitle}
+                  </FancyButton>
                   {/* </Link> */}
                 </div>
               </div>

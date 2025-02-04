@@ -35,6 +35,7 @@ import ColumnSlider from "../../components/column-slider";
 import { snap } from "gsap";
 import SliderV2 from "../../components/sliderv2";
 import { IActivityItem } from "../../types/IActivity";
+import { FancyButton } from "../../components/fancy-button";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -380,7 +381,7 @@ export default function Tours({ data }) {
                                         />
                                       </div>
 
-                                      <TCPTLButton
+                                      {/* <TCPTLButton
                                         fontSize={14}
                                         xPadding={38}
                                         yPadding={16}
@@ -391,7 +392,16 @@ export default function Tours({ data }) {
                                         url=""
                                       >
                                         BOOK TOUR
-                                      </TCPTLButton>
+
+                                      </TCPTLButton> */}
+                                      <div>
+                                        <FancyButton
+                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0"
+                                          isOutlined={false}
+                                        >
+                                          BOOK TOUR
+                                        </FancyButton>
+                                      </div>
                                     </div>
                                     <div className="hidden px-6 justify-center items-center 2xl:flex">
                                       <SliderContext.Provider

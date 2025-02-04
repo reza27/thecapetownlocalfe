@@ -94,21 +94,34 @@ export const FancyButton = ({
   return (
     <span className={className} ref={buttonElement}>
       {isOutlined ? (
-        <Link href={href} className="button button--stroke" data-block="button">
-          <span ref={buttonFlairElement} className="button__flair"></span>
+        <Link
+          href={href}
+          className="button after:inset-0 after:absolute !bg-transparent after:border after:border-white after:rounded-3xl after:content-[''] after:pointer-events-none"
+        >
+          <span
+            ref={buttonFlairElement}
+            className="button__flair inset-1 m-2 box-content absolute pointer-events-none scale-0 origin-center will-change-transform"
+          ></span>
           <span
             ref={buttonLabelElement}
-            className="button__label text-xs font-normal py-3 px-8 hover:text-gray-800"
+            className="button__label text-xs font-medium py-3 px-9 hover:text-gray-800"
           >
             {children}
           </span>
         </Link>
       ) : (
-        <Link href={href} className="button button--stroke" data-block="button">
-          <span ref={buttonFlairElement} className="button__flair"></span>
+        <Link
+          href={href}
+          className="button !bg-blue after:inset-0 after:absolute after:border after:border-blue after:rounded-3xl after:content-[''] after:pointer-events-none"
+          data-block="button"
+        >
+          <span
+            ref={buttonFlairElement}
+            className="button__flair before:!bg-gray-50 inset-0 absolute pointer-events-none scale-0 origin-center will-change-transform"
+          ></span>
           <span
             ref={buttonLabelElement}
-            className="button__label text-xs font-normal py-3 px-8 hover:text-gray-800"
+            className="button__label text-xs font-medium py-3 px-8 hover:text-blue"
           >
             {children}
           </span>
