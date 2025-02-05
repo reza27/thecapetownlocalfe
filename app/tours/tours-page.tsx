@@ -396,7 +396,7 @@ export default function Tours({ data }) {
                                       </TCPTLButton> */}
                                       <div>
                                         <FancyButton
-                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0"
+                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
                                           isOutlined={false}
                                         >
                                           BOOK TOUR

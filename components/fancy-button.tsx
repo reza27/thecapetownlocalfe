@@ -2,12 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap/all";
 import Link from "next/link";
 
-export const FancyButton = ({
-  className,
-  isOutlined,
-  href = "#",
-  children,
-}) => {
+export const FancyButton = ({ className, isOutlined, href = "", children }) => {
   const buttonElement = useRef<HTMLSpanElement | null>(null);
   const buttonFlairElement = useRef<HTMLSpanElement | null>(null);
   const buttonLabelElement = useRef<HTMLSpanElement | null>(null);
@@ -18,19 +13,14 @@ export const FancyButton = ({
   const init = () => {
     xSet = gsap.quickSetter(buttonFlairElement.current, "xPercent");
     ySet = gsap.quickSetter(buttonFlairElement.current, "yPercent");
-
-    console.log("button init");
   };
 
   const initEvents = () => {
-    console.log("button event");
-
     buttonElement.current?.addEventListener("mouseenter", (e) => {
       const { x, y } = getXY(e);
 
       xSet(x);
       ySet(y);
-      console.log("me", buttonFlairElement.current);
 
       gsap.to(buttonFlairElement.current, {
         scale: 1,
@@ -68,7 +58,6 @@ export const FancyButton = ({
     const { left, top, width, height } =
       buttonElement.current!.getBoundingClientRect();
 
-    console.log("left", left);
     const xTransformer = gsap.utils.pipe(
       gsap.utils.mapRange(0, width, 0, 100),
       gsap.utils.clamp(0, 100)
@@ -86,7 +75,6 @@ export const FancyButton = ({
   };
 
   useEffect(() => {
-    console.log("button");
     init();
     initEvents();
   }, []);
@@ -97,6 +85,11 @@ export const FancyButton = ({
         <Link
           href={href}
           className="button after:inset-0 after:absolute !bg-transparent after:border after:border-white after:rounded-3xl after:content-[''] after:pointer-events-none"
+          onClick={(e) => {
+            if (!href) {
+              e.preventDefault();
+            }
+          }}
         >
           <span
             ref={buttonFlairElement}
@@ -114,6 +107,11 @@ export const FancyButton = ({
           href={href}
           className="button !bg-blue after:inset-0 after:absolute after:border after:border-blue after:rounded-3xl after:content-[''] after:pointer-events-none"
           data-block="button"
+          onClick={(e) => {
+            if (!href) {
+              e.preventDefault();
+            }
+          }}
         >
           <span
             ref={buttonFlairElement}
