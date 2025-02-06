@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap/all";
 import Link from "next/link";
 
-export const FancyButton = ({ className, isOutlined, href = "", children }) => {
+export const FancyButton = ({
+  className,
+  isOutlined,
+  href = "",
+  onClick = () => {},
+  children,
+}) => {
   const buttonElement = useRef<HTMLSpanElement | null>(null);
   const buttonFlairElement = useRef<HTMLSpanElement | null>(null);
   const buttonLabelElement = useRef<HTMLSpanElement | null>(null);
@@ -17,6 +23,7 @@ export const FancyButton = ({ className, isOutlined, href = "", children }) => {
 
   const initEvents = () => {
     buttonElement.current?.addEventListener("mouseenter", (e) => {
+      console.log("mouseenter");
       const { x, y } = getXY(e);
 
       xSet(x);
@@ -89,6 +96,10 @@ export const FancyButton = ({ className, isOutlined, href = "", children }) => {
             if (!href) {
               e.preventDefault();
             }
+
+            if (onClick) {
+              onClick();
+            }
           }}
         >
           <span
@@ -110,6 +121,9 @@ export const FancyButton = ({ className, isOutlined, href = "", children }) => {
           onClick={(e) => {
             if (!href) {
               e.preventDefault();
+            }
+            if (onClick) {
+              onClick();
             }
           }}
         >

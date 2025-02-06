@@ -92,6 +92,19 @@ peer:placeholder-shown ~ .peer-placeholder-shown {
   color: $red600;
 }
 
+main {
+  transition-property: opacity, background;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
+
+.page-transition {
+  opacity: 0;
+  background: white;
+  transform: translateY(0px);
+  //filter: blur(12px);
+}
+
 * {
   box-sizing: border-box;
 }

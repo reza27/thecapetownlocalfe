@@ -6,6 +6,9 @@ import ImageLoader from "../../components/image-loader";
 import Head from "next/head";
 
 import { Metadata } from "next";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap/all"; // <-- import GSAP
+gsap.registerPlugin(useGSAP);
 
 export const metadata: Metadata = {
   title: "About",
@@ -19,24 +22,55 @@ const affiliateImageStyle = {
   overflow: "hidden",
 };
 
-const getRotation = (min: number, max: number) => {
-  return Math.random() * (max - min) + min;
-};
-
 export default function About({ data }) {
   const defaultGuideIndex = 0;
   const breakPointLg = 959;
   const breakPointXl = 1280;
-  const [guideHoverIndex, setGuideHoverIndex] = useState<number | null>(
-    defaultGuideIndex
-  );
+  const [guideHoverIndex, setGuideHoverIndex] =
+    useState<number>(defaultGuideIndex);
 
-  const guideStyle = (index: number) => {
+  const [guideOpacity, setGuideOpacity] = useState<number>(0);
+
+  const [activeGuideOpacity, setActiveGuideOpacity] = useState<number>(0);
+
+  const getRotation = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  };
+
+  useGSAP(() => {
+    gsap.set(".guide", {
+      y: 200,
+    });
+    //setActiveGuideOpacity(1);
+
+    gsap.to(".guide", {
+      opacity: 0.6,
+      ease: "power1.out",
+      y: 0,
+      duration: 0.5,
+      stagger: 0.1,
+      delay: 0.3,
+      onComplete: () => {
+        gsap.set(".guide", {
+          clearProps: "y",
+        });
+        setGuideOpacity((n) => n + 0.6);
+        setGuideHoverIndex((n) => n + 0);
+        setActiveGuideOpacity((n) => n + 1);
+      },
+    });
+  }, []);
+
+  const guideStyle = (
+    index: number,
+    guideOpacity: number,
+    activeGuideOpacity: number
+  ) => {
     return {
       flexBasis: Math.floor(100 / data.props.data.about.guides.length),
       flexShrink: 0,
       flexGrow: 1,
-      opacity: guideHoverIndex === index ? 1 : 0.6,
+      opacity: guideHoverIndex === index ? activeGuideOpacity : guideOpacity,
       transform:
         guideHoverIndex === index
           ? "scale(1.15,1.15)" + "rotate(" + getRotation(0, -5) + "deg)"
@@ -55,6 +89,7 @@ export default function About({ data }) {
   const [screenWidth, setScreenWidth] = useState<number>(400);
 
   useEffect(() => {
+    console.log("about ue");
     if (typeof window === "undefined") {
       return;
     }
@@ -133,14 +168,17 @@ export default function About({ data }) {
               ""
             )}
           </div> */}
-          <div className="flex flex-wrap relative mt-12">
-            <div className="absolute h-1/5 w-full bg-linear-to-r from-cyan-500 to-blue-500"></div>
+          <div className="flex flex-wrap justify-center relative mt-12">
             {data.props.data.about
               ? data.props.data.about?.guides?.map((guide, index) => (
                   <div
-                    className="lg:max-w-80 overflow-hidden w-full md:w-1/2 lg:px-0  sm:px-6 rounded-none lg:rounded-3xl transition-all duration-150 cursor-pointer"
+                    className="guide opacity-0 lg:max-w-52 overflow-hidden w-full md:w-1/2 lg:px-0 sm:px-6 rounded-none lg:rounded-3xl transition-all duration-150 cursor-pointer"
                     key={guide.id}
-                    style={screenWidth > breakPointLg ? guideStyle(index) : {}}
+                    style={
+                      screenWidth > breakPointLg
+                        ? guideStyle(index, guideOpacity, activeGuideOpacity)
+                        : {}
+                    }
                   >
                     <Image
                       loader={ImageLoader}

@@ -11,12 +11,6 @@ export async function getToursData() {
         activities {
           id
           title
-          faq {
-            question
-            answer {
-              document
-            }
-          }
           activityItemHeading {
             id
             title

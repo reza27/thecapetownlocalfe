@@ -29,6 +29,7 @@ import ReviewsV2 from "../components/reviews-v2";
 import ColumnSlider from "../components/column-slider";
 import outlined from "@material-tailwind/react/theme/components/timeline/timelineIconColors/outlined";
 import { FancyButton } from "../components/fancy-button";
+import { Faqs } from "../components/faqs";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -78,6 +79,8 @@ export default function Home({ homeData }) {
     if (typeof window === "undefined") {
       return;
     }
+
+    console.log("homeData", homeData);
 
     if (window.innerWidth <= 768) {
       setIsMobi(true);
@@ -325,6 +328,9 @@ export default function Home({ homeData }) {
             <ReviewsV2 screenWidth={screenWidth} />
           </ColumnSlider>
         </SliderContext.Provider>
+      </div>
+      <div className="flex justify-end">
+        <Faqs data={homeData.props.data.home?.faq} />
       </div>
       <div className="my-12 flex">
         <ContactForm
