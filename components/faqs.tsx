@@ -60,11 +60,11 @@ export const Faqs = ({ ...props }) => {
               }}
               className="absolute left-24 transition-all duration-2000"
             >
-              <div className="absolute top-10 whitespace-nowrap text-5xl font-semibold">
+              <div className="absolute top-10 whitespace-nowrap text-6xl font-semibold">
                 {faq.question}
               </div>
 
-              <div className="absolute top-28 whitespace-nowrap text-md font-medium">
+              <div className="absolute top-32 whitespace-nowrap text-md font-medium">
                 <DocumentRenderer document={faq.answer.document} />
               </div>
             </div>
