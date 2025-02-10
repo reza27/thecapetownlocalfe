@@ -90,6 +90,7 @@ export default function Home({ homeData }) {
 
     function autoResize() {
       setScreenWidth(window.innerWidth);
+      console.log("window.innerWidth", window.innerWidth);
     }
 
     window.addEventListener("resize", autoResize);
@@ -330,7 +331,7 @@ export default function Home({ homeData }) {
         </SliderContext.Provider>
       </div>
       <div className="flex justify-end">
-        <Faqs data={homeData.props.data.home?.faq} />
+        <Faqs data={homeData.props.data.home?.faq} screenWidth={screenWidth} />
       </div>
       <div className="my-12 flex">
         <ContactForm
