@@ -58,7 +58,7 @@ export default function ColumnSlider({ screenWidth, children }) {
     <div className=" relative tr flex flex-col pb-14">
       <div className="overflow-hidden rounded-3xl flex">
         <div
-          className="flex w-full transition duration-250 ease-out"
+          className="flex w-full transition duration-500 ease-out"
           style={childrenStyle}
         >
           {children}
