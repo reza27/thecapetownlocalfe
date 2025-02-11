@@ -38,27 +38,58 @@ export default function About({ data }) {
   };
 
   useGSAP(() => {
-    gsap.set(".guide", {
-      y: 200,
-    });
-    //setActiveGuideOpacity(1);
+    let mm = gsap.matchMedia();
 
-    gsap.to(".guide", {
-      opacity: 0.6,
-      ease: "power1.out",
-      y: 0,
-      duration: 0.5,
-      stagger: 0.1,
-      delay: 0.3,
-      onComplete: () => {
-        gsap.set(".guide", {
-          clearProps: "y",
-        });
-        setGuideOpacity((n) => n + 0.6);
-        setGuideHoverIndex((n) => n + 0);
-        setActiveGuideOpacity((n) => n + 1);
+    mm.add(
+      {
+        isMobile: "(max-width:959px)",
+        isDesktop: "(min-width:960px)",
       },
-    });
+      (context) => {
+        let { isMobile, isDesktop } = context.conditions;
+        if (isMobile) {
+          // gsap.to(".guide", {
+          //   opacity: 1,
+          //   ease: "power1.out",
+          //   y: 0,
+          //   duration: 0.5,
+          //   stagger: 0.1,
+          //   delay: 0.3,
+          //   onComplete: () => {
+          gsap.set(".guide", {
+            clearProps: "all",
+          });
+          //   setGuideOpacity((n) => n + 0.6);
+          //   setGuideHoverIndex((n) => n + 0);
+          //   setActiveGuideOpacity((n) => n + 1);
+          // },
+          // });
+        }
+
+        if (isDesktop) {
+          gsap.set(".guide", {
+            y: 200,
+          });
+
+          gsap.to(".guide", {
+            opacity: 0.6,
+            ease: "power1.out",
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            delay: 0.3,
+            onComplete: () => {
+              gsap.set(".guide", {
+                clearProps: "y",
+              });
+              setGuideOpacity(0.6);
+              setGuideHoverIndex((n) => n + 0);
+              setActiveGuideOpacity((n) => n + 1);
+            },
+          });
+        }
+      }
+    );
   }, []);
 
   const guideStyle = (
@@ -88,22 +119,23 @@ export default function About({ data }) {
 
   const [screenWidth, setScreenWidth] = useState<number>(400);
 
+  function autoResize() {
+    setScreenWidth(window.innerWidth);
+    setActiveGuideOpacity(1);
+    setGuideHoverIndex(0);
+  }
+
   useEffect(() => {
-    console.log("about ue");
     if (typeof window === "undefined") {
       return;
     }
 
     setScreenWidth(window.innerWidth);
 
-    function autoResize() {
-      setScreenWidth(window.innerWidth);
-    }
-
     window.addEventListener("resize", autoResize);
 
     return () => window.removeEventListener("resize", autoResize);
-  }, []);
+  }, [screenWidth]);
 
   const Affilates = () => {
     if (data.props.data.about?.affiliations?.length > 0) {
@@ -172,7 +204,7 @@ export default function About({ data }) {
             {data.props.data.about
               ? data.props.data.about?.guides?.map((guide, index) => (
                   <div
-                    className="guide opacity-0 lg:max-w-52 overflow-hidden w-full md:w-1/2 lg:px-0 sm:px-6 rounded-none lg:rounded-3xl transition-all duration-150 cursor-pointer"
+                    className="guide lg:opacity-0 lg:max-w-52 overflow-hidden w-full md:w-1/2 lg:px-0 sm:px-6 rounded-none lg:rounded-3xl transition-all duration-150 cursor-pointer"
                     key={guide.id}
                     style={
                       screenWidth > breakPointLg
