@@ -365,7 +365,7 @@ export default function Tours({ data }) {
                                       </h2>
                                       <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
                                         <div className=" text-blue w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full  w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
                                               src="/price.svg"
@@ -381,17 +381,17 @@ export default function Tours({ data }) {
                                             ></Image>
                                           </div>
                                           <div className="flex flex-col">
-                                            <span className="text-xs text-black tracking-tighter relative top-1">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
                                               Price
                                             </span>
-                                            <span className="text-2xl xl:text-3xl text-left font-semibold tracking-tighter">
+                                            <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
                                               {activityItem.price}
                                             </span>
                                           </div>
                                         </div>
                                         <div className="w-0.5 h-12 bg-gray-300"></div>
                                         <div className="w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
                                               src="/duration.svg"
@@ -407,17 +407,17 @@ export default function Tours({ data }) {
                                             ></Image>
                                           </div>
                                           <div className="flex flex-col">
-                                            <span className="text-xs text-black tracking-tight relative top-1">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Duration
                                             </span>
-                                            <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
                                               {activityItem.duration}
                                             </span>
                                           </div>
                                         </div>
                                         <div className="w-0.5 h-12 bg-gray-300"></div>
                                         <div className="w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
                                               src="/difficulty.svg"
@@ -433,10 +433,10 @@ export default function Tours({ data }) {
                                             ></Image>
                                           </div>
                                           <div className="flex flex-col">
-                                            <span className="text-xs text-black tracking-tight relative top-1">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Difficulty
                                             </span>
-                                            <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
                                               Easy
                                             </span>
                                           </div>

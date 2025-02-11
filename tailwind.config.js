@@ -31,6 +31,9 @@ module.exports = withMT({
           to: { transform: "translateX(0)" },
         },
       },
+      fontSize: {
+        xxs: "0.625rem",
+      },
       fontFamily: {
         sans: ["Poppins", ...defaultTheme.fontFamily.sans],
       },
