@@ -13,7 +13,13 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faTag } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faTag,
+  faHourglass1,
+  faDollarSign,
+  faGaugeHigh,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -36,6 +42,8 @@ import { snap } from "gsap";
 import SliderV2 from "../../components/sliderv2";
 import { IActivityItem } from "../../types/IActivity";
 import { FancyButton } from "../../components/fancy-button";
+import ImageLoader from "../../components/image-loader";
+import Image from "next/image";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
@@ -352,25 +360,86 @@ export default function Tours({ data }) {
                                     }}
                                   >
                                     <div className="flex flex-col">
-                                      <h2 className="text-4xl xl:text-6xl tracking-tighter">
+                                      <h2 className="text-5xl lg:text-6xl xl:text-7xl tracking-tighter !leading-[0.92]">
                                         {parse(activityItem.title)}
                                       </h2>
-                                      <div className="rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-3/4 xl:w-[320px] max-w-[260px] xl:max-w-[3800px]">
-                                        <div className="bg-blue text-powder-blue w-1/2 h-full flex flex-col justify-center items-start pl-5">
-                                          <span className="text-2xl xl:text-3xl text-left font-semibold tracking-tighter ">
-                                            {activityItem.price}
-                                          </span>
-                                          <span className="text-xs tracking-tighter">
-                                            Price
-                                          </span>
+                                      <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
+                                        <div className=" text-blue w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full  w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/price.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="price"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xs text-black tracking-tighter relative top-1">
+                                              Price
+                                            </span>
+                                            <span className="text-2xl xl:text-3xl text-left font-semibold tracking-tighter">
+                                              {activityItem.price}
+                                            </span>
+                                          </div>
                                         </div>
-                                        <div className="w-1/2 bg-gray-100 h-full flex flex-col justify-center items-start pl-5">
-                                          <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
-                                            {activityItem.duration}
-                                          </span>
-                                          <span className="text-xs text-black tracking-tight">
-                                            Duration
-                                          </span>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/duration.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="duration"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xs text-black tracking-tight relative top-1">
+                                              Duration
+                                            </span>
+                                            <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              {activityItem.duration}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-10 h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/difficulty.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="difficulty"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xs text-black tracking-tight relative top-1">
+                                              Difficulty
+                                            </span>
+                                            <span className="text-2xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              Easy
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                       <div className="doc mt-8">

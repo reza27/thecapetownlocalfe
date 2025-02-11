@@ -60,8 +60,8 @@ export default function Navbar() {
                   onClick={linkSelected.bind(this, val)}
                   className={
                     activeClass === val.id
-                      ? "selected pl-3 text-sm font-normal tracking-tighter"
-                      : "pl-3 text-sm font-normal tracking-tighter"
+                      ? "selected pl-3 text-sm font-normal tracking-tighter text-yellow"
+                      : "pl-3 text-sm font-normal tracking-tighter hover:text-yellow"
                   }
                 >
                   {val.text}

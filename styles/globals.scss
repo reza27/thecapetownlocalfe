@@ -208,6 +208,10 @@ main {
   font-size: 15px;
   color: #717171;
   line-height: 1.7;
+
+  @media screen and (min-width: 1280px) {
+    font-size: 17px;
+  }
 }
 
 .button {
