@@ -78,7 +78,7 @@ export const Faqs = ({ ...props }) => {
                     setCurrentIndex(index);
                   }
                 }}
-                className="flex w-28 h-full relative overflow-hidden transition-all ease-out duration-500 cursor-pointer first:rounded-l-3xl last:rounded-r-3xl"
+                className="flex w-28 h-full relative overflow-hidden transition-[width] ease-out duration-500 cursor-pointer first:rounded-l-3xl last:rounded-r-3xl"
               >
                 <div
                   style={{
@@ -90,7 +90,7 @@ export const Faqs = ({ ...props }) => {
 
                 <div className="absolute w-28 h-full overflow-hidden z-10 whitespace-nowrap">
                   <div
-                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-20 left-6 transition-all min-w-[500px] ease-out duration-1000 font-semibold text-2xl"
+                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-20 left-6 transition-transform min-w-[500px] ease-out duration-1000 font-semibold text-2xl"
                     style={{
                       opacity: currentIndex === index ? 0 : 1,
                       transform:
@@ -108,7 +108,7 @@ export const Faqs = ({ ...props }) => {
                     width: containerW,
                     opacity: faqOpacity,
                   }}
-                  className="absolute left-24 ease-out duration-500 w-full h-full transition-all"
+                  className="absolute left-24 ease-out duration-500 w-full h-full transition-[width_opacity_left]"
                 >
                   <div className="relative pt-10 text-4xl 2xl:text-5xl font-semibold w-full">
                     {faq.question}
@@ -149,7 +149,7 @@ export const Faqs = ({ ...props }) => {
                     setCurrentIndex(index);
                   }
                 }}
-                className="flex flex-col w-full relative overflow-hidden transition-all ease-out duration-500 cursor-pointer first:rounded-t-3xl last:rounded-b-3xl"
+                className="flex flex-col w-full relative overflow-hidden cursor-pointer first:rounded-t-3xl last:rounded-b-3xl"
               >
                 <div
                   style={{
@@ -182,15 +182,13 @@ export const Faqs = ({ ...props }) => {
                     };
                   }}
                   style={{
-                    // top: currentIndex === index ? "60px" : "108px",
-                    //width: containerW,
                     opacity: faqOpacity,
                     maxHeight:
                       currentIndex === index
                         ? sectionRefs.current[index]?.sectionRef?.scrollHeight
                         : 0,
                   }}
-                  className="relative px-12 text-4xl 2xl:text-5xl font-semibold w-full transition-all duration-500"
+                  className="relative px-12 text-4xl 2xl:text-5xl font-semibold w-full transition-[opacity_max-height] duration-500"
                 >
                   <div className="h-full text-black ">
                     <div className="faq-answer pb-10 pt-4 text-lg">
