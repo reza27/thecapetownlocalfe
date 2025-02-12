@@ -60,7 +60,7 @@ export default function Tours({ data }) {
   const [open, setOpen] = useState(1);
   const [scrollYPos, setScrollYPos] = useState<Array<number>>([0, 0]);
   const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean | undefined>(false);
   const [screenWidth, setScreenWidth] = useState<number>(400);
 
   const pageWrapper = useRef<HTMLDivElement>(null);
@@ -220,7 +220,6 @@ export default function Tours({ data }) {
 
             initTimeline();
 
-            // }, 1000);
             console.log("desktop", tl);
           }
         }
@@ -334,123 +333,120 @@ export default function Tours({ data }) {
                         >
                           {activityItemHeading.activityItems.map(
                             (activityItem: IActivityItem, index) => (
+                              // <div
+                              //   className="flex flex-col"
+                              //   id={activityItem.anchor}
+                              //   key={activityItem.id}
+                              // >
                               <div
-                                className="flex flex-col"
                                 id={activityItem.anchor}
                                 key={activityItem.id}
+                                className="flex flex-col lg:pb-12 column lg:flex-row-reverse lg:even:flex-row"
+                                // style={{
+                                //   flexDirection: isMobile
+                                //     ? "column"
+                                //     : index % 2 === 0
+                                //     ? "row-reverse"
+                                //     : "row",
+                                // }}
                               >
                                 <div
-                                  className="flex flex-col xl:flex-row lg:pb-12 column"
+                                  className="w-full lg:w-1/2 text-black pt-10 flex px-0 lg:px-6 2xl:px-0 flex-col lg:flex-row-reverse"
                                   style={{
-                                    flexDirection: isMobile
-                                      ? "column"
-                                      : index % 2 === 0
-                                      ? "row-reverse"
-                                      : "row",
+                                    flexDirection:
+                                      index % 2 === 0 ? "row-reverse" : "row",
                                   }}
                                 >
-                                  <div
-                                    className="w-full xl:w-1/2 text-black pt-10 flex px-0 lg:px-6 2xl:px-0 flex-col"
-                                    style={{
-                                      flexDirection: isMobile
-                                        ? "column"
-                                        : index % 2 === 0
-                                        ? "row-reverse"
-                                        : "row",
-                                    }}
-                                  >
-                                    <div className="flex flex-col">
-                                      <h2 className="text-5xl lg:text-6xl xl:text-7xl tracking-tighter !leading-[0.92]">
-                                        {parse(activityItem.title)}
-                                      </h2>
-                                      <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
-                                        <div className=" text-blue w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                            <Image
-                                              loader={ImageLoader}
-                                              src="/price.svg"
-                                              width={40}
-                                              height={40}
-                                              style={{
-                                                objectFit: "contain",
-                                                objectPosition: "center bottom",
-                                                height: "40px",
-                                                width: "40px",
-                                              }}
-                                              alt="price"
-                                            ></Image>
-                                          </div>
-                                          <div className="flex flex-col">
-                                            <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
-                                              Price
-                                            </span>
-                                            <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
-                                              {activityItem.price}
-                                            </span>
-                                          </div>
+                                  <div className="flex flex-col">
+                                    <h2 className="text-5xl lg:text-6xl xl:text-7xl tracking-tighter !leading-[0.92]">
+                                      {parse(activityItem.title)}
+                                    </h2>
+                                    <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
+                                      <div className=" text-blue w-1/3 h-full flex justify-center items-center">
+                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                          <Image
+                                            loader={ImageLoader}
+                                            src="/price.svg"
+                                            width={40}
+                                            height={40}
+                                            style={{
+                                              objectFit: "contain",
+                                              objectPosition: "center bottom",
+                                              height: "40px",
+                                              width: "40px",
+                                            }}
+                                            alt="price"
+                                          ></Image>
                                         </div>
-                                        <div className="w-0.5 h-12 bg-gray-300"></div>
-                                        <div className="w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                            <Image
-                                              loader={ImageLoader}
-                                              src="/duration.svg"
-                                              width={40}
-                                              height={40}
-                                              style={{
-                                                objectFit: "contain",
-                                                objectPosition: "center bottom",
-                                                height: "40px",
-                                                width: "40px",
-                                              }}
-                                              alt="duration"
-                                            ></Image>
-                                          </div>
-                                          <div className="flex flex-col">
-                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
-                                              Duration
-                                            </span>
-                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
-                                              {activityItem.duration}
-                                            </span>
-                                          </div>
-                                        </div>
-                                        <div className="w-0.5 h-12 bg-gray-300"></div>
-                                        <div className="w-1/3 h-full flex justify-center items-center">
-                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                            <Image
-                                              loader={ImageLoader}
-                                              src="/difficulty.svg"
-                                              width={40}
-                                              height={40}
-                                              style={{
-                                                objectFit: "contain",
-                                                objectPosition: "center bottom",
-                                                height: "40px",
-                                                width: "40px",
-                                              }}
-                                              alt="difficulty"
-                                            ></Image>
-                                          </div>
-                                          <div className="flex flex-col">
-                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
-                                              Difficulty
-                                            </span>
-                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
-                                              Easy
-                                            </span>
-                                          </div>
+                                        <div className="flex flex-col">
+                                          <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
+                                            Price
+                                          </span>
+                                          <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
+                                            {activityItem.price}
+                                          </span>
                                         </div>
                                       </div>
-                                      <div className="doc mt-8">
-                                        <DocumentRenderer
-                                          document={
-                                            activityItem.content.document
-                                          }
-                                        />
+                                      <div className="w-0.5 h-12 bg-gray-300"></div>
+                                      <div className="w-1/3 h-full flex justify-center items-center">
+                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                          <Image
+                                            loader={ImageLoader}
+                                            src="/duration.svg"
+                                            width={40}
+                                            height={40}
+                                            style={{
+                                              objectFit: "contain",
+                                              objectPosition: "center bottom",
+                                              height: "40px",
+                                              width: "40px",
+                                            }}
+                                            alt="duration"
+                                          ></Image>
+                                        </div>
+                                        <div className="flex flex-col">
+                                          <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                            Duration
+                                          </span>
+                                          <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            {activityItem.duration}
+                                          </span>
+                                        </div>
                                       </div>
+                                      <div className="w-0.5 h-12 bg-gray-300"></div>
+                                      <div className="w-1/3 h-full flex justify-center items-center">
+                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                          <Image
+                                            loader={ImageLoader}
+                                            src="/difficulty.svg"
+                                            width={40}
+                                            height={40}
+                                            style={{
+                                              objectFit: "contain",
+                                              objectPosition: "center bottom",
+                                              height: "40px",
+                                              width: "40px",
+                                            }}
+                                            alt="difficulty"
+                                          ></Image>
+                                        </div>
+                                        <div className="flex flex-col">
+                                          <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                            Difficulty
+                                          </span>
+                                          <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            Easy
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="doc mt-8">
+                                      <DocumentRenderer
+                                        document={activityItem.content.document}
+                                      />
+                                    </div>
 
-                                      {/* <TCPTLButton
+                                    {/* <TCPTLButton
                                         fontSize={14}
                                         xPadding={38}
                                         yPadding={16}
@@ -463,60 +459,43 @@ export default function Tours({ data }) {
                                         BOOK TOUR
 
                                       </TCPTLButton> */}
-                                      <div>
-                                        <FancyButton
-                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
-                                          isOutlined={false}
-                                        >
-                                          BOOK TOUR
-                                        </FancyButton>
-                                      </div>
-                                    </div>
-                                    <div className="hidden px-6 justify-center items-center 2xl:flex">
-                                      <SliderContext.Provider
-                                        value={activityItem.images}
+                                    <div>
+                                      <FancyButton
+                                        className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
+                                        isOutlined={false}
                                       >
-                                        <TourThumbnails
-                                          width={95}
-                                          height={350}
-                                          index={index}
-                                        />
-                                      </SliderContext.Provider>
+                                        BOOK TOUR
+                                      </FancyButton>
                                     </div>
                                   </div>
-
-                                  <div
-                                    className="w-full xl:w-1/2 overflow-hidden rounded-3xl"
-                                    id={activityItem.id}
-                                    ref={(ref) => {
-                                      imageScrollerRefs.current[index] = {
-                                        imageScrollerRef: ref,
-                                        id: "tour" + index,
-                                      };
-                                    }}
-                                  >
+                                  <div className="hidden px-6 justify-center items-center 2xl:flex">
                                     <SliderContext.Provider
                                       value={activityItem.images}
                                     >
-                                      {isMobile ? (
-                                        <SliderV2 screenWidth={screenWidth}>
-                                          <TourImages
-                                            isMobile={isMobile}
-                                            screenWidth={screenWidth}
-                                            height={
-                                              isMobile
-                                                ? "320px"
-                                                : "calc(100vh - 200px)"
-                                            }
-                                            ref={(ref) => {
-                                              sectionRefs.current[index] = {
-                                                sectionRef: ref,
-                                                id: "sectionRef-" + index,
-                                              };
-                                            }}
-                                          />
-                                        </SliderV2>
-                                      ) : (
+                                      <TourThumbnails
+                                        width={95}
+                                        height={350}
+                                        index={index}
+                                      />
+                                    </SliderContext.Provider>
+                                  </div>
+                                </div>
+
+                                <div
+                                  className="w-full xl:w-1/2 overflow-hidden rounded-3xl"
+                                  id={activityItem.id}
+                                  ref={(ref) => {
+                                    imageScrollerRefs.current[index] = {
+                                      imageScrollerRef: ref,
+                                      id: "tour" + index,
+                                    };
+                                  }}
+                                >
+                                  <SliderContext.Provider
+                                    value={activityItem.images}
+                                  >
+                                    {isMobile ? (
+                                      <SliderV2>
                                         <TourImages
                                           isMobile={isMobile}
                                           screenWidth={screenWidth}
@@ -532,12 +511,28 @@ export default function Tours({ data }) {
                                             };
                                           }}
                                         />
-                                      )}
-                                    </SliderContext.Provider>
-                                  </div>
+                                      </SliderV2>
+                                    ) : (
+                                      <TourImages
+                                        isMobile={isMobile}
+                                        screenWidth={screenWidth}
+                                        height={
+                                          isMobile
+                                            ? "320px"
+                                            : "calc(100vh - 200px)"
+                                        }
+                                        ref={(ref) => {
+                                          sectionRefs.current[index] = {
+                                            sectionRef: ref,
+                                            id: "sectionRef-" + index,
+                                          };
+                                        }}
+                                      />
+                                    )}
+                                  </SliderContext.Provider>
                                 </div>
-                                {/* <div className="spacer h-20"></div> */}
                               </div>
+                              // </div>
                             )
                           )}
                         </div>

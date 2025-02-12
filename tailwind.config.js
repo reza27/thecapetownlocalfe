@@ -38,6 +38,9 @@ module.exports = withMT({
         sans: ["Poppins", ...defaultTheme.fontFamily.sans],
       },
     },
+    screens: {
+      lg: "1024px",
+    },
     colors: {
       transparent: "transparent",
       yellow: "#FCB400",
