@@ -9,7 +9,7 @@ export default function TourThumbnails({ width, height, index }) {
     <div id={"spotlight-container" + index} className="relative">
       <div
         id={"spotlight" + index}
-        className="opacity-60 bg-white z-50 absolute top-0 left-0 spotlight"
+        className="opacity-50 bg-white z-50 absolute top-0 left-0 spotlight pointer-events-none"
         style={{
           width: width + "px",
           height: height / images.length + "px",
@@ -23,7 +23,7 @@ export default function TourThumbnails({ width, height, index }) {
         }}
       >
         {images.map((image, index) => (
-          <li key={image.id} className="">
+          <li key={image.id} className="thumb cursor-pointer">
             <Image
               loader={ImageLoader}
               alt={image.altText}

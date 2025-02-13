@@ -126,7 +126,7 @@ export default function Tours({ data }) {
             scrub: true,
             invalidateOnRefresh: true,
             onUpdate: () => {
-              console.log("scrub complete", tl.currentLabel());
+              // console.log("scrub complete", tl.currentLabel());
             },
 
             // snap: {
@@ -155,15 +155,9 @@ export default function Tours({ data }) {
         console.log("sections", sections);
         sections.forEach((section: any, i) => {
           const panels = gsap.utils.toArray(".panel", section);
-          console.log("section client height", section.clientHeight);
-          console.log("section scroll height", section.scrollHeight);
-
-          console.log("panel", panels);
-          // panels.forEach((panel) => tl.addLabel("panel" + 1));
 
           tl.to(
             section,
-
             {
               y: section.clientHeight - section.scrollHeight,
               duration: panels.length * 0.5,
@@ -177,10 +171,42 @@ export default function Tours({ data }) {
               "#spotlight-container" + i
             );
 
+            panels.forEach((panel, index) => {
+              tl.addLabel("panel-" + i + "-" + index, index * 0.75 + i * 2);
+              // tl.addLabel("section-" + i + "+=" + index * 0.75);
+
+              console.log(
+                "add:",
+                "panel-" + i + "-" + index,
+                index * 0.75 + i * 2
+              );
+            });
+
+            const thumbs = gsap.utils.toArray(".thumb", spotlightC);
+
+            thumbs.forEach((thumb: any, panelIndex) => {
+              thumb.addEventListener("click", () => {
+                console.log(
+                  "panel-" + i + "-" + panelIndex,
+                  panelIndex * 0.75 + i * 1.5
+                );
+                gsap.to(window, {
+                  duration: 0.5,
+
+                  scrollTo: {
+                    y: tl.scrollTrigger?.labelToScroll(
+                      "panel-" + i + "-" + panelIndex,
+                      panelIndex * 0.75 + i * 1.5
+                    ),
+                  },
+                  ease: "power1.inOut",
+                });
+              });
+            });
             tl.to(
               spotlight,
               {
-                y: THUMB_SECTION_HEIGHT - THUMB_SECTION_HEIGHT / panels.length,
+                yPercent: 100 * (panels.length - 1), // THUMB_SECTION_HEIGHT / panels.length,
                 duration: panels.length * 0.5,
                 // onUpdate: (obj) => {
                 //   console.log("complete!");
