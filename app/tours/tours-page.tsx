@@ -486,7 +486,7 @@ export default function Tours({ data }) {
                                       value={activityItem.images}
                                     >
                                       <TourThumbnails
-                                        thumbWidth={95}
+                                        thumbWidth={90}
                                         thumbHeight={138}
                                         index={index}
                                       />
