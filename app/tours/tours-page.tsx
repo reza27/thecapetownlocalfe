@@ -148,7 +148,7 @@ export default function Tours({ data }) {
               y: section.clientHeight - section.scrollHeight,
               duration: panels.length * 0.5,
             },
-            "section" + i
+            "section-" + i
           );
 
           if (sections[i + 1]) {
@@ -161,7 +161,7 @@ export default function Tours({ data }) {
               tl.addLabel(
                 "panel-" + i + "-" + index,
                 (index * (panels.length * 0.5)) / (panels.length - 1) +
-                  tl.labels["section" + i]
+                  tl.labels["section-" + i]
               );
 
               // console.log(
@@ -200,7 +200,7 @@ export default function Tours({ data }) {
                 //   );
                 // },
               },
-              "section" + i
+              "section-" + i
             );
 
             tl.to(".content", {
@@ -351,7 +351,7 @@ export default function Tours({ data }) {
                               <div
                                 id={activityItem.anchor}
                                 key={activityItem.id}
-                                className="flex flex-col lg:pb-12 column lg:flex-row-reverse lg:even:flex-row"
+                                className="flex flex-col lg:pb-12 column lg:flex-row lg:even:flex-row-reverse"
                                 // style={{
                                 //   flexDirection: isMobile
                                 //     ? "column"
@@ -360,6 +360,56 @@ export default function Tours({ data }) {
                                 //     : "row",
                                 // }}
                               >
+                                <div
+                                  className="w-full mt-8 lg:mt-0 lg:w-1/2 overflow-hidden rounded-3xl"
+                                  id={activityItem.id}
+                                  ref={(ref) => {
+                                    imageScrollerRefs.current[index] = {
+                                      imageScrollerRef: ref,
+                                      id: "tour" + index,
+                                    };
+                                  }}
+                                >
+                                  <SliderContext.Provider
+                                    value={activityItem.images}
+                                  >
+                                    {isMobile ? (
+                                      <SliderV2>
+                                        <TourImages
+                                          isMobile={isMobile}
+                                          screenWidth={screenWidth}
+                                          height={
+                                            isMobile
+                                              ? "320px"
+                                              : "calc(100vh - 200px)"
+                                          }
+                                          ref={(ref) => {
+                                            sectionRefs.current[index] = {
+                                              sectionRef: ref,
+                                              id: "sectionRef-" + index,
+                                            };
+                                          }}
+                                        />
+                                      </SliderV2>
+                                    ) : (
+                                      <TourImages
+                                        isMobile={isMobile}
+                                        screenWidth={screenWidth}
+                                        height={
+                                          isMobile
+                                            ? "320px"
+                                            : "calc(100vh - 200px)"
+                                        }
+                                        ref={(ref) => {
+                                          sectionRefs.current[index] = {
+                                            sectionRef: ref,
+                                            id: "sectionRef-" + index,
+                                          };
+                                        }}
+                                      />
+                                    )}
+                                  </SliderContext.Provider>
+                                </div>
                                 <div
                                   className="w-full lg:w-1/2 text-black flex px-0 lg:px-6 2xl:px-0 flex-col lg:flex-row-reverse"
                                   style={{
@@ -492,57 +542,6 @@ export default function Tours({ data }) {
                                       />
                                     </SliderContext.Provider>
                                   </div>
-                                </div>
-
-                                <div
-                                  className="w-full xl:w-1/2 overflow-hidden rounded-3xl"
-                                  id={activityItem.id}
-                                  ref={(ref) => {
-                                    imageScrollerRefs.current[index] = {
-                                      imageScrollerRef: ref,
-                                      id: "tour" + index,
-                                    };
-                                  }}
-                                >
-                                  <SliderContext.Provider
-                                    value={activityItem.images}
-                                  >
-                                    {isMobile ? (
-                                      <SliderV2>
-                                        <TourImages
-                                          isMobile={isMobile}
-                                          screenWidth={screenWidth}
-                                          height={
-                                            isMobile
-                                              ? "320px"
-                                              : "calc(100vh - 200px)"
-                                          }
-                                          ref={(ref) => {
-                                            sectionRefs.current[index] = {
-                                              sectionRef: ref,
-                                              id: "sectionRef-" + index,
-                                            };
-                                          }}
-                                        />
-                                      </SliderV2>
-                                    ) : (
-                                      <TourImages
-                                        isMobile={isMobile}
-                                        screenWidth={screenWidth}
-                                        height={
-                                          isMobile
-                                            ? "320px"
-                                            : "calc(100vh - 200px)"
-                                        }
-                                        ref={(ref) => {
-                                          sectionRefs.current[index] = {
-                                            sectionRef: ref,
-                                            id: "sectionRef-" + index,
-                                          };
-                                        }}
-                                      />
-                                    )}
-                                  </SliderContext.Provider>
                                 </div>
                               </div>
                               // </div>
