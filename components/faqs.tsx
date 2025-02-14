@@ -90,7 +90,7 @@ export const Faqs = ({ ...props }) => {
 
                 <div className="absolute w-28 h-full overflow-hidden z-10 whitespace-nowrap">
                   <div
-                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-20 left-6 transition-transform min-w-[500px] ease-out duration-1000 font-semibold text-2xl"
+                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-20 left-6 transition-transform min-w-[500px] ease-out duration-1000 font-semibold text-3xl"
                     style={{
                       opacity: currentIndex === index ? 0 : 1,
                       transform:
@@ -110,7 +110,7 @@ export const Faqs = ({ ...props }) => {
                   }}
                   className="absolute left-24 ease-out duration-500 w-full h-full transition-[width_opacity_left]"
                 >
-                  <div className="relative pt-10 text-4xl 2xl:text-5xl font-semibold w-full">
+                  <div className="relative pt-10 text-5xl 2xl:text-6xl font-semibold w-full">
                     {faq.question}
                   </div>
 
