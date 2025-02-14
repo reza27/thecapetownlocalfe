@@ -169,7 +169,7 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="absolute bottom-6 justify-center items-center w-full flex">
+        <div className="absolute bottom-12 justify-center items-center w-full flex">
           <Link
             href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.htmly"
             target="_blank"
