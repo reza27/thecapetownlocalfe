@@ -139,20 +139,6 @@ export default function Tours({ data }) {
           },
         });
 
-        // buttons.forEach((btn: any, i) => {
-        //   btn.addEventListener("click", (e: Event) => {
-        //     e.preventDefault();
-        //     gsap.to(window, {
-        //       duration: 2,
-
-        //       scrollTo: {
-        //         y: tl.scrollTrigger?.labelToScroll("section-2"),
-        //       },
-        //       ease: "power1.inOut",
-        //     });
-        //   });
-        // });
-        console.log("sections", sections);
         sections.forEach((section: any, i) => {
           const panels = gsap.utils.toArray(".panel", section);
 
@@ -162,7 +148,7 @@ export default function Tours({ data }) {
               y: section.clientHeight - section.scrollHeight,
               duration: panels.length * 0.5,
             },
-            "section-" + i
+            "section" + i
           );
 
           if (sections[i + 1]) {
@@ -172,31 +158,29 @@ export default function Tours({ data }) {
             );
 
             panels.forEach((panel, index) => {
-              tl.addLabel("panel-" + i + "-" + index, index * 0.75 + i * 2);
-              // tl.addLabel("section-" + i + "+=" + index * 0.75);
-
-              console.log(
-                "add:",
+              tl.addLabel(
                 "panel-" + i + "-" + index,
-                index * 0.75 + i * 2
+                (index * (panels.length * 0.5)) / (panels.length - 1) +
+                  tl.labels["section" + i]
               );
+
+              // console.log(
+              //   "add:",
+              //   (index * (panels.length * 0.5)) / (panels.length - 1)
+              // );
             });
 
             const thumbs = gsap.utils.toArray(".thumb", spotlightC);
 
             thumbs.forEach((thumb: any, panelIndex) => {
               thumb.addEventListener("click", () => {
-                console.log(
-                  "panel-" + i + "-" + panelIndex,
-                  panelIndex * 0.75 + i * 1.5
-                );
                 gsap.to(window, {
                   duration: 0.5,
 
                   scrollTo: {
                     y: tl.scrollTrigger?.labelToScroll(
-                      "panel-" + i + "-" + panelIndex,
-                      panelIndex * 0.75 + i * 1.5
+                      "panel-" + i + "-" + panelIndex
+                      //"section" + i + "<+=" + 1 * panelIndex
                     ),
                   },
                   ease: "power1.inOut",
@@ -216,7 +200,7 @@ export default function Tours({ data }) {
                 //   );
                 // },
               },
-              "section-" + i
+              "section" + i
             );
 
             tl.to(".content", {
@@ -377,102 +361,104 @@ export default function Tours({ data }) {
                                 // }}
                               >
                                 <div
-                                  className="w-full lg:w-1/2 text-black pt-10 flex px-0 lg:px-6 2xl:px-0 flex-col lg:flex-row-reverse"
+                                  className="w-full lg:w-1/2 text-black flex px-0 lg:px-6 2xl:px-0 flex-col lg:flex-row-reverse"
                                   style={{
                                     flexDirection:
                                       index % 2 === 0 ? "row-reverse" : "row",
                                   }}
                                 >
-                                  <div className="flex flex-col">
+                                  <div className="flex flex-col justify-center items-center">
                                     <h2 className="text-5xl lg:text-6xl xl:text-7xl tracking-tighter !leading-[0.92]">
                                       {parse(activityItem.title)}
                                     </h2>
-                                    <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-center items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
-                                      <div className=" text-blue w-1/3 h-full flex justify-center items-center">
-                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                          <Image
-                                            loader={ImageLoader}
-                                            src="/price.svg"
-                                            width={40}
-                                            height={40}
-                                            style={{
-                                              objectFit: "contain",
-                                              objectPosition: "center bottom",
-                                              height: "40px",
-                                              width: "40px",
-                                            }}
-                                            alt="price"
-                                          ></Image>
+                                    <div className="flex w-full justify-start">
+                                      <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-start items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
+                                        <div className=" text-blue w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/price.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="price"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
+                                              Price
+                                            </span>
+                                            <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
+                                              {activityItem.price}
+                                            </span>
+                                          </div>
                                         </div>
-                                        <div className="flex flex-col">
-                                          <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
-                                            Price
-                                          </span>
-                                          <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
-                                            {activityItem.price}
-                                          </span>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/duration.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="duration"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                              Duration
+                                            </span>
+                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              {activityItem.duration}
+                                            </span>
+                                          </div>
                                         </div>
-                                      </div>
-                                      <div className="w-0.5 h-12 bg-gray-300"></div>
-                                      <div className="w-1/3 h-full flex justify-center items-center">
-                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                          <Image
-                                            loader={ImageLoader}
-                                            src="/duration.svg"
-                                            width={40}
-                                            height={40}
-                                            style={{
-                                              objectFit: "contain",
-                                              objectPosition: "center bottom",
-                                              height: "40px",
-                                              width: "40px",
-                                            }}
-                                            alt="duration"
-                                          ></Image>
-                                        </div>
-                                        <div className="flex flex-col">
-                                          <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
-                                            Duration
-                                          </span>
-                                          <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
-                                            {activityItem.duration}
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="w-0.5 h-12 bg-gray-300"></div>
-                                      <div className="w-1/3 h-full flex justify-center items-center">
-                                        <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
-                                          <Image
-                                            loader={ImageLoader}
-                                            src="/difficulty.svg"
-                                            width={40}
-                                            height={40}
-                                            style={{
-                                              objectFit: "contain",
-                                              objectPosition: "center bottom",
-                                              height: "40px",
-                                              width: "40px",
-                                            }}
-                                            alt="difficulty"
-                                          ></Image>
-                                        </div>
-                                        <div className="flex flex-col">
-                                          <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
-                                            Difficulty
-                                          </span>
-                                          <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
-                                            Easy
-                                          </span>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/difficulty.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="difficulty"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                              Difficulty
+                                            </span>
+                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              Easy
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
+
                                     <div className="doc mt-8">
                                       <DocumentRenderer
                                         document={activityItem.content.document}
                                       />
-                                    </div>
 
-                                    {/* <TCPTLButton
+                                      {/* <TCPTLButton
                                         fontSize={14}
                                         xPadding={38}
                                         yPadding={16}
@@ -485,13 +471,14 @@ export default function Tours({ data }) {
                                         BOOK TOUR
 
                                       </TCPTLButton> */}
-                                    <div>
-                                      <FancyButton
-                                        className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
-                                        isOutlined={false}
-                                      >
-                                        BOOK TOUR
-                                      </FancyButton>
+                                      <div className="flex justify-start w-full">
+                                        <FancyButton
+                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
+                                          isOutlined={false}
+                                        >
+                                          BOOK TOUR
+                                        </FancyButton>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="hidden px-6 justify-center items-center 2xl:flex">
@@ -499,8 +486,8 @@ export default function Tours({ data }) {
                                       value={activityItem.images}
                                     >
                                       <TourThumbnails
-                                        width={95}
-                                        height={350}
+                                        thumbWidth={95}
+                                        thumbHeight={138}
                                         index={index}
                                       />
                                     </SliderContext.Provider>

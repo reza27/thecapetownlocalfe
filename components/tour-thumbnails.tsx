@@ -2,7 +2,7 @@ import { useSliderContext } from "../lib/contexts/slider-context";
 import ImageLoader from "./image-loader";
 import Image from "next/image";
 
-export default function TourThumbnails({ width, height, index }) {
+export default function TourThumbnails({ thumbWidth, thumbHeight, index }) {
   const images = useSliderContext();
 
   return (
@@ -11,15 +11,14 @@ export default function TourThumbnails({ width, height, index }) {
         id={"spotlight" + index}
         className="opacity-50 bg-white z-50 absolute top-0 left-0 spotlight pointer-events-none"
         style={{
-          width: width + "px",
-          height: height / images.length + "px",
+          width: thumbWidth,
+          height: thumbHeight,
         }}
       ></div>
       <ul
         className="rounded-xl flex flex-col overflow-hidden relative z-10"
         style={{
-          width: width + "px",
-          height: height + "px",
+          width: thumbWidth,
         }}
       >
         {images.map((image, index) => (
@@ -37,8 +36,8 @@ export default function TourThumbnails({ width, height, index }) {
               style={{
                 objectFit: "cover",
                 objectPosition: "center top",
-                height: height / images.length + "px",
-                width: "100%",
+                height: thumbHeight,
+                width: thumbWidth,
               }}
             />
           </li>
