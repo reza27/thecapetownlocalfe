@@ -169,7 +169,7 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
-        <div className="absolute bottom-12 justify-center items-center w-full flex">
+        <div className="absolute bottom-16 justify-center items-center w-full flex">
           <Link
             href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.htmly"
             target="_blank"
@@ -198,7 +198,7 @@ export default function Navbar() {
               src="/instagram-logo-glyph.png"
               width={40}
               height={40}
-              className="invert brightness-0"
+              className="invert brightness-0 mr-5"
               style={{
                 objectFit: "contain",
                 objectPosition: "center bottom",
@@ -206,6 +206,25 @@ export default function Navbar() {
                 width: "40px",
               }}
               alt="instagram white"
+            />
+          </Link>
+          <Link
+            href="https://www.facebook.com/thecapetownlocal"
+            target="_blank"
+          >
+            <Image
+              loader={ImageLoader}
+              src="/facebook.svg"
+              width={32}
+              height={32}
+              className="invert brightness-0"
+              style={{
+                objectFit: "contain",
+                objectPosition: "center bottom",
+                height: "32px",
+                width: "32px",
+              }}
+              alt="fb white"
             />
           </Link>
         </div>
