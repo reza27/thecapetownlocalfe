@@ -144,7 +144,7 @@ export default function Navbar() {
         <div className="flex justify-center items-center w-full relative top-24">
           <Image
             loader={ImageLoader}
-            src="/thecptlocalblue.png"
+            src="/thecptlocalblue@2x.png"
             width={220}
             height={50}
             style={{
