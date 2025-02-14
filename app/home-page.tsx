@@ -306,7 +306,7 @@ export default function Home({ homeData }) {
                       "&tab=" +
                       homeTour.homeTour.tab
                     }
-                    className="z-10"
+                    className="z-10 uppercase"
                   >
                     Discover {homeTour.homeTour.shortTitle}
                   </FancyButton>
