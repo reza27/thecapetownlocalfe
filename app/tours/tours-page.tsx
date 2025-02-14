@@ -125,16 +125,13 @@ export default function Tours({ data }) {
             pin: true,
             scrub: true,
             invalidateOnRefresh: true,
-            onUpdate: () => {
-              // console.log("scrub complete", tl.currentLabel());
-            },
 
-            // snap: {
-            //   snapTo: 1 / (sections.length - 1),
-            //   duration: 2,
-            //   delay: 0.1,
-            //   ease: "power1.inOut",
-            // },
+            snap: {
+              snapTo: "labels", //1 / (sections.length - 1),
+              duration: 0.5,
+              delay: 2,
+              ease: "power1.inOut",
+            },
             //markers: true,
           },
         });
@@ -163,11 +160,6 @@ export default function Tours({ data }) {
                 (index * (panels.length * 0.5)) / (panels.length - 1) +
                   tl.labels["section-" + i]
               );
-
-              // console.log(
-              //   "add:",
-              //   (index * (panels.length * 0.5)) / (panels.length - 1)
-              // );
             });
 
             const thumbs = gsap.utils.toArray(".thumb", spotlightC);
@@ -180,7 +172,6 @@ export default function Tours({ data }) {
                   scrollTo: {
                     y: tl.scrollTrigger?.labelToScroll(
                       "panel-" + i + "-" + panelIndex
-                      //"section" + i + "<+=" + 1 * panelIndex
                     ),
                   },
                   ease: "power1.inOut",
@@ -192,13 +183,6 @@ export default function Tours({ data }) {
               {
                 yPercent: 100 * (panels.length - 1), // THUMB_SECTION_HEIGHT / panels.length,
                 duration: panels.length * 0.5,
-                // onUpdate: (obj) => {
-                //   console.log("complete!");
-                //   console.log(
-                //     spotlight?.getBoundingClientRect().y! -
-                //       spotlightC?.getBoundingClientRect().y!
-                //   );
-                // },
               },
               "section-" + i
             );
@@ -261,22 +245,11 @@ export default function Tours({ data }) {
 
       const buttons = gsap.utils.toArray(".book-btn");
       buttons.forEach((btn: any, i) => {
-        btn.addEventListener("click", scrollToForm); // (e: Event) => {
-        // e.preventDefault();
-        // gsap.to(window, {
-        //   duration: 2,
-
-        //   scrollTo: {
-        //     y: tl.scrollTrigger?.labelToScroll("section-2"),
-        //   },
-        //   ease: "power1.inOut",
-        // });
-        // });
+        btn.addEventListener("click", scrollToForm);
       });
 
       let params = new URLSearchParams(document.location.search);
-      let section = params.get("section"); // is the string "Jonathan"
-
+      let section = params.get("section");
       if (section) {
         gsap.to(window, {
           duration: 2,
@@ -321,13 +294,6 @@ export default function Tours({ data }) {
 
   return (
     <div className="page-wrapper" ref={pageWrapper}>
-      {/*      
-      <section className="section">
-        <div className="container ">
-          
-        </div>
-      </section>  */}
-
       <div className="wrapper flex justify-center items-center">
         <div className="container no-overflow">
           <div className="content">
