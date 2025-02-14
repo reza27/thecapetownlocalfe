@@ -32,7 +32,7 @@ export default function TourThumbnails({ thumbWidth, thumbHeight, index }) {
                  auto"
               width={100}
               height={100}
-              className="transition-all duration-150"
+              className="transition-all duration-150 saturate-[1.0] hover:saturate-[1.2]"
               style={{
                 objectFit: "cover",
                 objectPosition: "center top",

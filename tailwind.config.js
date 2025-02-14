@@ -39,7 +39,7 @@ module.exports = withMT({
       },
     },
     screens: {
-      lg: "1024px",
+      lg: "1025px",
     },
     colors: {
       transparent: "transparent",
