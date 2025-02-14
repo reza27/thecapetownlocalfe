@@ -330,7 +330,7 @@ export default function Tours({ data }) {
                                 className="flex flex-col lg:pb-12 column lg:flex-row lg:even:flex-row-reverse"
                               >
                                 <div
-                                  className="w-full mt-8 lg:mt-0 lg:w-1/2 overflow-hidden rounded-3xl"
+                                  className="w-full mt-8 lg:mt-0 lg:w-1/2 overflow-hidden rounded-3xl h-[320px] lg:h-[calc(100vh_-_200px)]"
                                   id={activityItem.id}
                                   ref={(ref) => {
                                     imageScrollerRefs.current[index] = {
@@ -347,22 +347,12 @@ export default function Tours({ data }) {
                                         <TourImages
                                           isMobile={isMobile}
                                           screenWidth={screenWidth}
-                                          height={
-                                            isMobile
-                                              ? "320px"
-                                              : "calc(100vh - 200px)"
-                                          }
                                         />
                                       </SliderV2>
                                     ) : (
                                       <TourImages
                                         isMobile={isMobile}
                                         screenWidth={screenWidth}
-                                        height={
-                                          isMobile
-                                            ? "320px"
-                                            : "calc(100vh - 200px)"
-                                        }
                                       />
                                     )}
                                   </SliderContext.Provider>
@@ -400,7 +390,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
                                               Price
                                             </span>
-                                            <span className="text-lg xl:text-3xl text-left font-semibold tracking-tighter">
+                                            <span className="text-lg lg:text-3xl text-left font-semibold tracking-tighter">
                                               {activityItem.price}
                                             </span>
                                           </div>
@@ -426,7 +416,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Duration
                                             </span>
-                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg lg:text-3xl text-blue text-left tracking-tight font-semibold">
                                               {activityItem.duration}
                                             </span>
                                           </div>
@@ -452,7 +442,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Difficulty
                                             </span>
-                                            <span className="text-lg xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg lg:text-3xl text-blue text-left tracking-tight font-semibold">
                                               Easy
                                             </span>
                                           </div>

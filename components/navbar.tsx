@@ -138,12 +138,27 @@ export default function Navbar() {
       </div>
       <div
         ref={mobiLinks}
-        className="lg:hidden w-full fixed left-0 top-0 right-0 h-screen bg-blue flex justify-center transition-all duration-500 z-20"
+        className="lg:hidden w-full fixed left-0 top-0 right-0 h-screen bg-blue flex flex-col transition-all duration-500 z-20"
         style={{ left: openMenu ? "0" : "-100vw" }}
       >
-        <ul className="relative top-32 text-center text-4xl font-medium text-white tracking-tight">
+        <div className="flex justify-center items-center w-full relative top-24">
+          <Image
+            loader={ImageLoader}
+            src="/thecptlocalblue.png"
+            width={220}
+            height={50}
+            style={{
+              objectFit: "contain",
+              objectPosition: "center bottom",
+              height: "50px",
+              width: "220px",
+            }}
+            alt="logo white"
+          />
+        </div>
+        <ul className="relative top-40 text-center text-4xl font-medium text-white tracking-tight">
           {links.map((val: ILink) => (
-            <li key={val.mobiKey} className="py-2">
+            <li key={val.mobiKey} className="py-4">
               <Link
                 href={val.href}
                 onClick={linkSelected.bind(this, val)}
@@ -154,6 +169,46 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        <div className="absolute bottom-6 justify-center items-center w-full flex">
+          <Link
+            href="https://www.tripadvisor.co.za/Attraction_Review-g312659-d17543425-Reviews-The_Cape_Town_Local-Cape_Town_Central_Western_Cape.htmly"
+            target="_blank"
+          >
+            <Image
+              loader={ImageLoader}
+              src="/tripadvisor.svg"
+              width={40}
+              height={40}
+              className="fill-white invert brightness-0 mr-5"
+              style={{
+                objectFit: "contain",
+                objectPosition: "center bottom",
+                height: "40px",
+                width: "40px",
+              }}
+              alt="tripadvisor white"
+            />
+          </Link>
+          <Link
+            href="https://www.instagram.com/thecapetownlocal/?hl=en"
+            target="_blank"
+          >
+            <Image
+              loader={ImageLoader}
+              src="/instagram-logo-glyph.png"
+              width={40}
+              height={40}
+              className="invert brightness-0"
+              style={{
+                objectFit: "contain",
+                objectPosition: "center bottom",
+                height: "40px",
+                width: "40px",
+              }}
+              alt="instagram white"
+            />
+          </Link>
+        </div>
       </div>
     </div>
   );
