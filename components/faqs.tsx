@@ -12,12 +12,13 @@ export const Faqs = ({ ...props }) => {
   >([]);
 
   const faqContainer = useRef<HTMLDivElement>(null);
+  const panelW = 106;
 
   const autoResize = () => {
     if (faqContainer.current) {
       setContainerW(
         faqContainer.current!.getBoundingClientRect().width -
-          106 * (props.data.length - 1) -
+          panelW * (props.data.length - 1) -
           60
       );
       setFaqOpacity(1);
@@ -28,7 +29,7 @@ export const Faqs = ({ ...props }) => {
     if (faqContainer.current) {
       setContainerW(
         faqContainer.current!.getBoundingClientRect().width -
-          106 * (props.data.length - 1) -
+          panelW * (props.data.length - 1) -
           60
       );
 
@@ -67,7 +68,7 @@ export const Faqs = ({ ...props }) => {
           >
             {props.data.map((faq, index) => (
               <div
-                key={faq}
+                key={faq.id}
                 style={{
                   width: currentIndex === index ? "100%" : "106px",
                 }}
@@ -138,10 +139,7 @@ export const Faqs = ({ ...props }) => {
           >
             {props.data.map((faq, index) => (
               <div
-                key={faq}
-                // style={{
-                //   height: currentIndex === index ? "100%" : "106px",
-                // }}
+                key={faq.id}
                 onClick={() => {
                   if (currentIndex === index) {
                     setCurrentIndex(null);
@@ -160,19 +158,7 @@ export const Faqs = ({ ...props }) => {
                 ></div>
 
                 <div className="flex justify-start pl-10 items-center h-20 text-2xl font-semibold z-10">
-                  <div
-                    style={
-                      {
-                        //opacity: currentIndex === index ? 0 : 1,
-                        // transform:
-                        //   currentIndex === index
-                        //     ? "translateY(-100px)"
-                        //     : "translateY(0px)",
-                      }
-                    }
-                  >
-                    {faq.question}
-                  </div>
+                  <div>{faq.question}</div>
                 </div>
                 <div
                   ref={(ref) => {

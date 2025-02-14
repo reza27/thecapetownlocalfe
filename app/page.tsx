@@ -8,6 +8,7 @@ async function getHomeData() {
       query GetHome {
         home {
           faq {
+            id
             question
             answer {
               document

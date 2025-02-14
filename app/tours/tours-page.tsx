@@ -127,7 +127,7 @@ export default function Tours({ data }) {
             invalidateOnRefresh: true,
 
             snap: {
-              snapTo: "labels", //1 / (sections.length - 1),
+              snapTo: "labels",
               duration: 0.5,
               delay: 2,
               ease: "power1.inOut",
@@ -203,9 +203,25 @@ export default function Tours({ data }) {
         },
         (context) => {
           let { isMobile, isDesktop } = context.conditions;
+          let params = new URLSearchParams(document.location.search);
+          let section = params.get("section");
           if (isMobile) {
             setIsMobile(true);
             gsap.set(".wrapper", { marginBottom: "0px" });
+
+            if (section) {
+              gsap.to(window, {
+                duration: 1,
+
+                scrollTo: {
+                  y: imageScrollerRefs.current[section].imageScrollerRef,
+                  offsetY: 100,
+                },
+
+                delay: 2,
+                ease: "power1",
+              });
+            }
           }
 
           if (isDesktop) {
@@ -213,8 +229,18 @@ export default function Tours({ data }) {
             gsap.set(".wrapper", { marginBottom: "-156px" });
 
             initTimeline();
+            if (section) {
+              gsap.to(window, {
+                duration: 1,
 
-            console.log("desktop", tl);
+                scrollTo: {
+                  y: tl.scrollTrigger?.labelToScroll("section-" + section),
+                },
+
+                delay: 2,
+                ease: "power1",
+              });
+            }
           }
         }
       );
@@ -248,21 +274,6 @@ export default function Tours({ data }) {
         btn.addEventListener("click", scrollToForm);
       });
 
-      let params = new URLSearchParams(document.location.search);
-      let section = params.get("section");
-      if (section) {
-        gsap.to(window, {
-          duration: 2,
-
-          scrollTo: {
-            y: tl.scrollTrigger?.labelToScroll("section-" + section),
-          },
-
-          delay: 2,
-          ease: "power1",
-        });
-      }
-
       return () => {
         buttons.forEach((btn: any, i) => {
           btn.addEventListener("click", scrollToForm); // (e: Event) => {
@@ -289,6 +300,10 @@ export default function Tours({ data }) {
 
     window.addEventListener("resize", autoResize);
 
+    setTimeout(() => {
+      console.log("sectionRefs.current[section]", data.props.data.activities);
+    }, 3000);
+
     return () => window.removeEventListener("resize", autoResize);
   }, []);
 
@@ -300,7 +315,7 @@ export default function Tours({ data }) {
             <div className="w-full flex">
               <section className="h-full">
                 {data.props.data.activities.map((item) => (
-                  <div className="relative">
+                  <div key={item.id} className="relative">
                     {item.activityItemHeading.map(
                       (activityItemHeading, index) => (
                         <div
@@ -309,22 +324,10 @@ export default function Tours({ data }) {
                         >
                           {activityItemHeading.activityItems.map(
                             (activityItem: IActivityItem, index) => (
-                              // <div
-                              //   className="flex flex-col"
-                              //   id={activityItem.anchor}
-                              //   key={activityItem.id}
-                              // >
                               <div
                                 id={activityItem.anchor}
                                 key={activityItem.id}
                                 className="flex flex-col lg:pb-12 column lg:flex-row lg:even:flex-row-reverse"
-                                // style={{
-                                //   flexDirection: isMobile
-                                //     ? "column"
-                                //     : index % 2 === 0
-                                //     ? "row-reverse"
-                                //     : "row",
-                                // }}
                               >
                                 <div
                                   className="w-full mt-8 lg:mt-0 lg:w-1/2 overflow-hidden rounded-3xl"
@@ -349,12 +352,6 @@ export default function Tours({ data }) {
                                               ? "320px"
                                               : "calc(100vh - 200px)"
                                           }
-                                          ref={(ref) => {
-                                            sectionRefs.current[index] = {
-                                              sectionRef: ref,
-                                              id: "sectionRef-" + index,
-                                            };
-                                          }}
                                         />
                                       </SliderV2>
                                     ) : (
@@ -366,12 +363,6 @@ export default function Tours({ data }) {
                                             ? "320px"
                                             : "calc(100vh - 200px)"
                                         }
-                                        ref={(ref) => {
-                                          sectionRefs.current[index] = {
-                                            sectionRef: ref,
-                                            id: "sectionRef-" + index,
-                                          };
-                                        }}
                                       />
                                     )}
                                   </SliderContext.Provider>
