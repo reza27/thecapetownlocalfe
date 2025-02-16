@@ -30,7 +30,7 @@ export default function Footer() {
           <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Tours</p>
             <ul className="flex flex-col text-xs text-gray-400">
-              <Link className="py-0.5 hover:text-yellow" href="/">
+              <Link className="py-0.5 hover:text-yellow" href="/tours">
                 Lion's head
               </Link>
               <Link className="py-0.5 hover:text-yellow" href="/tours">

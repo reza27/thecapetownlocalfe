@@ -49,7 +49,7 @@ export const Faqs = ({ ...props }) => {
   return (
     <div className="flex w-full">
       {props.screenWidth > 1024 ? (
-        <div className="flex w-full flex-col 2xl:flex-row 2xl:h-[550px] rounded-3xl">
+        <div className="flex w-full flex-col 2xl:flex-row 2xl:h-[580px] rounded-3xl">
           <div className="w-full 2xl:w-1/4 text-4xl 2xl:text-6xl  pb-8 font-semibold flex flex-wrap justify-center items-center text-black">
             <div className="tracking-tight w-full flex flex-col justify-center items-center 2xl:items-start 2xl:justify-start">
               <p className="text-yellow text-sm">FAQS</p>
@@ -64,7 +64,7 @@ export const Faqs = ({ ...props }) => {
           </div>
           <div
             ref={faqContainer}
-            className="flex w-full 2xl:w-3/4 justify-end text-black tracking-tight h-[550px] 2xl:h-full 2xl:pl-10"
+            className="flex w-full 2xl:w-3/4 justify-end text-black tracking-tight h-[580px] 2xl:h-full 2xl:pl-10"
           >
             {props.data.map((faq, index) => (
               <div
