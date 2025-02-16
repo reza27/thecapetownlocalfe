@@ -347,12 +347,14 @@ export default function Tours({ data }) {
                                         <TourImages
                                           isMobile={isMobile}
                                           screenWidth={screenWidth}
+                                          height={"320px"}
                                         />
                                       </SliderV2>
                                     ) : (
                                       <TourImages
                                         isMobile={isMobile}
                                         screenWidth={screenWidth}
+                                        height={"calc(100vh - 200px)"}
                                       />
                                     )}
                                   </SliderContext.Provider>
