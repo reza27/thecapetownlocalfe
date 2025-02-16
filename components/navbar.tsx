@@ -73,7 +73,7 @@ export default function Navbar() {
                   className={
                     activeClass === val.id
                       ? "selected pl-3 text-sm font-normal tracking-tighter text-yellow"
-                      : "pl-3 text-sm font-normal tracking-tighter hover:text-yellow"
+                      : "pl-3 text-sm font-normal tracking-tighter hover:text-yellow transition-all duration-300"
                   }
                 >
                   {val.text}
@@ -105,7 +105,7 @@ export default function Navbar() {
               });
             }}
           >
-            <p className="hover:text-gray-700 pr-3 text-sm font-normal tracking-tighter">
+            <p className="hover:text-gray-700 pr-3 text-sm font-normal tracking-tighter transition-all duration-300">
               WhatsApp
             </p>
 
