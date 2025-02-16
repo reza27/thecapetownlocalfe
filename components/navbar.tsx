@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { sendGAEvent } from "@next/third-parties/google";
 import ImageLoader from "./image-loader";
@@ -36,14 +36,26 @@ export default function Navbar() {
 
   const [activeClass, setActiveClass] = useState(1);
 
-  const linkSelected = (event: ILink) => {
-    setActiveClass(event.id);
+  const linkSelected = (link: ILink) => {
+    setActiveClass(link.id);
     if (checkBox.current) {
       checkBox.current.checked = false;
     }
 
     setOpenMenu(false);
   };
+
+  useEffect(() => {
+    const currentPage: ILink | undefined = links.find((e: ILink) => {
+      return e.href === window.location.pathname;
+    });
+
+    if (currentPage) {
+      linkSelected(currentPage);
+    }
+
+    console.log("currentPage", currentPage);
+  }, []);
 
   return (
     <div

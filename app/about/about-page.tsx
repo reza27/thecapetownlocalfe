@@ -24,7 +24,7 @@ const affiliateImageStyle = {
 
 export default function About({ data }) {
   const defaultGuideIndex = 0;
-  const breakPointLg = 959;
+  const breakPointLg = 1025;
   const breakPointXl = 1280;
   const [guideHoverIndex, setGuideHoverIndex] =
     useState<number>(defaultGuideIndex);
@@ -42,8 +42,8 @@ export default function About({ data }) {
 
     mm.add(
       {
-        isMobile: "(max-width:959px)",
-        isDesktop: "(min-width:960px)",
+        isMobile: "(max-width:1024px)",
+        isDesktop: "(min-width:1025px)",
       },
       (context) => {
         let { isMobile, isDesktop } = context.conditions;
