@@ -142,7 +142,7 @@ export const Faqs = ({ ...props }) => {
                 key={faq.id}
                 onClick={() => {
                   if (currentIndex === index) {
-                    setCurrentIndex(null);
+                    setCurrentIndex(0);
                   } else {
                     setCurrentIndex(index);
                   }
