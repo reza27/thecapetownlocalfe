@@ -52,8 +52,8 @@ export default function Home({ homeData }) {
 
   const tourImageStyle = {
     objectFit: "cover",
-    objectPosition: "center bottom",
-    height: "300px",
+    objectPosition: "center top",
+    height: "380px",
     width: "100vw",
     overflow: "hidden",
   };
@@ -103,14 +103,14 @@ export default function Home({ homeData }) {
         <title>Home - The Cape Town Local</title>
       </Head>
       <div className="w-full relative bg-white flex pt-28 md:pt-32">
-        <div className="w-full relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute bottom-40 left-6 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
+        <div className="w-full flex relative h-[650px] overflow-hidden rounded-3xl">
+          <div className="absolute bottom-40 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
             <br /> on our guided hikes.
           </div>
-          <div className="absolute bottom-28 left-6 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
+          <div className="absolute bottom-28 w-full md:w-auto text-center md:text-left left-0 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
             We live your experience.
           </div>
           {/* <TCPTLButton
@@ -122,13 +122,16 @@ export default function Home({ homeData }) {
           >
             VIEW TOURS
           </TCPTLButton> */}
-          <FancyButton
-            isOutlined={true}
-            href={"/tours"}
-            className="absolute bottom-12 left-6 md:left-12 z-10"
-          >
-            VIEW TOURS
-          </FancyButton>
+          <div className="w-full flex absolute bottom-12 justify-center items-center h-10">
+            <FancyButton
+              isOutlined={true}
+              href={"/tours"}
+              className="absolute block md:left-12 z-10"
+            >
+              VIEW TOURS
+            </FancyButton>
+          </div>
+
           <Image
             loader={ImageLoader}
             src="/home_header_img.png"
@@ -257,9 +260,14 @@ export default function Home({ homeData }) {
         {/* </div> */}
       </div>
       <div className="my-12">
-        <h2 className="text-center text-3xl mb-8 mt-6 leading-tight tracking-tighter">
-          Most popular tours
-        </h2>
+        <div className="mb-8 mt-6">
+          <p className="text-yellow pb-0 mb-0 text-xs text-center w-full font-medium">
+            MOST POPULAR
+          </p>
+          <h2 className="text-center text-3xl  leading-tight tracking-tighter">
+            Most popular tours
+          </h2>
+        </div>
         <div className="flex md:flex-row flex-col">
           {homeData.props.data.home?.homeTours.map(
             (homeTour: IHomeTours, index: number) => (
@@ -274,7 +282,7 @@ export default function Home({ homeData }) {
                   height={100}
                   style={tourImageStyle}
                 />
-                <div className="flex justify-center items-center flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
+                <div className="flex justify-end pb-10 md:pl-10 items-center md:items-start flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
                   <h2 className="text-white text-center drop-shadow-md">
                     {homeTour.homeTour.shortTitle}
                   </h2>
@@ -306,7 +314,7 @@ export default function Home({ homeData }) {
                       "&tab=" +
                       homeTour.homeTour.tab
                     }
-                    className="z-10 uppercase"
+                    className="z-10 uppercase min-w-20"
                   >
                     Discover {homeTour.homeTour.shortTitle}
                   </FancyButton>
@@ -317,7 +325,7 @@ export default function Home({ homeData }) {
           )}
         </div>
       </div>
-      <div className="flex bg-light-grey my-12 rounded-3xl p-8 md:p-12 flex-col">
+      <div className="flex bg-light-grey my-12 rounded-3xl px-5 py-6  md:p-12 flex-col">
         <p className="text-yellow text-xs text-center w-full font-medium">
           CLIENT REVIEWS
         </p>

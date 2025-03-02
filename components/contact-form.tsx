@@ -10,7 +10,7 @@ import {
   Option,
   Textarea,
 } from "@material-tailwind/react";
-import React, { useRef, useState } from "react";
+import React, { ReactElement, useMemo, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import Image from "next/image";
 import ImageLoader from "../components/image-loader";
@@ -27,6 +27,8 @@ import TCPTLDatePicker from "./forms/tcptl-date-picker";
 import { SelectTheme } from "../themes/select-theme";
 import { InputTheme } from "../themes/input-theme";
 import { FancyButton } from "./fancy-button";
+import { AnyAaaaRecord } from "dns";
+import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
 
 const waImageStyle = {
   objectFit: "contain",
@@ -92,6 +94,8 @@ export default function ContactForm(props) {
   const name1 = useRef<HTMLDivElement | null>(null);
   const email = useRef<HTMLDivElement | null>(null);
   const phone = useRef<HTMLDivElement | null>(null);
+  const date = useRef<HTMLDivElement | null>(null);
+
   const numberOfPeople = useRef<HTMLDivElement | null>(null);
 
   const errorRefs = [
@@ -100,7 +104,16 @@ export default function ContactForm(props) {
     { ref: email, id: "email" },
     { ref: numberOfPeople, id: "numberOfPeople" },
     { ref: phone, id: "phone" },
+    { ref: date, id: "date" },
   ];
+
+  const datePicker = useMemo(() => {
+    return (
+      <div ref={date}>
+        <TCPTLDatePicker className="w-full text-white" label="Preferred date" />
+      </div>
+    );
+  }, []);
 
   const onCountryCodeChange = (value) => {
     setCountryCallingCode(value);
@@ -127,7 +140,7 @@ export default function ContactForm(props) {
           email: "",
           numberOfPeople: 0,
           phone: "",
-          date: new Date(),
+          date: null,
           //isFlexibleDate: true,
           isFlexibleDate: "No",
 
@@ -146,8 +159,8 @@ export default function ContactForm(props) {
             phone: countryCallingCode + values.phone,
           });
 
-          dispatch(postBookingRequest(formattedValues));
-
+          //dispatch(postBookingRequest(formattedValues));
+          console.log("formattedValues1", values);
           sendGAEvent("event", "submit_form", {
             action: "Form submit",
           });
@@ -281,10 +294,19 @@ export default function ContactForm(props) {
                     }}
                     className="input-field absolute"
                   />*/}
-                  <TCPTLDatePicker
+                  {/* <TCPTLDatePicker
                     className="w-full text-white"
                     label="Preferred date"
-                  />
+                  /> */}
+                  <div className="flex flex-col w-full">
+                    {datePicker}
+
+                    {formik.touched.date && formik.errors.date ? (
+                      <div className="text-xs text-yellow pt-2 w-full">
+                        {formik.errors.date}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
                 <div className="flex text-white text-xs w-full lg:w-1/3 mt-7 lg:pr-4 lg:mt-0">
                   {/* <label className="label-check"> */}

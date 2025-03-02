@@ -13,7 +13,16 @@ const nextConfig = {
     // your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: true,
-  }
-}
+  },
 
-module.exports = nextConfig
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
+  },
+};
+
+module.exports = nextConfig;

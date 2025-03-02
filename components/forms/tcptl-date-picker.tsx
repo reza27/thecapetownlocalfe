@@ -13,6 +13,7 @@ import { InputTheme } from "../../themes/input-theme";
 
 export default function TCPTLDatePicker({ className, label }) {
   const [date, setDate] = React.useState<Date>();
+  console.log("date picker render", date);
 
   return (
     <div className={className}>

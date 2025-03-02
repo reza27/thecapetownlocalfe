@@ -4,6 +4,7 @@ import Image from "next/image";
 
 export default function TourThumbnails({ thumbWidth, thumbHeight, index }) {
   const images = useSliderContext();
+  console.log("thumb render");
 
   return (
     <div id={"spotlight-container" + index} className="relative">
