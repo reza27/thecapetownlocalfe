@@ -35,7 +35,6 @@ export const Faqs = ({ ...props }) => {
 
       setTimeout(() => {
         setFaqOpacity(1);
-        console.log("sectionRefs", sectionRefs.current);
       }, 500);
     }
 

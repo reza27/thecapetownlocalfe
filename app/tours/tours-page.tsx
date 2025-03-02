@@ -300,10 +300,6 @@ export default function Tours({ data }) {
 
     window.addEventListener("resize", autoResize);
 
-    setTimeout(() => {
-      console.log("sectionRefs.current[section]", data.props.data.activities);
-    }, 3000);
-
     return () => window.removeEventListener("resize", autoResize);
   }, []);
 

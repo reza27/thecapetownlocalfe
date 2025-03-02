@@ -23,7 +23,6 @@ export const FancyButton = ({
 
   const initEvents = () => {
     buttonElement.current?.addEventListener("mouseenter", (e) => {
-      console.log("mouseenter");
       const { x, y } = getXY(e);
 
       xSet(x);

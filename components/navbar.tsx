@@ -53,8 +53,6 @@ export default function Navbar() {
     if (currentPage) {
       linkSelected(currentPage);
     }
-
-    console.log("currentPage", currentPage);
   }, []);
 
   return (

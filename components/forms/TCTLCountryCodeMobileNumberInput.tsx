@@ -12,7 +12,6 @@ import { useCountries } from "use-react-countries";
 import { InputTheme } from "../../themes/input-theme";
 
 export const TCTLCountryCodeMobileNumberInput = (props) => {
-  console.log("phone render");
   const { countries } = useCountries();
   const [countryCodes, setCountryCodes] = useState(countries);
 

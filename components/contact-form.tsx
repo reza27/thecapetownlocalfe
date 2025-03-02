@@ -107,13 +107,13 @@ export default function ContactForm(props) {
     { ref: date, id: "date" },
   ];
 
-  const datePicker = useMemo(() => {
-    return (
-      <div ref={date}>
-        <TCPTLDatePicker className="w-full text-white" label="Preferred date" />
-      </div>
-    );
-  }, []);
+  // const datePicker = useMemo(() => {
+  //   return (
+  //     <div ref={date}>
+  //       <TCPTLDatePicker className="w-full text-white" label="Preferred date" />
+  //     </div>
+  //   );
+  // }, []);
 
   const onCountryCodeChange = (value) => {
     setCountryCallingCode(value);
@@ -159,8 +159,7 @@ export default function ContactForm(props) {
             phone: countryCallingCode + values.phone,
           });
 
-          //dispatch(postBookingRequest(formattedValues));
-          console.log("formattedValues1", values);
+          dispatch(postBookingRequest(formattedValues));
           sendGAEvent("event", "submit_form", {
             action: "Form submit",
           });
@@ -294,13 +293,15 @@ export default function ContactForm(props) {
                     }}
                     className="input-field absolute"
                   />*/}
-                  {/* <TCPTLDatePicker
-                    className="w-full text-white"
-                    label="Preferred date"
-                  /> */}
-                  <div className="flex flex-col w-full">
-                    {datePicker}
 
+                  <div className="flex flex-col w-full" ref={date}>
+                    <TCPTLDatePicker
+                      className="w-full text-white"
+                      label="Preferred date"
+                      onChange={(aOption) => {
+                        formik.setFieldValue("date", aOption);
+                      }}
+                    />
                     {formik.touched.date && formik.errors.date ? (
                       <div className="text-xs text-yellow pt-2 w-full">
                         {formik.errors.date}

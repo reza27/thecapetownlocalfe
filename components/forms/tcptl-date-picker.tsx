@@ -11,9 +11,8 @@ import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { InputTheme } from "../../themes/input-theme";
 
-export default function TCPTLDatePicker({ className, label }) {
+export default function TCPTLDatePicker({ className, label, onChange }) {
   const [date, setDate] = React.useState<Date>();
-  console.log("date picker render", date);
 
   return (
     <div className={className}>
@@ -38,7 +37,10 @@ export default function TCPTLDatePicker({ className, label }) {
           <DayPicker
             mode="single"
             selected={date}
-            onSelect={setDate}
+            onSelect={(date) => {
+              setDate(date);
+              onChange(date);
+            }}
             //showOutsideDays
             className="border-0"
             classNames={{

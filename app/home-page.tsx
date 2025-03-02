@@ -80,8 +80,6 @@ export default function Home({ homeData }) {
       return;
     }
 
-    console.log("homeData", homeData);
-
     if (window.innerWidth <= 768) {
       setIsMobi(true);
     }
@@ -90,7 +88,6 @@ export default function Home({ homeData }) {
 
     function autoResize() {
       setScreenWidth(window.innerWidth);
-      console.log("window.innerWidth", window.innerWidth);
     }
 
     window.addEventListener("resize", autoResize);
