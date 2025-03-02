@@ -47,9 +47,9 @@ export default function Slider({
           xpos: xPosVal,
           rightButtonClasses:
             newIndex === sliderObjects.length - 1
-              ? "right-button slider-button disabled"
+              ? "right-button slider-button disabled rounded-3xl"
               : "right-button slider-button",
-          leftButtonClasses: "left-button slider-button",
+          leftButtonClasses: "left-button slider-button rounded-3xl",
         };
       }
       case "decrement": {

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Slider from "../components/slider";
 import ImageLoader from "../components/image-loader";
-import { Button } from "@material-tailwind/react";
+import { button, Button } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
@@ -21,16 +21,26 @@ import {
   IGoogleReviewObject,
   IGoogleReviewError,
 } from "../types/IGoogleReview";
+import { TCPTLButton } from "../components/tcptl-button";
+import { url } from "inspector";
+import ContactForm from "../components/contact-form";
+import { getFormOptions } from "../components/forms/getFormOptions";
+import ReviewsV2 from "../components/reviews-v2";
+import ColumnSlider from "../components/column-slider";
+import outlined from "@material-tailwind/react/theme/components/timeline/timelineIconColors/outlined";
+import { FancyButton } from "../components/fancy-button";
+import { Faqs } from "../components/faqs";
 
 export const metadata: Metadata = {
   title: "Home",
 };
 
 export default function Home({ homeData }) {
-  const [isMobi, setIsMobi] = useState(false);
+  const [isMobi, setIsMobi] = useState<boolean>(false);
+  const [screenWidth, setScreenWidth] = useState<number>(400);
 
   const dispatch = useAppDispatch();
-  const { data, error, isLoading } = useGetReviewsQuery();
+  //const { data, error, isLoading } = useGetReviewsQuery();
 
   const featureImageStyle = {
     objectFit: "contain",
@@ -42,8 +52,8 @@ export default function Home({ homeData }) {
 
   const tourImageStyle = {
     objectFit: "cover",
-    objectPosition: "center bottom",
-    height: "300px",
+    objectPosition: "center top",
+    height: "380px",
     width: "100vw",
     overflow: "hidden",
   };
@@ -66,17 +76,73 @@ export default function Home({ homeData }) {
   };
 
   useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
     if (window.innerWidth <= 768) {
       setIsMobi(true);
     }
+
+    setScreenWidth(window.innerWidth);
+
+    function autoResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", autoResize);
+
+    return () => window.removeEventListener("resize", autoResize);
   }, []);
   return (
     <>
       <Head>
         <title>Home - The Cape Town Local</title>
       </Head>
-      <div id="home">
-        <div className="header-home">
+      <div className="w-full relative bg-white flex pt-28 md:pt-32">
+        <div className="w-full flex relative h-[650px] overflow-hidden rounded-3xl">
+          <div className="absolute bottom-40 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
+            Discover
+            <br />
+            <span className="text-yellow">Breathtaking</span> landscapes
+            <br /> on our guided hikes.
+          </div>
+          <div className="absolute bottom-28 w-full md:w-auto text-center md:text-left left-0 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
+            We live your experience.
+          </div>
+          {/* <TCPTLButton
+            description={{
+              isOutlined: true,
+            }}
+            className="absolute bottom-12 left-6 md:left-12 z-10"
+            url="/tours"
+          >
+            VIEW TOURS
+          </TCPTLButton> */}
+          <div className="w-full flex absolute bottom-12 justify-center items-center h-10">
+            <FancyButton
+              isOutlined={true}
+              href={"/tours"}
+              className="absolute block md:left-12 z-10"
+            >
+              VIEW TOURS
+            </FancyButton>
+          </div>
+
+          <Image
+            loader={ImageLoader}
+            src="/home_header_img.png"
+            alt="The Cape Town Local - Mountain"
+            // sizes="100vw"
+            fill
+            //sizes="(min-width: 808px) 50vw, 100vw"
+            style={{
+              objectFit: "cover", // cover, contain, none
+              objectPosition: "100% 0%",
+            }}
+          />
+        </div>
+        {/* <div className="header-home">
           <div className="left">
             <h1 className="home-title">
               Discover <br />
@@ -96,9 +162,9 @@ export default function Home({ homeData }) {
               height={100}
               style={featureImageStyle}
             />
-          </div>
-        </div>
-        <div className="info">
+          </div> 
+        </div>*/}
+        {/* <div className="info">
           <p>
             20{" "}
             <span>
@@ -128,39 +194,9 @@ export default function Home({ homeData }) {
               rating
             </span>
           </p>
-        </div>
-        <h2 className="toursHeading">Most popular tours</h2>
-        <div className="tours">
-          {homeData.props.data.home?.homeTours.map(
-            (homeTour: IHomeTours, index: number) => (
-              <div className="tour" key={homeTour.homeTour.id}>
-                <Image
-                  loader={ImageLoader}
-                  src={getImageUrl(homeTour.homeTour.images)}
-                  width={100}
-                  height={100}
-                  style={tourImageStyle}
-                />
-                <div className="tourContent">
-                  <h2 className="drop-shadow-md">{homeTour.homeTour.title}</h2>
-                  <Link
-                    href={
-                      "/tours?anchor=" +
-                      homeTour.homeTour.anchor +
-                      "&tab=" +
-                      homeTour.homeTour.tab
-                    }
-                  >
-                    <Button className="tour-button">
-                      Discover {homeTour.homeTour.title}
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            )
-          )}
-        </div>
-        <div className="reviews">
+        </div> */}
+
+        {/* <div className="reviews">
           <div className="left">
             <h2>Reviews</h2>
             <h3>
@@ -187,8 +223,8 @@ export default function Home({ homeData }) {
               </Button>
             </a>
           </div>
-          <div className="right">
-            {" "}
+          <div className="right"> */}
+        {/* {" "}
             {error ? (
               <SliderContext.Provider value={defaultReviews || []}>
                 <Slider
@@ -217,9 +253,95 @@ export default function Home({ homeData }) {
                   <Reviews />
                 </Slider>
               </SliderContext.Provider>
-            ) : null}
-          </div>
+            ) : null} */}
+        {/* </div> */}
+      </div>
+      <div className="my-12">
+        <div className="mb-8 mt-6">
+          <p className="text-yellow pb-0 mb-0 text-xs text-center w-full font-medium">
+            MOST POPULAR
+          </p>
+          <h2 className="text-center text-3xl  leading-tight tracking-tighter">
+            Most popular tours
+          </h2>
         </div>
+        <div className="flex md:flex-row flex-col">
+          {homeData.props.data.home?.homeTours.map(
+            (homeTour: IHomeTours, index: number) => (
+              <div
+                className="relative rounded-3xl overflow-hidden md:first:mr-4 mt-4 md:mt-0"
+                key={homeTour.homeTour.id}
+              >
+                <Image
+                  loader={ImageLoader}
+                  src={getImageUrl(homeTour.homeTour.images)}
+                  width={100}
+                  height={100}
+                  style={tourImageStyle}
+                />
+                <div className="flex justify-end pb-10 md:pl-10 items-center md:items-start flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
+                  <h2 className="text-white text-center drop-shadow-md">
+                    {homeTour.homeTour.shortTitle}
+                  </h2>
+                  {/* <Link
+                    href={
+                      "/tours?anchor=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                  > */}
+                  {/* <TCPTLButton
+                    className="tour-button"
+                    description={{ isOutlined: false }}
+                    url={
+                      "/tours?section=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                  >
+                    Discover {homeTour.homeTour.shortTitle}
+                  </TCPTLButton> */}
+                  <FancyButton
+                    isOutlined={false}
+                    href={
+                      "/tours?section=" +
+                      homeTour.homeTour.anchor +
+                      "&tab=" +
+                      homeTour.homeTour.tab
+                    }
+                    className="z-10 uppercase min-w-20"
+                  >
+                    Discover {homeTour.homeTour.shortTitle}
+                  </FancyButton>
+                  {/* </Link> */}
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </div>
+      <div className="flex bg-light-grey my-12 rounded-3xl px-5 py-6  md:p-12 flex-col">
+        <p className="text-yellow text-xs text-center w-full font-medium">
+          CLIENT REVIEWS
+        </p>
+        <h3 className="w-full text-3xl sm:text-4xl text-center pt-3 pb-6 tracking-tighter">
+          Don't take our word for it, take theirs!
+        </h3>
+        <SliderContext.Provider value={defaultReviews || []}>
+          <ColumnSlider screenWidth={screenWidth}>
+            <ReviewsV2 screenWidth={screenWidth} />
+          </ColumnSlider>
+        </SliderContext.Provider>
+      </div>
+      <div className="flex justify-end">
+        <Faqs data={homeData.props.data.home?.faq} screenWidth={screenWidth} />
+      </div>
+      <div className="my-12 flex">
+        <ContactForm
+          selectOptions={getFormOptions(homeData.props.data.activities)}
+        />
       </div>
     </>
   );

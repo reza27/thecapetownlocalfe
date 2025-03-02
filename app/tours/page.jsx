@@ -11,19 +11,15 @@ export async function getToursData() {
         activities {
           id
           title
-          faq {
-            question
-            answer {
-              document
-            }
-          }
           activityItemHeading {
             id
             title
             activityItemsCount
-            activityItems {
+
+            activityItems(orderBy: { anchor: asc }) {
               id
               title
+              shortTitle
               anchor
               tab
               content {

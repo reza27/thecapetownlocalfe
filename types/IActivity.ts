@@ -10,10 +10,12 @@ interface ActivityItemImages {
 export interface IActivityItem {
   id: string;
   title: string;
+  shortTitle: string;
   anchor: string;
   tab: string;
   price: string;
   duration: string;
+  difficulty: string;
   images: ActivityItemImages[];
 }
 interface ActivityItemHeading {

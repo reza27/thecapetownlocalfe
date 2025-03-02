@@ -1,9 +1,12 @@
+"use client";
 import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css"; //importing font awesome css
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, sendGAEvent } from "@next/third-parties/google";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import StoreProvider from "./StoreProvider";
+import ImageLoader from "../components/image-loader";
+import Image from "next/image";
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -12,6 +15,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const disablePageScroll = useAppSelector(
+  //   (state) => state.tours.disablePageScroll
+  // );
+
   return (
     <StoreProvider>
       <html lang="en">
@@ -42,10 +49,43 @@ export default function RootLayout({
             href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat&family=Alexandria&family=Roboto:wght@300;500;700;800&display=swap"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:wght@300;400;700&display=swap"
+            rel="stylesheet"
+          ></link>
         </head>
         <body>
           <Navbar />
-          {children}
+          <main className="flex justify-center px-2 md:px-4 lg:px-16">
+            <div className="max-w-[1700px] w-full">{children}</div>
+            <div className="lg:hidden fixed z-20 bottom-6 right-6">
+              <a
+                id="whatsapp"
+                className="flex items-center"
+                href="https://wa.me/27789803335"
+                target="_blank"
+                onClick={() => {
+                  sendGAEvent("event", "whatsapp", {
+                    action: "WhatsApp opened",
+                  });
+                }}
+              >
+                <Image
+                  loader={ImageLoader}
+                  src="/WhatsApp.svg"
+                  width={40}
+                  height={40}
+                  style={{
+                    objectFit: "contain",
+                    objectPosition: "center bottom",
+                    height: "60px",
+                    width: "60px",
+                  }}
+                  alt="whatsapp"
+                />
+              </a>
+            </div>
+          </main>
           <Footer />
           <GoogleAnalytics gaId={`${process.env.NEXT_PUBLIC_ANALYTICS}`} />
         </body>

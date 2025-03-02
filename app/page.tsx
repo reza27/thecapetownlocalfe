@@ -7,10 +7,18 @@ async function getHomeData() {
     query: gql`
       query GetHome {
         home {
+          faq {
+            id
+            question
+            answer {
+              document
+            }
+          }
           homeTours {
             homeTour {
               id
               title
+              shortTitle
               anchor
               tab
               images(take: 1) {

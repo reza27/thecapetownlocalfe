@@ -13,7 +13,13 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock, faTag } from "@fortawesome/free-solid-svg-icons";
+import {
+  faClock,
+  faTag,
+  faHourglass1,
+  faDollarSign,
+  faGaugeHigh,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -23,232 +29,542 @@ import Slider from "../../components/slider";
 import TourImages from "../../components/tour-images";
 import { SliderContext } from "../../lib/contexts/slider-context";
 import { getFormOptions } from "../../components/forms/getFormOptions";
+import ImageScroller from "../../components/image-scroller";
+import { useAppDispatch } from "../../lib/hooks";
+import { setDisablePageScroll } from "../../lib/features/tours/toursSlice";
+import { gsap, ScrollTrigger, ScrollToPlugin } from "gsap/all"; // <-- import GSAP
+import { useGSAP } from "@gsap/react"; // <-- import the hook from our React package
+import { TCPTLButton } from "../../components/tcptl-button";
+import parse from "html-react-parser";
+import TourThumbnails from "../../components/tour-thumbnails";
+import ColumnSlider from "../../components/column-slider";
+import { snap } from "gsap";
+import SliderV2 from "../../components/sliderv2";
+import { IActivityItem } from "../../types/IActivity";
+import { FancyButton } from "../../components/fancy-button";
+import ImageLoader from "../../components/image-loader";
+import Image from "next/image";
+
+gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export const metadata: Metadata = {
   title: "Tours",
 };
 export default function Tours({ data }) {
+  const dispatch = useAppDispatch();
+
   let firstTab =
     data.props.data.activities[0]?.activityItemHeading[0].title.toLowerCase();
   const [tab, setTab] = useState(firstTab);
   const [open, setOpen] = useState(1);
+  const [scrollYPos, setScrollYPos] = useState<Array<number>>([0, 0]);
+  const [scrollPageYPos, setScrollPageYPos] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean | undefined>(false);
+  const [screenWidth, setScreenWidth] = useState<number>(400);
+
+  const pageWrapper = useRef<HTMLDivElement>(null);
+
+  const [imageScrollerHeight, setImageScrollerHeight] = useState<
+    number | undefined
+  >(0);
+
   const contactRef = useRef<HTMLDivElement | null>(null);
-  const HEADER_OFFSET = 110;
+  const imageScrollerRefs = useRef<
+    Array<{ imageScrollerRef: HTMLDivElement | null; id: string }>
+  >([]);
+  const sectionRefs = useRef<
+    Array<{ sectionRef: HTMLDivElement | null; id: string }>
+  >([]);
   const anchorRefs = useRef<
     Array<{ anchorRef: HTMLDivElement | null; id: string }>
   >([]);
 
-  const handleOpen = (value) => {
-    setOpen(open === value ? 0 : value);
-  };
+  const HEADER_OFFSET = 110;
+  const THUMB_SECTION_HEIGHT = 350;
 
-  function Icon({ id, open }) {
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={2}
-        stroke="currentColor"
-        className={`${
-          id === open ? "rotate-180" : ""
-        } h-5 w-5 transition-transform`}
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-        />
-      </svg>
-    );
-  }
-
-  const Tabs = (aItem) => {
-    const item = aItem.item;
-    if (item.activityItemHeading?.length > 1) {
-      return (
-        <div className="tabs">
-          <ul className="ul-tabs">
-            {item.activityItemHeading.map((activityItemHeading, index) => (
-              <li
-                key={activityItemHeading.id}
-                className={
-                  tab == activityItemHeading.title.toLowerCase()
-                    ? "selected"
-                    : ""
-                }
-                onClick={() => setTab(activityItemHeading.title.toLowerCase())}
-              >
-                <h2>
-                  <span>{activityItemHeading.title}</span>
-                </h2>
-              </li>
-            ))}
-          </ul>
-        </div>
-      );
-    }
-  };
-
-  const selectTabAndScrollToAnchor = () => {
-    const url = new URL(window.location.href);
-    const tab1 = url.searchParams.get("tab")?.toLowerCase();
-    const anchor = url.searchParams.get("anchor")?.toLowerCase();
-
-    if (tab1) {
-      setTab(tab1);
-      if (anchor) {
-        const element = anchorRefs.current.find((obj) => obj.id === anchor);
-        const elementPosition = element?.anchorRef?.getBoundingClientRect().top;
-        const offsetPosition = elementPosition
-          ? elementPosition + window.scrollY - HEADER_OFFSET
-          : 0;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
+  const getActivityItems = () => {
+    return data.props.data.activities.flatMap((item) => {
+      return item.activityItemHeading.flatMap((activityItemHeading) => {
+        return activityItemHeading.activityItems.flatMap((activityItem) => {
+          return activityItem;
         });
-      }
-    }
+      });
+    });
   };
+  const getWindowW = () => {
+    if (typeof window === "undefined") {
+      return 0;
+    }
+    return window.innerWidth < 768;
+  };
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+      let tl;
+
+      const initTimeline = () => {
+        const buttons: Array<any> = gsap.utils.toArray(".book-btn");
+
+        const container = document.querySelector(".container");
+        const sections = gsap.utils.toArray(".section");
+
+        gsap.set(".wrapper", { marginBottom: "-86px" });
+
+        tl = gsap.timeline({
+          defaults: {
+            ease: "none",
+          },
+
+          scrollTrigger: {
+            trigger: ".wrapper",
+            start: "140 140",
+            end: "+=6000",
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+
+            snap: {
+              snapTo: "labels",
+              duration: 0.5,
+              delay: 1,
+              ease: "power1.inOut",
+            },
+            //markers: true,
+          },
+        });
+
+        sections.forEach((section: any, i) => {
+          const panels = gsap.utils.toArray(".panel", section);
+
+          tl.to(
+            section,
+            {
+              y: section.clientHeight - section.scrollHeight,
+              duration: panels.length * 0.5,
+            },
+            "section-" + i
+          );
+
+          if (sections[i + 1]) {
+            const spotlight = document.querySelector("#spotlight" + i);
+            const spotlightC = document.querySelector(
+              "#spotlight-container" + i
+            );
+
+            panels.forEach((panel, index) => {
+              tl.addLabel(
+                "panel-" + i + "-" + index,
+                (index * (panels.length * 0.5)) / (panels.length - 1) +
+                  tl.labels["section-" + i]
+              );
+            });
+
+            const thumbs = gsap.utils.toArray(".thumb", spotlightC);
+
+            thumbs.forEach((thumb: any, panelIndex) => {
+              thumb.addEventListener("click", () => {
+                gsap.to(window, {
+                  duration: 0.5,
+
+                  scrollTo: {
+                    y: tl.scrollTrigger?.labelToScroll(
+                      "panel-" + i + "-" + panelIndex
+                    ),
+                  },
+                  ease: "power1.inOut",
+                });
+              });
+            });
+            tl.to(
+              spotlight,
+              {
+                yPercent: 100 * (panels.length - 1), // THUMB_SECTION_HEIGHT / panels.length,
+                duration: panels.length * 0.5,
+              },
+              "section-" + i
+            );
+
+            tl.to(".content", {
+              yPercent: -100 * (i + 1),
+            });
+          }
+        });
+      };
+
+      let mm = gsap.matchMedia();
+
+      mm.add(
+        {
+          isMobile: "(max-width:1024px)",
+          isDesktop: "(min-width:1025px)",
+        },
+        (context) => {
+          let { isMobile, isDesktop } = context.conditions;
+          let params = new URLSearchParams(document.location.search);
+          let section = params.get("section");
+          if (isMobile) {
+            setIsMobile(true);
+            gsap.set(".wrapper", { marginBottom: "0px" });
+
+            if (section) {
+              gsap.to(window, {
+                duration: 1,
+
+                scrollTo: {
+                  y: imageScrollerRefs.current[section].imageScrollerRef,
+                  offsetY: 100,
+                },
+
+                delay: 2,
+                ease: "power1",
+              });
+            }
+          }
+
+          if (isDesktop) {
+            setIsMobile(false);
+            gsap.set(".wrapper", { marginBottom: "-156px" });
+
+            initTimeline();
+            if (section) {
+              gsap.to(window, {
+                duration: 1,
+
+                scrollTo: {
+                  y: tl.scrollTrigger?.labelToScroll("section-" + section),
+                },
+
+                delay: 2,
+                ease: "power1",
+              });
+            }
+          }
+        }
+      );
+
+      const scrollToForm = (e) => {
+        e.preventDefault();
+        if (isMobile) {
+          gsap.to(window, {
+            duration: 2,
+
+            scrollTo: {
+              y: "#tour-contact-form",
+              offsetY: 100,
+            },
+            ease: "power1.inOut",
+          });
+        } else {
+          gsap.to(window, {
+            duration: 2,
+
+            scrollTo: {
+              y: tl.scrollTrigger?.labelToScroll("section-2"),
+            },
+            ease: "power1.inOut",
+          });
+        }
+      };
+
+      const buttons = gsap.utils.toArray(".book-btn");
+      buttons.forEach((btn: any, i) => {
+        btn.addEventListener("click", scrollToForm);
+      });
+
+      return () => {
+        buttons.forEach((btn: any, i) => {
+          btn.addEventListener("click", scrollToForm); // (e: Event) => {
+        });
+      };
+    },
+    { dependencies: [isMobile], revertOnUpdate: true, scope: pageWrapper }
+  );
 
   useEffect(() => {
     const DELAY: number = 300;
-    setTimeout(selectTabAndScrollToAnchor, DELAY);
+
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.scrollTo(0, 0);
+
+    setScreenWidth(window.innerWidth);
+
+    function autoResize() {
+      setScreenWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", autoResize);
+
+    return () => window.removeEventListener("resize", autoResize);
   }, []);
+
   return (
-    <>
-      <Head>
-        <title>Tours - The Cape Town Local</title>
-      </Head>
-      <div id="tours">
-        {data.props.data.activities.map((item) => (
-          <div key={item.id}>
-            <div className="header">
-              <h1>Tours</h1>
-              <p></p>
-            </div>
-            <Tabs item={item} />
-            <div className="tab-panels">
-              {item.activityItemHeading.map((activityItemHeading) => (
-                <div
-                  key={activityItemHeading.id}
-                  className={
-                    (tab == activityItemHeading.title.toLowerCase()
-                      ? "selected"
-                      : "") + " panel w-full"
-                  }
-                  data-index={activityItemHeading.id}
-                >
-                  {activityItemHeading.activityItems.map(
-                    (activityItem, index) => (
-                      <div className="panel-outer" key={activityItem.id}>
-                        <div key={activityItem.id} className="panel-inner">
-                          <div
-                            className="tab-panel"
-                            id={activityItem.anchor.toLowerCase()}
-                            ref={(ref) => {
-                              anchorRefs.current[index] = {
-                                anchorRef: ref,
-                                id: activityItem.anchor.toLowerCase(),
-                              };
-                            }}
-                          >
-                            <h2>{activityItem.title}</h2>
-                            <div className="doc">
-                              <DocumentRenderer
-                                document={activityItem.content.document}
-                              />
-                            </div>
-                            <div className="price">
-                              <span className="price-black">
-                                <FontAwesomeIcon icon={faTag} />{" "}
-                              </span>
-                              {activityItem.price}
-                            </div>
-                            <div className="duration">
-                              <span>
-                                <FontAwesomeIcon icon={faClock} />
-                              </span>
-                              {activityItem.duration}
-                            </div>
-                            <Button
-                              className="enquire-button"
-                              onClick={() => {
-                                const elementPosition =
-                                  contactRef.current?.getBoundingClientRect()
-                                    .top;
-                                const offsetPosition = elementPosition
-                                  ? elementPosition +
-                                    window.scrollY -
-                                    HEADER_OFFSET
-                                  : 0;
-
-                                window.scrollTo({
-                                  top: offsetPosition,
-                                  behavior: "smooth",
-                                });
-                              }}
-                            >
-                              Enquire now
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="panel-images">
-                          <SliderContext.Provider value={activityItem.images}>
-                            <Slider
-                              id={activityItem.id}
-                              containerClass="image-slider"
-                              panelClass="panel-images-slider"
-                              type="tours"
-                            >
-                              <TourImages />
-                            </Slider>
-                          </SliderContext.Provider>
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-              ))}
-
-              <div
-                ref={contactRef}
-                id="tour-contact-form"
-                className="tour-contact-form"
-              >
-                <ContactForm selectOptions={getFormOptions(item)} />
-              </div>
-              {item.faq.length > 0 ? (
-                <div className="faqs">
-                  <h2>FAQs</h2>
-                  <div className="faqs-accordion">
-                    {item.faq.map((faq, i) => (
-                      <Accordion
-                        open={open === i + 1}
-                        key={faq.id}
-                        icon={<Icon id={1} open={open} />}
-                      >
-                        <AccordionHeader
-                          key={faq.question}
-                          onClick={() => handleOpen(i + 1)}
+    <div className="page-wrapper" ref={pageWrapper}>
+      <div className="wrapper flex justify-center items-center">
+        <div className="container no-overflow">
+          <div className="content">
+            <div className="w-full flex">
+              <section className="h-full">
+                {data.props.data.activities.map((item) => (
+                  <div key={item.id} className="relative">
+                    {item.activityItemHeading.map(
+                      (activityItemHeading, index) => (
+                        <div
+                          key={activityItemHeading.id}
+                          data-index={activityItemHeading.id}
                         >
-                          {faq.question}
-                        </AccordionHeader>
-                        <AccordionBody key={faq.answer}>
-                          <DocumentRenderer document={faq.answer.document} />
-                        </AccordionBody>
-                      </Accordion>
-                    ))}
+                          {activityItemHeading.activityItems.map(
+                            (activityItem: IActivityItem, index) => (
+                              <div
+                                id={activityItem.anchor}
+                                key={activityItem.id}
+                                className="flex flex-col lg:pb-12 column lg:flex-row lg:even:flex-row-reverse"
+                              >
+                                <div
+                                  className="w-full mt-8 lg:mt-0 lg:w-1/2 overflow-hidden rounded-3xl h-[320px] lg:h-[calc(100vh_-_200px)]"
+                                  id={activityItem.id}
+                                  ref={(ref) => {
+                                    imageScrollerRefs.current[index] = {
+                                      imageScrollerRef: ref,
+                                      id: "tour" + index,
+                                    };
+                                  }}
+                                >
+                                  <SliderContext.Provider
+                                    value={activityItem.images}
+                                  >
+                                    {isMobile ? (
+                                      <SliderV2>
+                                        <TourImages
+                                          isMobile={isMobile}
+                                          screenWidth={screenWidth}
+                                          height={"320px"}
+                                        />
+                                      </SliderV2>
+                                    ) : (
+                                      <TourImages
+                                        isMobile={isMobile}
+                                        screenWidth={screenWidth}
+                                        height={"calc(100vh - 200px)"}
+                                      />
+                                    )}
+                                  </SliderContext.Provider>
+                                </div>
+                                <div
+                                  className="w-full lg:w-1/2 text-black flex px-0 lg:px-6 2xl:px-0 flex-col lg:flex-row-reverse"
+                                  style={{
+                                    flexDirection:
+                                      index % 2 === 0 ? "row-reverse" : "row",
+                                  }}
+                                >
+                                  <div className="flex flex-col lg:justify-center lg:items-center">
+                                    <h2 className="text-[42px] pt-8 lg:pt-0 lg:text-6xl xl:text-6xl 2xl:text-7xl tracking-tighter !leading-[0.98] lg:!leading-[0.92]">
+                                      {parse(activityItem.title)}
+                                    </h2>
+                                    <div className="flex w-full justify-start">
+                                      <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-start items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
+                                        <div className=" text-blue w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/price.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="price"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
+                                              Price
+                                            </span>
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-left font-semibold tracking-tighter">
+                                              {activityItem.price}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/duration.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="duration"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                              Duration
+                                            </span>
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              {activityItem.duration}
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="w-0.5 h-12 bg-gray-300"></div>
+                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                          <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
+                                            <Image
+                                              loader={ImageLoader}
+                                              src="/difficulty.svg"
+                                              width={40}
+                                              height={40}
+                                              style={{
+                                                objectFit: "contain",
+                                                objectPosition: "center bottom",
+                                                height: "40px",
+                                                width: "40px",
+                                              }}
+                                              alt="difficulty"
+                                            ></Image>
+                                          </div>
+                                          <div className="flex flex-col">
+                                            <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
+                                              Difficulty
+                                            </span>
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              {activityItem.difficulty ||
+                                                "Easy"}
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="doc mt-8">
+                                      <DocumentRenderer
+                                        document={activityItem.content.document}
+                                      />
+
+                                      {/* <TCPTLButton
+                                        fontSize={14}
+                                        xPadding={38}
+                                        yPadding={16}
+                                        description={{
+                                          isOutlined: false,
+                                        }}
+                                        className="z-10 text-2xl flex pt-7 book-btn mb-7 xl:mb-0"
+                                        url=""
+                                      >
+                                        BOOK TOUR
+
+                                      </TCPTLButton> */}
+                                      <div className="flex justify-start w-full">
+                                        <FancyButton
+                                          className="z-10 text-2xl inline-flex mt-7 mb-7 xl:mb-0 book-btn"
+                                          isOutlined={false}
+                                        >
+                                          BOOK TOUR
+                                        </FancyButton>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="hidden px-6 justify-center items-center 2xl:flex">
+                                    <SliderContext.Provider
+                                      value={activityItem.images}
+                                    >
+                                      <TourThumbnails
+                                        thumbWidth={90}
+                                        thumbHeight={138}
+                                        index={index}
+                                      />
+                                    </SliderContext.Provider>
+                                  </div>
+                                </div>
+                              </div>
+                              // </div>
+                            )
+                          )}
+                        </div>
+                      )
+                    )}
+                    <div className="w-full flex mt-10 mb-10 xl:mb-0">
+                      <section className="section">
+                        <div
+                          ref={contactRef}
+                          id="tour-contact-form"
+                          className="tour-contact-form"
+                        >
+                          <ContactForm selectOptions={getFormOptions(item)} />
+                        </div>
+                      </section>
+                    </div>
                   </div>
+                ))}
+                {/* <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 1
+                  </h3>
                 </div>
-              ) : (
-                <></>
-              )}
+                <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 2
+                  </h3>
+                </div>
+                <div className="panel bg-green-300 center">
+                  <h3>
+                    Section 1<br />
+                    Panel 3
+                  </h3>
+                </div> */}
+                {/* </section>
+              <div className="text-black w-1/2">text</div>
+            </div>
+            <div className="w-full flex mt-[112px] h-[600px]">
+              <section className="section w-1/2 h-full">
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 1
+                  </h3>
+                </div>
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 2
+                  </h3>
+                </div>
+                <div className="panel bg-blue-gray-300 center">
+                  <h3>
+                    Section 2<br />
+                    Panel 3
+                  </h3>
+                </div>
+              </section>
+              <div className="text-black w-1/2">text</div>
+            </div>*/}
+              </section>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* <div className="buttons center">
+          <button className="section-btn">Section 1</button>
+          <button className="section-btn">Section 2</button>
+          <button className="section-btn">Section 3</button>
+          <button id="btn-overflow">Toggle Overflow</button>
+        </div> */}
       </div>
-    </>
+    </div>
   );
 }

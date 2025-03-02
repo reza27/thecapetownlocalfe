@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import contactSlice from "./features/contact/contactSlice";
+import toursSlice from "./features/tours/toursSlice";
+
 import indemnitySlice from "./features/indemnity/indemnitySlice";
 import { RTKApi } from "../api/services/RTKService";
 
@@ -8,6 +10,7 @@ export const makeStore = () => {
     reducer: {
       contact: contactSlice,
       indemnity: indemnitySlice,
+      tours: toursSlice,
       [RTKApi.reducerPath]: RTKApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

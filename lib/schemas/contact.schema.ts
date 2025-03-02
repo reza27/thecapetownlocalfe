@@ -9,9 +9,11 @@ const contactSchema = object({
   phone: string().matches(phoneRegExp, "Mobile number is not valid"),
   email: string().email("Invalid email address").required("Email Required"),
   numberOfPeople: string().required("Number of people is required"),
-  date: date().default(() => new Date()),
-  isFlexibleDate: boolean(),
-  isTransportNeeded: boolean(),
+  date: date()
+    .default(() => new Date())
+    .required("Date is required"),
+  isFlexibleDate: string(),
+  isTransportNeeded: string(),
   address: string().when("isTransportNeeded", {
     is: true,
     then: (schema) => schema.required(),

@@ -16,8 +16,12 @@ export default function Contact({ data }) {
       <Head>
         <title>Contact - The Cape Town Local</title>
       </Head>
-      <div id="contact">
-        <div>
+      <div className="w-full">
+        <div className="mt-32 mb-12 flex flex-col w-full">
+          <h1 className="text-center py-9 tracking-tighter">
+            Ready to <span className="text-yellow">make a booking</span> with
+            us?
+          </h1>
           <ContactForm
             selectOptions={getFormOptions(data.props.data.activities[0])}
           />
