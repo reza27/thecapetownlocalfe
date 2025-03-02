@@ -15,6 +15,7 @@ export interface IActivityItem {
   tab: string;
   price: string;
   duration: string;
+  difficulty: string;
   images: ActivityItemImages[];
 }
 interface ActivityItemHeading {

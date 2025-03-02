@@ -56,7 +56,7 @@ export default function RootLayout({
         </head>
         <body>
           <Navbar />
-          <main className="flex justify-center px-4 lg:px-16">
+          <main className="flex justify-center px-2 md:px-4 lg:px-16">
             <div className="max-w-[1700px] w-full">{children}</div>
             <div className="lg:hidden fixed z-20 bottom-6 right-6">
               <a

@@ -111,7 +111,7 @@ export default function Tours({ data }) {
         const container = document.querySelector(".container");
         const sections = gsap.utils.toArray(".section");
 
-        gsap.set(".wrapper", { marginBottom: "-156px" });
+        gsap.set(".wrapper", { marginBottom: "-86px" });
 
         tl = gsap.timeline({
           defaults: {
@@ -129,7 +129,7 @@ export default function Tours({ data }) {
             snap: {
               snapTo: "labels",
               duration: 0.5,
-              delay: 2,
+              delay: 1,
               ease: "power1.inOut",
             },
             //markers: true,
@@ -367,7 +367,7 @@ export default function Tours({ data }) {
                                   }}
                                 >
                                   <div className="flex flex-col lg:justify-center lg:items-center">
-                                    <h2 className="text-[42px] pt-8 lg:pt-0 lg:text-6xl xl:text-7xl tracking-tighter !leading-[0.98] lg:!leading-[0.92]">
+                                    <h2 className="text-[42px] pt-8 lg:pt-0 lg:text-6xl xl:text-6xl 2xl:text-7xl tracking-tighter !leading-[0.98] lg:!leading-[0.92]">
                                       {parse(activityItem.title)}
                                     </h2>
                                     <div className="flex w-full justify-start">
@@ -392,7 +392,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
                                               Price
                                             </span>
-                                            <span className="text-lg lg:text-3xl text-left font-semibold tracking-tighter">
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-left font-semibold tracking-tighter">
                                               {activityItem.price}
                                             </span>
                                           </div>
@@ -418,7 +418,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Duration
                                             </span>
-                                            <span className="text-lg lg:text-3xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
                                               {activityItem.duration}
                                             </span>
                                           </div>
@@ -444,8 +444,9 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Difficulty
                                             </span>
-                                            <span className="text-lg lg:text-3xl text-blue text-left tracking-tight font-semibold">
-                                              Easy
+                                            <span className="text-lg lg:text-xl xl:text-3xl text-blue text-left tracking-tight font-semibold">
+                                              {activityItem.difficulty ||
+                                                "Easy"}
                                             </span>
                                           </div>
                                         </div>
