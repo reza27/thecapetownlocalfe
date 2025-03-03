@@ -280,7 +280,7 @@ export default function Home({ homeData }) {
                   style={tourImageStyle}
                 />
                 <div className="flex justify-end pb-10 md:pl-10 items-center md:items-start flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
-                  <h2 className="text-white text-center drop-shadow-md leading-none px-2 pb-2">
+                  <h2 className="text-white text-center md:text-left drop-shadow-md text-3xl md:text-[32px] leading-none px-2 pb-2">
                     {homeTour.homeTour.shortTitle}
                   </h2>
                   {/* <Link
