@@ -101,7 +101,7 @@ export default function Home({ homeData }) {
       </Head>
       <div className="w-full relative bg-white flex pt-28 md:pt-32">
         <div className="w-full flex relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute bottom-40 px-3 md:px-0 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
+          <div className="absolute w-full md:w-auto bottom-40 px-3 md:px-0 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
