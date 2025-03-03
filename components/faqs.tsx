@@ -91,7 +91,7 @@ export const Faqs = ({ ...props }) => {
 
                 <div className="absolute w-28 h-full overflow-hidden z-10 whitespace-nowrap">
                   <div
-                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-20 left-6 transition-transform min-w-[500px] ease-out duration-1000 font-semibold text-3xl"
+                    className="absolute w-96 -rotate-90 origin-[0%_0%] mt-[440px] top-24 left-5 transition-transform min-w-[500px] ease-out duration-1000 font-semibold text-3xl"
                     style={{
                       opacity: currentIndex === index ? 0 : 1,
                       transform:
@@ -158,7 +158,7 @@ export const Faqs = ({ ...props }) => {
                   className="inset-0 m-auto bg-yellow absolute"
                 ></div>
 
-                <div className="flex justify-start pl-10 items-center h-20 text-2xl font-semibold z-10">
+                <div className="flex justify-start pl-5 sm:pl-6 items-center h-20 text-2xl font-semibold z-10">
                   <div>{faq.question}</div>
                 </div>
                 <div
@@ -175,7 +175,7 @@ export const Faqs = ({ ...props }) => {
                         ? sectionRefs.current[index]?.sectionRef?.scrollHeight
                         : 0,
                   }}
-                  className="relative px-12 text-4xl 2xl:text-5xl font-semibold w-full transition-[opacity_max-height] duration-500"
+                  className="relative px-6 text-4xl 2xl:text-5xl font-semibold w-full transition-[opacity_max-height] duration-500"
                 >
                   <div className="h-full text-black ">
                     <div className="faq-answer pb-10 pt-4 text-lg">

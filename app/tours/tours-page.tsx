@@ -368,7 +368,7 @@ export default function Tours({ data }) {
                                     </h2>
                                     <div className="flex w-full justify-start">
                                       <div className="bg-light-grey-2 rounded-3xl h-16 xl:h-20 flex justify-start items-center font-semibold overflow-hidden mt-8 w-full max-w-[600px]">
-                                        <div className=" text-blue w-1/3 h-full flex justify-center items-center">
+                                        <div className=" text-blue w-[30%] h-full flex justify-center items-center">
                                           <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
@@ -394,7 +394,7 @@ export default function Tours({ data }) {
                                           </div>
                                         </div>
                                         <div className="w-0.5 h-12 bg-gray-300"></div>
-                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                        <div className="w-[30%] h-full flex justify-center items-center">
                                           <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
@@ -420,7 +420,7 @@ export default function Tours({ data }) {
                                           </div>
                                         </div>
                                         <div className="w-0.5 h-12 bg-gray-300"></div>
-                                        <div className="w-1/3 h-full flex justify-center items-center">
+                                        <div className="w-[40%] h-full flex justify-center items-center">
                                           <div className="rounded-full w-8 h-8 lg:w-10 lg:h-10 mr-2 flex justify-center items-center text-black">
                                             <Image
                                               loader={ImageLoader}
@@ -440,7 +440,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Difficulty
                                             </span>
-                                            <span className="text-lg lg:text-xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg lg:text-xl xl:text-2xl text-blue text-left tracking-tight font-semibold">
                                               {activityItem.difficulty ||
                                                 "Easy"}
                                             </span>

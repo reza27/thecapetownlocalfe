@@ -40,7 +40,7 @@ export default function Home({ homeData }) {
   const [screenWidth, setScreenWidth] = useState<number>(400);
 
   const dispatch = useAppDispatch();
-  //const { data, error, isLoading } = useGetReviewsQuery();
+  const { data, error, isLoading } = useGetReviewsQuery();
 
   const featureImageStyle = {
     objectFit: "contain",
@@ -101,7 +101,7 @@ export default function Home({ homeData }) {
       </Head>
       <div className="w-full relative bg-white flex pt-28 md:pt-32">
         <div className="w-full flex relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute bottom-40 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
+          <div className="absolute bottom-40 px-3 md:px-0 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
@@ -329,11 +329,30 @@ export default function Home({ homeData }) {
         <h3 className="w-full text-3xl sm:text-4xl text-center pt-3 pb-6 tracking-tighter">
           Don't take our word for it, take theirs!
         </h3>
-        <SliderContext.Provider value={defaultReviews || []}>
+        {/* <SliderContext.Provider value={defaultReviews || []}>
           <ColumnSlider screenWidth={screenWidth}>
             <ReviewsV2 screenWidth={screenWidth} />
           </ColumnSlider>
-        </SliderContext.Provider>
+        </SliderContext.Provider> */}
+        {error ? (
+          <SliderContext.Provider value={defaultReviews || []}>
+            <ColumnSlider screenWidth={screenWidth}>
+              <ReviewsV2 screenWidth={screenWidth} />
+            </ColumnSlider>
+          </SliderContext.Provider>
+        ) : isLoading ? (
+          <div className="w-full h-full flex justify-center items-center">
+            <img src="/spinner.svg" className="w-10 h-auto" />
+          </div>
+        ) : data ? (
+          <SliderContext.Provider
+            value={getReviewsOrError(data) || defaultReviews}
+          >
+            <ColumnSlider screenWidth={screenWidth}>
+              <ReviewsV2 screenWidth={screenWidth} />
+            </ColumnSlider>
+          </SliderContext.Provider>
+        ) : null}
       </div>
       <div className="flex justify-end">
         <Faqs data={homeData.props.data.home?.faq} screenWidth={screenWidth} />
