@@ -27,6 +27,7 @@ export async function getToursData() {
               }
               price
               duration
+              difficulty
               images {
                 altText
                 id
