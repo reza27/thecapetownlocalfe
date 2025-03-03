@@ -41,9 +41,9 @@ export default function Footer() {
           <div className="lg:pl-20 pt-10 lg:pt-0">
             <p className="text-white text-sm pb-1">Other links</p>
             <ul className="flex flex-col text-xs text-gray-400">
-              <Link className="py-0.5 hover:text-yellow" href="/indemnity">
+              {/* <Link className="py-0.5 hover:text-yellow" href="/indemnity">
                 Indemnity Form
-              </Link>
+              </Link> */}
               <Link className="py-0.5 hover:text-yellow" href="/privacy-policy">
                 Privacy Policy
               </Link>
