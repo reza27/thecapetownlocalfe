@@ -18,7 +18,7 @@ export const Faqs = ({ ...props }) => {
     if (faqContainer.current) {
       setContainerW(
         faqContainer.current!.getBoundingClientRect().width -
-          panelW * (props.data.length - 1) -
+          panelW * (props.data?.length - 1) -
           60
       );
       setFaqOpacity(1);
@@ -29,7 +29,7 @@ export const Faqs = ({ ...props }) => {
     if (faqContainer.current) {
       setContainerW(
         faqContainer.current!.getBoundingClientRect().width -
-          panelW * (props.data.length - 1) -
+          panelW * (props.data?.length - 1) -
           60
       );
 
@@ -65,7 +65,7 @@ export const Faqs = ({ ...props }) => {
             ref={faqContainer}
             className="flex w-full 2xl:w-3/4 justify-end text-black tracking-tight h-[580px] 2xl:h-full 2xl:pl-10"
           >
-            {props.data.map((faq, index) => (
+            {props.data?.map((faq, index) => (
               <div
                 key={faq.id}
                 style={{
@@ -83,7 +83,8 @@ export const Faqs = ({ ...props }) => {
                 <div
                   style={{
                     opacity:
-                      (props.data.length - index) / props.data.length / 2 + 0.5,
+                      (props.data?.length - index) / props.data?.length / 2 +
+                      0.5,
                   }}
                   className="inset-0 m-auto bg-yellow absolute"
                 ></div>
@@ -136,7 +137,7 @@ export const Faqs = ({ ...props }) => {
             ref={faqContainer}
             className="flex flex-col w-full justify-end text-black tracking-tight 2xl:h-full"
           >
-            {props.data.map((faq, index) => (
+            {props.data?.map((faq, index) => (
               <div
                 key={faq.id}
                 onClick={() => {
@@ -151,7 +152,8 @@ export const Faqs = ({ ...props }) => {
                 <div
                   style={{
                     opacity:
-                      (props.data.length - index) / props.data.length / 2 + 0.5,
+                      (props.data?.length - index) / props.data?.length / 2 +
+                      0.5,
                   }}
                   className="inset-0 m-auto bg-yellow absolute"
                 ></div>

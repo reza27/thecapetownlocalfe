@@ -362,7 +362,7 @@ export default function Tours({ data }) {
                                       index % 2 === 0 ? "row-reverse" : "row",
                                   }}
                                 >
-                                  <div className="flex flex-col lg:justify-center lg:items-center">
+                                  <div className="flex flex-col lg:justify-center lg:items-center w-full">
                                     <h2 className="text-[42px] pt-8 lg:pt-0 lg:text-6xl xl:text-6xl 2xl:text-7xl tracking-tighter !leading-[0.98] lg:!leading-[0.92]">
                                       {parse(activityItem.title)}
                                     </h2>
