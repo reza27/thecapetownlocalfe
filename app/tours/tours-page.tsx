@@ -388,7 +388,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tighter relative top-1.5 lg:top-1">
                                               Price
                                             </span>
-                                            <span className="text-lg lg:text-xl text-left font-semibold tracking-tighter">
+                                            <span className="text-lg lg:text-xl xl:text-2xl text-left font-semibold tracking-tighter">
                                               {activityItem.price}
                                             </span>
                                           </div>
@@ -414,7 +414,7 @@ export default function Tours({ data }) {
                                             <span className="text-xxs lg:text-xs text-black tracking-tight relative top-1.5 lg:top-1">
                                               Duration
                                             </span>
-                                            <span className="text-lg lg:text-xl text-blue text-left tracking-tight font-semibold">
+                                            <span className="text-lg lg:text-xl xl:text-2xl text-blue text-left tracking-tight font-semibold">
                                               {activityItem.duration}
                                             </span>
                                           </div>
