@@ -2,6 +2,12 @@ import Home from "./home-page";
 import { gql } from "@apollo/client";
 import client from "../helpers/apollo-client";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | The Cape Town Local",
+};
+
 async function getHomeData() {
   const { data } = await client.query({
     query: gql`
@@ -28,6 +34,20 @@ async function getHomeData() {
                   publicUrl
                 }
               }
+            }
+          }
+        }
+        activities {
+          id
+          title
+          activityItemHeading {
+            id
+            title
+            activityItemsCount
+            activityItems {
+              id
+              title
+              shortTitle
             }
           }
         }

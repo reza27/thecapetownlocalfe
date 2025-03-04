@@ -1,4 +1,3 @@
-"use client";
 import "../styles/globals.scss";
 import "@fortawesome/fontawesome-svg-core/styles.css"; //importing font awesome css
 import { GoogleAnalytics, sendGAEvent } from "@next/third-parties/google";
@@ -7,6 +6,17 @@ import Footer from "../components/footer";
 import StoreProvider from "./StoreProvider";
 import ImageLoader from "../components/image-loader";
 import Image from "next/image";
+import { Metadata } from "next";
+import { WhatsApp } from "../components/whatsapp";
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | The Cape Town Local",
+    default: "The Cape Town Local",
+  },
+  description:
+    "The Cape Town Local - We live your experience. Join us for guided hiking tours up Table Mountain and Lion's Head.",
+};
 
 export default function RootLayout({
   // Layouts must accept a children prop.
@@ -59,7 +69,7 @@ export default function RootLayout({
           <main className="flex justify-center px-2 md:px-4 lg:px-16">
             <div className="max-w-[1700px] w-full">{children}</div>
             <div className="lg:hidden fixed z-20 bottom-6 right-6">
-              <a
+              {/* <a
                 id="whatsapp"
                 className="flex items-center"
                 href="https://wa.me/27789803335"
@@ -83,7 +93,8 @@ export default function RootLayout({
                   }}
                   alt="whatsapp"
                 />
-              </a>
+              </a> */}
+              <WhatsApp />
             </div>
           </main>
           <Footer />

@@ -2,6 +2,11 @@ import { gql } from "@apollo/client";
 import client from "../../helpers/apollo-client";
 import React from "react";
 import Contact from "./contact-page";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+};
 
 export async function getContactData() {
   const { data } = await client.query({
