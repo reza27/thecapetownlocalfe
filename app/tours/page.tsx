@@ -2,6 +2,11 @@ import { gql } from "@apollo/client";
 import React from "react";
 import Tours from "./tours-page";
 import client from "../../helpers/apollo-client";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Tours",
+};
 
 export async function getToursData() {
   //(where: {tag:{name:{equals:"Tours"}}})

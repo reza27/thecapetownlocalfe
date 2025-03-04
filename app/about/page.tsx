@@ -2,6 +2,12 @@ import { gql } from "@apollo/client";
 import client from "../../helpers/apollo-client";
 import React from "react";
 import About from "./about-page";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+};
+
 export async function getAboutPage() {
   const { data } = await client.query({
     query: gql`
