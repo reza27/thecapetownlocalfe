@@ -3,7 +3,7 @@ import { IBookingRequest } from "../../../types/IBookingRequest";
 import TCTLApi from "../../../api/TCTLApi";
 import TCTLService from "../../../api/services/TCTLService";
 
-export const contactSlice = createSlice({
+export const navigationSlice = createSlice({
   name: "navigation",
   initialState: {
     currentPage: "",
@@ -11,10 +11,11 @@ export const contactSlice = createSlice({
   reducers: {
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
+      console.log("state.currentPage", state.currentPage);
     },
   },
 });
 
-export const { setCurrentPage } = contactSlice.actions;
+export const { setCurrentPage } = navigationSlice.actions;
 
-export default contactSlice.reducer;
+export default navigationSlice.reducer;

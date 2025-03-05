@@ -5,6 +5,8 @@ import { isMobile } from "react-device-detect";
 import { sendGAEvent } from "@next/third-parties/google";
 import ImageLoader from "./image-loader";
 import Image from "next/image";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { setCurrentPage } from "../lib/features/navigation/navigationSlice";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -35,6 +37,7 @@ export default function Navbar() {
   ];
 
   const [activeClass, setActiveClass] = useState(1);
+  const dispatch = useAppDispatch();
 
   const linkSelected = (link: ILink) => {
     setActiveClass(link.id);
@@ -42,8 +45,22 @@ export default function Navbar() {
       checkBox.current.checked = false;
     }
 
+    dispatch(setCurrentPage(link.href));
+
     setOpenMenu(false);
   };
+
+  const currentNav = useAppSelector((state) => state.navigation.currentPage);
+
+  useEffect(() => {
+    const updatedLink: ILink | undefined = links.find(
+      (link) => link.href === currentNav
+    );
+
+    if (updatedLink) {
+      linkSelected(updatedLink);
+    }
+  }, [currentNav]);
 
   useEffect(() => {
     const currentPage: ILink | undefined = links.find((e: ILink) => {
@@ -52,6 +69,7 @@ export default function Navbar() {
 
     if (currentPage) {
       linkSelected(currentPage);
+      dispatch(setCurrentPage(currentPage.href));
     }
   }, []);
 
@@ -84,6 +102,7 @@ export default function Navbar() {
         <Link
           className="cursor-pointer w-1/2 lg:w-1/3 flex lg:justify-center items-center"
           href="/"
+          onClick={() => dispatch(setCurrentPage("/"))}
         >
           <img
             className="w-44 md:w-56 h-auto relative z-10"

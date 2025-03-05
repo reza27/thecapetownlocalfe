@@ -4,6 +4,7 @@ import toursSlice from "./features/tours/toursSlice";
 
 import indemnitySlice from "./features/indemnity/indemnitySlice";
 import { RTKApi } from "../api/services/RTKService";
+import navigationSlice from "./features/navigation/navigationSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
       contact: contactSlice,
       indemnity: indemnitySlice,
       tours: toursSlice,
+      navigation: navigationSlice,
       [RTKApi.reducerPath]: RTKApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

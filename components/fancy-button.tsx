@@ -6,7 +6,7 @@ export const FancyButton = ({
   className,
   isOutlined,
   href = "",
-  onClick = () => {},
+  onClick,
   children,
 }) => {
   const buttonElement = useRef<HTMLSpanElement | null>(null);

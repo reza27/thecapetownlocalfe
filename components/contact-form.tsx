@@ -29,6 +29,7 @@ import { InputTheme } from "../themes/input-theme";
 import { FancyButton } from "./fancy-button";
 import { AnyAaaaRecord } from "dns";
 import { AnyAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
+import { sendGAEvent } from "@next/third-parties/google";
 
 const waImageStyle = {
   objectFit: "contain",

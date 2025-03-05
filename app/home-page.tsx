@@ -30,6 +30,7 @@ import ColumnSlider from "../components/column-slider";
 import outlined from "@material-tailwind/react/theme/components/timeline/timelineIconColors/outlined";
 import { FancyButton } from "../components/fancy-button";
 import { Faqs } from "../components/faqs";
+import { setCurrentPage } from "../lib/features/navigation/navigationSlice";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -121,6 +122,9 @@ export default function Home({ homeData }) {
               isOutlined={true}
               href={"/tours"}
               className="absolute block md:left-12 z-10"
+              onClick={() => {
+                dispatch(setCurrentPage("/tours"));
+              }}
             >
               VIEW TOURS
             </FancyButton>
@@ -162,6 +166,7 @@ export default function Home({ homeData }) {
                   width={100}
                   height={100}
                   style={tourImageStyle}
+                  alt={homeTour.homeTour.images[0].altText}
                 />
                 <div className="flex justify-end pb-10 md:pl-10 items-center md:items-start flex-col absolute left-0 right-0 top-0 bottom-0 m-auto">
                   <h2 className="text-white text-center md:text-left drop-shadow-md text-3xl md:text-[32px] leading-none px-2 pb-2">
@@ -177,6 +182,9 @@ export default function Home({ homeData }) {
                       homeTour.homeTour.tab
                     }
                     className="z-10 uppercase min-w-20"
+                    onClick={() => {
+                      dispatch(setCurrentPage("/tours"));
+                    }}
                   >
                     Discover {homeTour.homeTour.shortTitle}
                   </FancyButton>
