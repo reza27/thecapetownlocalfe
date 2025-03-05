@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   },
   description:
     "The Cape Town Local - We live your experience. Join us for guided hiking tours up Table Mountain and Lion's Head.",
+  metadataBase: new URL("https://www.thecapetownlocal.com"),
 };
 
 export default function RootLayout({
