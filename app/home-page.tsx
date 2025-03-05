@@ -98,15 +98,15 @@ export default function Home({ homeData }) {
     <>
       <div className="w-full relative bg-white flex pt-28 md:pt-32">
         <div className="w-full flex relative h-[650px] overflow-hidden rounded-3xl">
-          <div className="absolute w-full md:w-auto bottom-40 px-3 md:px-0 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
+          <h1 className="absolute w-full md:w-auto bottom-40 px-3 md:px-0 text-center md:text-left left-0 md:left-12 z-10 text-3xl lg:text-7xl font-semibold text-white transition-all duration-300 tracking-tighter">
             Discover
             <br />
             <span className="text-yellow">Breathtaking</span> landscapes
             <br /> on our guided hikes.
-          </div>
-          <div className="absolute bottom-28 w-full md:w-auto text-center md:text-left left-0 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
+          </h1>
+          <h2 className="font-normal absolute bottom-28 w-full md:w-auto text-center md:text-left left-0 md:left-12 z-10 text-lg md:text-xl text-white transition-all duration-300">
             We live your experience.
-          </div>
+          </h2>
           {/* <TCPTLButton
             description={{
               isOutlined: true,
